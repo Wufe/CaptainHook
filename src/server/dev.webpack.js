@@ -5,7 +5,7 @@ module.exports = {
         extensions: [ "", ".webpack.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        index: "./index.tsx"
+        index: "index.tsx"
     },
     output: {
         path: 'src/server/build',
