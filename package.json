@@ -1,0 +1,44 @@
+{
+  "name": "chook",
+  "version": "0.0.1",
+  "description": "Tasks ran by webhooks",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm-run-all --parallel backend:dev frontend:dev",
+    "dev:backend": "npm run -s backend:pack:watch",
+    "dev:frontend": "npm run -s frontend:pack:watch",
+    "backend:dev": "npm run -s backend:pack:watch",
+    "backend:pack": "webpack --config environment/backend.dev.webpack.js",
+    "backend:pack:watch": "npm run -s backend:pack -- --watch",
+    "frontend:dev": "npm run -s frontend:pack:watch",
+    "frontend:pack": "webpack --config environment/frontend.dev.webpack.js",
+    "frontend:pack:watch": "npm run -s frontend:pack -- --watch",
+    "start": "npm-run-all start:frontend start:backend",
+    "start:backend": "npm run -s backend:pack && node src/backend/build/index.js",
+    "start:frontend": "npm run -s frontend:pack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wufe/captainhook.git"
+  },
+  "author": "Simone Bembi <simone.bembi@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wufe/captainhook/issues"
+  },
+  "homepage": "https://github.com/wufe/captainhook#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "file-loader": "^0.9.0",
+    "npm-run-all": "^3.1.0",
+    "source-map-loader": "^0.1.5",
+    "style-loader": "^0.13.1",
+    "ts-loader": "^0.9.0",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2"
+  }
+}
