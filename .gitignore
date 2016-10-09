@@ -1,2 +1,10 @@
+# Project dependencies
 /node_modules
+
+# OS
 .DS_Store
+
+# Build artifacts
+/src/cli/build
+/src/frontend/build
+/src/server/build
