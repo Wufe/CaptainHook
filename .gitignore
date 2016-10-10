@@ -8,3 +8,6 @@
 /src/cli/build
 /src/frontend/build
 /src/server/build
+
+# Typescript
+/typings

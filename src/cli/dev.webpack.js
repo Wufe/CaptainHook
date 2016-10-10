@@ -5,11 +5,12 @@ module.exports = {
         extensions: [ "", ".webpack.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        index: "index.tsx"
+        index: "./index.tsx"
     },
     output: {
         path: 'src/cli/build',
         filename: "[name].js",
+        libraryTarget: 'umd'
     },
     target: 'node',
     module: {

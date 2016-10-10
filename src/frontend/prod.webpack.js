@@ -3,17 +3,17 @@ var path = require( 'path' );
 
 module.exports = {
     context: __dirname,
-    devtool: "source-map-loader",
+    devtool: "null",
     resolve: {
         extensions: [ "", ".webpack.js", ".web.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        main: "./index.tsx",
+        main: "index.tsx",
         vendor: [ "react", "react-dom" ]
     },
     output: {
         publicPath: "/",
-        path: path.join( 'src', 'frontend', 'build', 'assets' ),
+        path: path.join( 'dist', 'resources', 'assets' ),
         filename: "javascript/[name].bundle.js",
         chunkFilename: 'javascript/[name].chunk.js'
     },
@@ -39,5 +39,25 @@ module.exports = {
             }
         ]
     },
-    plugins: []
+    plugins: [
+    	new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            debug: false,
+            minimize: true,
+            sourceMap: false,
+            output: {
+                comments: false
+            },
+            compressor: {
+                warnings: false
+            },
+            mangle: false
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify( 'production' )
+            }
+        })
+    ]
 };
