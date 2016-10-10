@@ -5,11 +5,12 @@ module.exports = {
         extensions: [ "", ".webpack.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        index: "./index.tsx"
+        chook: "./index.ts"
     },
     output: {
-        path: 'src/server/build',
-        filename: "[name].js",
+        path: 'build/lib',
+        filename: "chook.js",
+        libraryTarget: 'umd'
     },
     target: 'node',
     module: {

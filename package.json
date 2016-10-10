@@ -2,41 +2,29 @@
   "name": "chook",
   "version": "0.0.1",
   "description": "Tasks ran by webhooks",
-  "main": "index.js",
+  "main": "dist/lib/chook.js",
   "scripts": {
-    "dev": "npm-run-all --parallel chook:dev cli:dev server:dev frontend:dev",
-    "dev:chook": "npm run -s chook:dev",
-    "dev:cli": "npm run -s cli:dev",
+    "dev": "npm-run-all --parallel core:dev frontend:dev",
+    "dev:core": "npm run -s core:dev",
     "dev:frontend": "npm run -s frontend:dev",
-    "dev:server": "npm run -s server:dev",
-    "chook:dev": "npm run -s chook:compile:watch",
-    "chook:compile": "webpack --config src/chook/dev.webpack.js",
-    "chook:compile:watch": "npm run -s chook:compile -- --watch",
-    "cli:dev": "npm run -s cli:compile:watch",
-    "cli:compile": "webpack --config src/cli/dev.webpack.js",
-    "cli:compile:watch": "npm run -s cli:compile -- --watch",
+    "core:dev": "npm run -s core:compile:watch",
+    "core:compile": "webpack --config src/core/dev.webpack.js",
+    "core:compile:watch": "npm run -s core:compile -- --watch",
     "frontend:dev": "npm run -s frontend:compile:watch",
     "frontend:compile": "webpack --config src/frontend/dev.webpack.js",
-    "frontend:compile:watch": "npm run -s frontend:compile -- --watch",
-    "server:dev": "npm run -s server:compile:watch",
-    "server:compile": "webpack --config src/server/dev.webpack.js",
-    "server:compile:watch": "npm run -s server:compile -- --watch",
-    "start": "npm-run-all start:chook start:cli start:frontend start:server",
-    "start:chook": "npm run -s chook:compile",
-    "start:cli": "npm run -s cli:compile",
-    "start:frontend": "npm run -s frontend:compile",
-    "start:server": "npm run -s server:compile && node src/server/build/index.js"
+    "frontend:compile:watch": "npm run -s frontend:compile -- --watch"
   },
-  "bin": "bin/chook",
+  "bin": "dist/bin/chook",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wufe/captainhook.git"
   },
-  "author": "Simone Bembi <simone.bembi@gmail.com>",
+  "author": "Simone Bembi <simone.bembi@gmail.com> (https://wufe.me)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/wufe/captainhook/issues"
   },
+  "contributors": [],
   "homepage": "https://github.com/wufe/captainhook#readme",
   "dependencies": {
     "express": "^4.14.0"

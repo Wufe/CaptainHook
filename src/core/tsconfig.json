@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "./build/",
+        "outDir": "../build/lib",
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "commonjs",
@@ -9,6 +9,6 @@
     },
     "files": [
         "../../typings/index.d.ts",
-        "./index.tsx"
+        "./index.ts"
     ]
 }

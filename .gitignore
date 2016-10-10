@@ -1,13 +1,19 @@
 # Project dependencies
 /node_modules
 
+# NPM
+npm-debug.log
+
 # OS
 .DS_Store
 
 # Build artifacts
-/src/cli/build
-/src/frontend/build
-/src/server/build
+/build/resources
+/build/lib
+
+# Dist artifacts
+/dist/resources
+/dist/lib
 
 # Typescript
 /typings

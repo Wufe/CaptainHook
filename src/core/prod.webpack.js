@@ -7,7 +7,7 @@ module.exports = {
         extensions: [ "", ".webpack.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        index: "./index.tsx"
+        chook: "./index.ts"
     },
     output: {
         path: 'dist/lib',

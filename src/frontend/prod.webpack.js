@@ -8,7 +8,7 @@ module.exports = {
         extensions: [ "", ".webpack.js", ".web.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        main: "index.tsx",
+        main: "./index.tsx",
         vendor: [ "react", "react-dom" ]
     },
     output: {

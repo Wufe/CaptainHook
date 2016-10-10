@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "./build/assets/javascript/",
+        "outDir": "./build/resources/assets/javascript/",
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "commonjs",

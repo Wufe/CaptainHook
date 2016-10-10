@@ -13,7 +13,7 @@ module.exports = {
     },
     output: {
         publicPath: "/",
-        path: path.join( 'src', 'frontend', 'build', 'assets' ),
+        path: path.join( 'build', 'resources', 'assets' ),
         filename: "javascript/[name].bundle.js",
         chunkFilename: 'javascript/[name].chunk.js'
     },
