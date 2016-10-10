@@ -13,7 +13,7 @@
     "frontend:dev": "npm run -s frontend:compile:watch",
     "frontend:compile": "webpack --config src/frontend/dev.webpack.js",
     "frontend:compile:watch": "npm run -s frontend:compile -- --watch",
-    "test": "mocha tests"
+    "test": "istanbul cover mocha tests"
   },
   "bin": "dist/bin/chook",
   "repository": {
