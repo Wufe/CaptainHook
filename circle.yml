@@ -15,5 +15,8 @@ machine:
       - typings install
 
   test:
+    pre:
+      - npm run -s frontend:compile
+      - npm run -s core:compile
     override:
       - npm test
