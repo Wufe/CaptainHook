@@ -6,17 +6,17 @@ machine:
     version:
       6.1.0
 
-  dependencies:
-    pre:
-      - pwd
-    override:
-      - npm install -g typings webpack
-      - npm install
-      - typings install
+dependencies:
+  pre:
+    - pwd
+  override:
+    - npm install -g typings webpack
+    - npm install
+    - typings install
 
-  test:
-    pre:
-      - npm run -s frontend:compile
-      - npm run -s core:compile
-    override:
-      - npm test
+test:
+  pre:
+    - npm run -s frontend:compile
+    - npm run -s core:compile
+  override:
+    - npm test
