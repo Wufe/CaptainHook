@@ -21,6 +21,10 @@ module.exports = {
                 test: /\.tsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 loader: 'ts-loader'
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
             }
         ]
     },
