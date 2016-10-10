@@ -27,4 +27,7 @@ describe( 'Server.validateMethod', function(){
 	it( 'should throw a TypeError with invalid method', function(){
 		expect( server.validateMethod.bind( server, 'asd' ) ).to.throw( 'Not a valid method.' );
 	});
+	it( 'should be fine with a valid one', function(){
+		expect( server.validateMethod.bind( server, 'all' ) ).to.not.throw( 'Not a valid method.' );
+	});
 });
