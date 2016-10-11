@@ -12,17 +12,6 @@ export default class Configuration{
 		this.readConfiguration();
 	}
 
-	getFileContent(): string{
-		let fileContent: string;
-		try{
-			fileContent = fs.readFileSync( this.configurationPath, 'utf8' );
-		}catch( error ){
-			this.generateDefaultConfiguration();
-			fileContent = fs.readFileSync( this.configurationPath, 'utf8' );
-		}
-		return fileContent;
-	}
-
 	dumpConfiguration( configurationObject: any ): void{
 		fs.writeFileSync( this.configurationPath, Yaml.safeDump( configurationObject ) );
 	}
@@ -35,8 +24,19 @@ export default class Configuration{
 	}
 
 	readConfiguration(): void{
-		let fileContent: string = this.getFileContent();
+		let fileContent: string = this.getFileContent( this.configurationPath );
 		this.configuration = Yaml.safeLoad( fileContent );
+	}
+
+	getFileContent( filePath: string ): string{
+		let fileContent: string;
+		try{
+			fileContent = fs.readFileSync( filePath, 'utf8' );
+		}catch( error ){
+			this.generateDefaultConfiguration();
+			fileContent = fs.readFileSync( filePath, 'utf8' );
+		}
+		return fileContent;
 	}
 
 	get( key: string ): any{
