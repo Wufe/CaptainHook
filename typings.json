@@ -2,6 +2,7 @@
   "globalDependencies": {
     "express": "registry:dt/express#4.0.0+20160708185218",
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20161008174359",
+    "js-yaml": "registry:dt/js-yaml#3.5.2+20160316171810",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
     "node": "registry:dt/node#6.0.0+20161010101523",
     "react": "registry:dt/react#0.14.0+20161008064207",
