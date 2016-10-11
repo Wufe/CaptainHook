@@ -17,3 +17,6 @@ npm-debug.log
 
 # Typescript
 /typings
+
+# Test report
+test-results.xml
