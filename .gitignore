@@ -20,3 +20,6 @@ npm-debug.log
 
 # Test report
 test-results.xml
+
+# Configuration file
+chook.config.yml
