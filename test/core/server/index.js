@@ -3,10 +3,6 @@ const expect = require( 'chai' ).expect;
 const Server = require( '../../../build/lib/chook.js' ).Server;
 
 describe( 'Server', function(){
-	
-});
-
-describe( 'Server', function(){
 	let server;
 	before( function(){
 		server = new Server();
