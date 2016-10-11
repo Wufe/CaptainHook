@@ -28,7 +28,7 @@
   "contributors": [],
   "homepage": "https://github.com/wufe/captainhook#readme",
   "dependencies": {
-    "js-yaml": "^3.6.1"
+    "js-yaml": "^3.6.1",
     "express": "^4.14.0",
     "yargs": "^6.0.0"
   },
