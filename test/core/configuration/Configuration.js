@@ -16,3 +16,14 @@ describe( 'Configuration', function(){
 		});
 	});
 });
+
+describe( 'Configuration.readConfiguration', function(){
+	before( function(){
+		configuration = new Configuration();
+		configuration.configuration = undefined;
+	});
+	it( 'should produce a default configuration object', function(){
+		configuration.readConfiguration();
+		assert.equal( typeof configuration.configuration == 'undefined', false );
+	});
+});
