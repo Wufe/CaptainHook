@@ -1,5 +1,7 @@
 # Captain Hook
 
+[![CircleCI](https://circleci.com/gh/Wufe/CaptainHook.svg?style=svg)](https://circleci.com/gh/Wufe/CaptainHook)
+
 ### Open webhook service
 
 Run your tasks behind a webhook.
