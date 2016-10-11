@@ -13,10 +13,12 @@ dependencies:
     - npm install -g typings webpack
     - npm install
     - typings install
-
+    
 test:
   pre:
     - npm run -s frontend:compile
     - npm run -s core:compile
   override:
-    - npm test
+    - mocha test --recursive --reporter mocha-junit-reporter:
+        environment:
+          MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml
