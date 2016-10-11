@@ -26,5 +26,5 @@ module.exports = {
             }
         ]
     },
-    externals: [ 'express' ]
+    externals: [ 'express', 'js-yaml' ]
 };
