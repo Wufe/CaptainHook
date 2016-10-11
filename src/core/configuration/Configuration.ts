@@ -1,3 +1,4 @@
+import * as Yaml from 'js-yaml';
 const path = require( 'path' );
 
 export default class Configuration{
