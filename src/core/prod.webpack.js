@@ -49,4 +49,5 @@ module.exports = {
             }
         })
     ]
+    externals: [ 'yargs' ]
 };

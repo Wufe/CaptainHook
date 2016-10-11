@@ -1,5 +1,8 @@
+import * as Yargs from 'yargs';
+
 export default class Cli{
 	constructor(){
-		console.log( `Command Line` );
+        let argv:any = Yargs.argv
+		console.log( argv );
 	}	
 }
