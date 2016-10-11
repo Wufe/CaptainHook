@@ -1,6 +1,7 @@
 import Cli from './cli';
 import EntryManager from './chook/EntryManager';
 import Server from './server/Server';
+import Configuration from './configuration/Configuration';
 
 export {Cli, EntryManager, Server};
 
