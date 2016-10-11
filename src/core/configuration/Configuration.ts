@@ -8,7 +8,7 @@ export default class Configuration{
 	configuration: any;
 
 	constructor(){
-		this.configurationPath = path.join( __dirname, "..", "..", "chook.config.yml" );
+		this.configurationPath = path.resolve( "./chook.config.yml" );
 		this.readConfiguration();
 	}
 
