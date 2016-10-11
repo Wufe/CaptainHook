@@ -3,7 +3,12 @@ import EntryManager from './chook/EntryManager';
 import Server from './server/Server';
 import Configuration from './configuration/Configuration';
 
-export {Cli, EntryManager, Server};
+export {
+	Cli,
+	Configuration,
+	EntryManager,
+	Server
+};
 
 /* Sample code */
 const server: Server = new Server();
