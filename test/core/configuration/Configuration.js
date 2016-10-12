@@ -27,3 +27,18 @@ describe( 'Configuration.readConfiguration', function(){
 		assert.equal( typeof configuration.configuration == 'undefined', false );
 	});
 });
+
+describe( 'Configuration.set', function(){
+	before( function(){
+		configuration = new Configuration();
+	});
+	it( 'should add a string configuration value', function(){
+		configuration.set( 'asd', 'lol' );
+		assert.equal( configuration.configuration.asd, 'lol' );
+	});
+	it( 'should add a array configuration value', function(){
+		configuration.set( 'asd', [ 'lol', 'rofl' ]);
+		assert.equal( configuration.configuration.asd[0], 'lol' );
+		assert.equal( configuration.configuration.asd[1], 'rofl' );
+	});
+});
