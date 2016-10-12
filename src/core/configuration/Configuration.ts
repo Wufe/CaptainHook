@@ -59,10 +59,10 @@ export default class Configuration{
 	}
 
 	getByPath( path: string[] ): any{
-		let value: any = null;
+		let value: any = this.configuration;
 		let i: number = 0;
 		while( typeof value != 'undefined' && i < path.length ){
-			value = this.configuration[ path[i++] ];
+			value = value[ path[i++] ];
 		}
 		return value;
 	}
