@@ -47,3 +47,19 @@ describe( 'Configuration.set', function(){
 		assert.equal( configuration.configuration.asd.rofl, 'rofl' );
 	});
 });
+
+describe( 'Configuration.get', function(){
+	before( function(){
+		configuration = new Configuration();
+		configuration.set( 'asd', 'dsa' );
+		configuration.set( 'lol', { lal: 'rofl' });
+	});
+	it( 'should get a single value', function(){
+		let value = configuration.get( 'asd' );
+		assert.equal( value, 'dsa' );
+	})
+	it( 'should get nested element value', function(){
+		let value = configuration.get( 'lol', 'lal' );
+		assert.equal( value, 'rofl' );
+	});
+});
