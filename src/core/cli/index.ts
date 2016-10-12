@@ -13,6 +13,17 @@ export default class Cli{
 		this.parse(argv);
   	}
 
+    prepareCommands = (): Components.Command[] => {
+        var commands: Components.Command[] = [];
+
+        for(var key in cmds){
+            var tCmd = this.parseCommand(cmds[key], key);
+            commands.push(tCmd);
+        }
+
+        return commands;
+    }
+
     parseCommand = (obj: any, name: string): Components.Command => {
         var description: string = obj.description;
         var opts = this.parseOpts(obj.opts);
