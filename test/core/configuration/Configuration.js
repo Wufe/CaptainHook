@@ -41,4 +41,9 @@ describe( 'Configuration.set', function(){
 		assert.equal( configuration.configuration.asd[0], 'lol' );
 		assert.equal( configuration.configuration.asd[1], 'rofl' );
 	});
+	it( 'should add a object configuration value', function(){
+		configuration.set( 'asd', { lol, rofl });
+		assert.equal( configuration.configuration.asd.lol, 'lol' );
+		assert.equal( configuration.configuration.asd.rofl, 'rofl' );
+	});
 });
