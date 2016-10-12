@@ -13,6 +13,22 @@ export default class Cli{
 		this.parse(argv);
   	}
 
+    parseCommand = (obj: any, name: string): Components.Command => {
+        var description: string = obj.description;
+        var opts = this.parseOpts(obj.opts);
+        var args = this.parseArguments(obj.args);
+        var callable: boolean = obj.callable;
+
+        var subcommands: Components.Command[] = [];
+        var sc: any
+        for(sc in obj.subcommands){
+            var tSub = this.parseCommand(obj.subcommands[sc], sc);
+            subcommands.push(tSub);
+        }
+
+        return new Components.Command(name, description, opts, args, callable, subcommands);
+    }
+
     parseArguments = (arr: any): Components.Argument[] => {
         var args: Components.Argument[] = [];
         var argObj: any;
