@@ -2,6 +2,7 @@ import * as Yargs from 'yargs';
 import * as Components from './CommandComponents';
 const cmds = require("./commands.json");
 
+
 export default class Cli{
     args: any[];
     opts: any;
@@ -9,8 +10,11 @@ export default class Cli{
     availableCommands: Components.Command[];
 
 	constructor(){
+        this.availableCommands = this.prepareCommands();
+
         let argv:any = Yargs.argv;
-		this.parse(argv);
+        this.parse(argv);
+        process.exit();
   	}
 
     prepareCommands = (): Components.Command[] => {
