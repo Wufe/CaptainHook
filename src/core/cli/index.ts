@@ -13,6 +13,23 @@ export default class Cli{
 		this.parse(argv);
   	}
 
+    parseOpts = (arr: any): Components.Option[] => {
+        var opts: Components.Option[] = [];
+
+        var optObj: any;
+        for(var i in arr){
+            optObj = arr[i];
+            let name = optObj.name;
+            let fullname = optObj.fullname;
+            let description = optObj.description;
+
+            let tOpt = new Components.Option(name, fullname, description);
+            opts.push(tOpt);
+        }
+
+        return opts;
+    }
+
     parse = (argv: any): void => {
         var _args = argv._;
         this.command = _args[0];
