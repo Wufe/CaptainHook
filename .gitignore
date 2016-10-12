@@ -23,3 +23,6 @@ test-results.xml
 
 # Configuration file
 chook.config.yml
+
+# Yarn lock file
+yarn.lock
