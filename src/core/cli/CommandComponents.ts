@@ -62,6 +62,13 @@ class Command{
         return false;
     }
 
+    matchOpts(given: any[]): boolean{
+        var match: boolean = true;
+        for(var key in given){
+            match = match && this.isValidOption(key);
+        }
+        return match;
+    }
 }
 
 export { Option, Argument, Command };
