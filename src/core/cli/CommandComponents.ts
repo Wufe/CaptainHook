@@ -37,6 +37,20 @@ class Command{
         this.callable = callable;
         this.subcommands = subcommands;
     }
+    getRequiredArgumentCount(): number{
+        var count = 0;
+
+        var arg: Argument;
+        for(var i in this.args){
+            arg = this.args[i];
+            if(arg.required){
+                count++;
+            }
+        }
+
+        return count;
+    }
+
 }
 
 export { Option, Argument, Command };
