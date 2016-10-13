@@ -51,6 +51,17 @@ class Command{
         return count;
     }
 
+    isValidOption(given: any): boolean{
+        var opt: Option;
+        for(var i in this.opts){
+            opt = this.opts[i];
+            if((given == opt.name) || (given == opt.fullname)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 
 export { Option, Argument, Command };
