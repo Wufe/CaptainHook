@@ -21,8 +21,18 @@ describe( 'Utils', function(){
 		});
 	});
 	describe( 'isFile', function(){
+		let testFile = './utils.test';
+		let testDirectory = './utils.test.dir';
+		before( function(){
+			fs.writeFileSync( testFile, '' );
+			fs.mkdirSync( testDirectory );
+		});
 		it( 'should be a function', function(){
 			Utils.isFile.should.be.a.Function;
+		});
+		after( function(){
+			fs.unlinkSync( testFile );
+			fs.rmdirSync( testDirectory );
 		});
 	});
 	describe( 'isDirectory', function(){
