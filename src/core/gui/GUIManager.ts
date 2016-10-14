@@ -24,9 +24,27 @@ export default class GUIManager{
 		this.addAssetsRoutes();
 	}
 
-	addAssetsRoutes(): void{}
+	addAssetsRoutes(): void{
+		this.serverInstance.addRoute( 'all', '*', (request, response, next ) => {
+			this.serveAssets( request, response, next );
+		});	
+	}
 
-	serveAssets( request: any, response: any, next: any ): void{}
+	serveAssets( request: any, response: any, next: any ): void{
+		let urlPathname: string = this.getUrlPathname( request );
+		let isAssetsDir: boolean = this.isAssetsDir( urlPathname );
+		if( isAssetsDir ){
+			urlPathname = urlPathname.replace( assetsDir, "" );
+			let resourcePath: string = this.getResourcePath( urlPathname );
+			if( Utils.isFile( resourcePath ) ){
+				response.sendFile( resourcePath );
+			}else{
+				response.status( 404 ).end();
+			}
+		}else{
+			next();
+		}
+	}
 
 	getUrlPathname( request: any ): string{
 		let url: any = Url.parse( request.url, true );
@@ -39,6 +57,10 @@ export default class GUIManager{
 		if( startingWithAssetsDir === null )
 			return false;
 		return true;
+	}
+
+	getResourcePath( pathname: string ): string{
+		return Path.join( assetsPath, pathname );
 	}
 
 }
