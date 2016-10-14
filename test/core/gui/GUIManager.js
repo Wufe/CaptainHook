@@ -16,4 +16,13 @@ describe( 'GUIManager', function(){
 			guiManagerInstance.getUrlPathname( genericMockRequest ).should.be.exactly( '/test' );
 		});
 	});
+	describe( 'isAssetsDir', function(){
+		let pathname = '/assets/javascript/test.chunk.js';
+		it( 'should return true if the pathname is the assets one', function(){
+			guiManagerInstance.isAssetsDir( pathname ).should.be.exactly(true);
+		});
+		it( 'should return false if the pathname is not the assets one', function(){
+			guiManagerInstance.isAssetsDir( '/test' ).should.be.exactly(false);
+		});
+	})
 });
