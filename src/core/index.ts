@@ -19,4 +19,4 @@ const server: Server = new Server();
 server.addRoute( 'get', '/webhook/idaji', (request, response) => {
 	response.send( 'OK' );
 });
-server.listen();
+//server.listen();
