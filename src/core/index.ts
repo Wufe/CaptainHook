@@ -2,12 +2,14 @@ import Cli from './cli';
 import EntryManager from './chook/EntryManager';
 import Server from './server/Server';
 import Configuration from './configuration/Configuration';
+import * as Utils from './chook/Utils';
 
 export {
 	Cli,
 	Configuration,
 	EntryManager,
-	Server
+	Server,
+	Utils
 };
 
 /* Sample code */
