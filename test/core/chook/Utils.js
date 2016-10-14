@@ -30,6 +30,15 @@ describe( 'Utils', function(){
 		it( 'should be a function', function(){
 			Utils.isFile.should.be.a.Function;
 		});
+		it( 'should return false if a file does not exist', function(){
+			Utils.isFile( './UtilsFileExistsTestFile' ).should.be.exactly(false);
+		});
+		it( 'should return false if the path is not a file', function(){
+			Utils.isFile( testDirectory ).should.be.exactly(false);
+		});
+		it( 'should return true if the path is a file', function(){
+			Utils.isFile( testFile ).should.be.exactly(true);
+		});
 		after( function(){
 			fs.unlinkSync( testFile );
 			fs.rmdirSync( testDirectory );
