@@ -4,6 +4,7 @@ import GUIManager from '../gui/GUIManager';
 export default class ServerManager{
 
 	serverInstance: Server;
+	guiManager: GUIManager;
 
 	constructor(){
 		this.serverInstance = new Server();
@@ -14,8 +15,12 @@ export default class ServerManager{
 	}
 
 	initializeGui(): void{
-		let gui: GUIManager = new GUIManager( this.serverInstance );
-		gui.initialize();
+		this.guiManager = this.createGuiManager();
+		this.guiManager.initialize();
+	}
+
+	createGuiManager(): GUIManager{
+		return new GUIManager( this.serverInstance );
 	}
 
 }
