@@ -5,7 +5,7 @@ module.exports = {
         extensions: [ "", ".webpack.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        chook: "./index.ts"
+        chook: "./dev-index.ts"
     },
     output: {
         path: 'build/lib',
