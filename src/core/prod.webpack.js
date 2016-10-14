@@ -48,5 +48,6 @@ module.exports = {
                 'NODE_ENV': JSON.stringify( 'production' )
             }
         })
-    ]
+    ],
+    externals: [ 'express', 'js-yaml' ]
 };
