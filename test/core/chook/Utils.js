@@ -37,6 +37,15 @@ describe( 'Utils', function(){
 		it( 'should be a function', function(){
 			Utils.isDirectory.should.be.a.Function;
 		});
+		it( 'should return false if a directory does not exist', function(){
+			Utils.isDirectory( './UtilsFileExistsTestFile' ).should.be.exactly(false);
+		});
+		it( 'should return false if the path is not a directory', function(){
+			Utils.isDirectory( testFile ).should.be.exactly(false);
+		});
+		it( 'should return true if the path is a directory', function(){
+			Utils.isDirectory( testDirectory ).should.be.exactly(true);
+		});
 	});
 	after( function(){
 		fs.unlinkSync( testFile );
