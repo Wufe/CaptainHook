@@ -49,5 +49,5 @@ module.exports = {
             }
         })
     ],
-    externals: [ 'express', 'js-yaml' ]
+    externals: [ 'express', 'js-yaml', 'handlebars' ]
 };
