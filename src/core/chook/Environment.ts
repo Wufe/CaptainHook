@@ -3,16 +3,22 @@ const Path = require( 'path' );
 class Environment{
 
 	projectRoot: string;
+	buildDirectory: string;
 
 	constructor(){
+		this.checkBuildDirectory();
 		this.checkProjectRoot();
 	}
 
 	checkProjectRoot(): void{
+		let projectRoot: string = Path.resolve( Path.join( this.buildDirectory, '..' ) );
+		this.projectRoot = projectRoot;
+	}
+
+	checkBuildDirectory(): void{
 		let args: string[] = process.argv;
 		let scriptPath: string = args[1];
-		let projectRoot: string = Path.resolve( Path.join( scriptPath, '..', '..', '..' ) );
-		this.projectRoot = projectRoot;
+		this.buildDirectory = Path.resolve( Path.join( scriptPath, '..', '..' ) );
 	}
 
 }
