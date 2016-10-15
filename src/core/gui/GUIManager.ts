@@ -12,7 +12,9 @@ const Path = require( 'path' );
  */ 
 
 const assetsDir: string = "/assets/";
-const assetsPath: string = Path.resolve( Path.join( Environment.buildDirectory, 'resources', 'assets' ) );
+const resourcesPath: string = Path.resolve( Path.join( Environment.buildDirectory, 'resources' ) );
+const assetsPath: string = Path.join( resourcesPath, 'assets' );
+const viewsPath: string = Path.join( resourcesPath, 'views' );
 
 export default class GUIManager{
 
@@ -80,7 +82,7 @@ export default class GUIManager{
 		let renderer: Renderer = this.getRenderer();
 		let pageContent: string;
 		try{
-			pageContent = renderer.compile( `${assetsPath}/views/index.html` );
+			pageContent = renderer.compile( `${viewsPath}/index.html` );
 		}catch( error ){
 			response.status( 400 ).send( `Cannot get index.` );
 		}
