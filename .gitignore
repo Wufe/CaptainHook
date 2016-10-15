@@ -8,12 +8,12 @@ npm-debug.log
 .DS_Store
 
 # Build artifacts
-/build/resources
 /build/lib
+/build/resources/assets
 
 # Dist artifacts
-/dist/resources
 /dist/lib
+/dist/resources/assets
 
 # Typescript
 /typings
