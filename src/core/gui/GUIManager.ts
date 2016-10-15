@@ -1,5 +1,6 @@
 import Server from '../server/Server';
 import * as Utils from '../chook/Utils';
+import Environment from '../chook/Environment';
 declare let require:any;
 const Url = require( 'url' );
 const Path = require( 'path' );
@@ -10,7 +11,7 @@ const Path = require( 'path' );
  */ 
 
 const assetsDir: string = "/assets/";
-const assetsPath: string = Path.resolve( Path.join( '..', 'resources', 'assets' ) );
+const assetsPath: string = Path.resolve( Path.join( Environment.buildDirectory, 'resources', 'assets' ) );
 
 export default class GUIManager{
 
@@ -39,7 +40,7 @@ export default class GUIManager{
 			if( Utils.isFile( resourcePath ) ){
 				response.sendFile( resourcePath );
 			}else{
-				response.status( 404 ).end();
+				response.status( 404 ).send( `Cannot find ${resourcePath}.` );
 			}
 		}else{
 			next();
