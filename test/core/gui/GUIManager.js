@@ -1,6 +1,4 @@
 const ServerManager = require( '../../../build/lib/chook.js' ).ServerManager;
-const Path = require( 'path' );
-
 const serverManager = new ServerManager();
 const guiManagerInstance = serverManager.createGuiManager();
 
