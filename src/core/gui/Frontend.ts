@@ -3,12 +3,7 @@ const Path = require( 'path' );
 const Url = require( 'url' );
 
 import Server from '../server/Server';
-import Environment from '../chook/Environment';
-
-const assetsDir: string = "/assets/";
-const resourcesPath: string = Path.resolve( Path.join( Environment.buildDirectory, 'resources' ) );
-const assetsPath: string = Path.join( resourcesPath, 'assets' );
-const viewsPath: string = Path.join( resourcesPath, 'views' );
+import FrontendRouter from './FrontendRouter';
 
 export default class Frontend{
 
@@ -16,6 +11,14 @@ export default class Frontend{
 
 	constructor( server: Server ){
 		this.server = server;
+	}
+
+	setup(): void{
+		this.setupFrontendRoutes();
+	}
+
+	setupFrontendRoutes(): void{
+		let frontendRouter: FrontendRouter = new FrontendRouter( this.server );
 	}
 
 }
