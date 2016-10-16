@@ -82,7 +82,14 @@ export default class GUIManager{
 		let renderer: Renderer = this.getRenderer();
 		let pageContent: string;
 		try{
-			pageContent = renderer.compile( `${viewsPath}/index.html` );
+			let data: any = {
+				css: [],
+				javascript: [
+					'/assets/javascript/vendor.bundle.js',
+					'/assets/javascript/main.bundle.js'
+				]
+			};
+			pageContent = renderer.compile( `${viewsPath}/index.html`, data );
 		}catch( error ){
 			response.status( 400 ).send( `Cannot get index.` );
 		}
