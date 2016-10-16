@@ -32,15 +32,9 @@ export default class FrontendRouter{
 
 	serveAssets( request: any, response: any, next: any ): void{
 		let urlPathname: string = this.getUrlPathname( request );
-		let isAssetsDir: boolean = this.isAssetsDir( urlPathname );
-		if( isAssetsDir ){
-			urlPathname = urlPathname.replace( assetsDir, "" );
-			let resourcePath: string = this.getResourcePath( urlPathname );
-			if( Utils.isFile( resourcePath ) ){
-				this.sendFile( response, resourcePath );
-			}else{
-				this.sendNotFound( response, resourcePath );
-			}
+		let resourcePath: string = this.getResourcePath( urlPathname );
+		if( Utils.isFile( resourcePath ) ){
+			this.sendFile( response, resourcePath );
 		}else{
 			next();
 		}
@@ -78,8 +72,8 @@ export default class FrontendRouter{
 			let data: any = {
 				css: [],
 				javascript: [
-					'/assets/javascript/vendor.bundle.js',
-					'/assets/javascript/main.bundle.js'
+					'/javascript/vendor.bundle.js',
+					'/javascript/main.bundle.js'
 				]
 			};
 			pageContent = renderer.compile( `${viewsPath}/index.html`, data );
