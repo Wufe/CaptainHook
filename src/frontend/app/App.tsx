@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './App.scss';
 
 export interface AppProps{
 	children ?: any;
@@ -7,7 +8,7 @@ export interface AppProps{
 class App extends React.Component<AppProps, any>{
 	render(){
 		return (
-			<h1>Hello world</h1>
+			<h1>Captain Hook</h1>
 		);
 	}
 }
