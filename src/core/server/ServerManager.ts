@@ -16,7 +16,7 @@ export default class ServerManager{
 
 	initializeGui(): void{
 		this.guiManager = this.createGuiManager();
-		this.guiManager.initialize();
+		this.guiManager.setup();
 	}
 
 	createGuiManager(): GUIManager{
