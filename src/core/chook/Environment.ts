@@ -1,4 +1,5 @@
 const Path = require( 'path' );
+const fs = require( 'fs' );
 
 class Environment{
 
@@ -18,7 +19,8 @@ class Environment{
 	checkBuildDirectory(): void{
 		let args: string[] = process.argv;
 		let scriptPath: string = args[1];
-		this.buildDirectory = Path.resolve( Path.join( scriptPath, '..', '..' ) );
+		let realPath = fs.realpathSync( scriptPath );
+		this.buildDirectory = Path.resolve( Path.join( Path.dirname( realPath ), '..' ) );
 	}
 
 }
