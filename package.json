@@ -2,7 +2,7 @@
   "name": "chook",
   "version": "0.0.1",
   "description": "Tasks ran by webhooks",
-  "main": "dist/lib/chook.js",
+  "main": "build/lib/chook.js",
   "scripts": {
     "dev": "npm-run-all --parallel core:dev frontend:dev",
     "dev:core": "npm run -s core:dev",
@@ -15,7 +15,7 @@
     "frontend:compile:watch": "npm run -s frontend:compile -- --watch",
     "test": "istanbul cover mocha"
   },
-  "bin": "dist/bin/chook",
+  "bin": "build/bin/chook",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wufe/captainhook.git"
