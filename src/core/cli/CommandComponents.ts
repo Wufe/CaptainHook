@@ -51,6 +51,14 @@ class Command{
         return count;
     }
 
+    matchArgs(given: any[]): boolean{
+        if(given.length < this.getRequiredArgumentCount() && given.length > this.args.length){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     isValidOption(given: any): boolean{
         var opt: Option;
         for(var i in this.opts){
