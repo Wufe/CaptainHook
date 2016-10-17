@@ -37,6 +37,16 @@ class Command{
         this.callable = callable;
         this.subcommands = subcommands;
     }
+
+    canCall(cmd: string, args: any[], opts: any[]){
+        var match: boolean = true;
+        match = match && (cmd == this.cmd);
+        match = match && this.matchArgs(args);
+        match = match && this.matchOpts(opts);
+
+        return match;
+    }
+
     getRequiredArgumentCount(): number{
         var count = 0;
 
