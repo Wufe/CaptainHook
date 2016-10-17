@@ -49,5 +49,9 @@ module.exports = {
             }
         })
     ],
-    externals: [ 'express', 'js-yaml', 'handlebars' ]
+    externals: [ 'express', 'js-yaml', 'handlebars' ],
+    node:{
+        __filename: true,
+        __dirname: true
+    }
 };
