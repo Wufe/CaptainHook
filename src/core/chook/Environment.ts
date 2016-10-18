@@ -1,3 +1,5 @@
+declare let require: any;
+declare let process: any;
 const Path = require( 'path' );
 const Fs = require( 'fs' );
 
