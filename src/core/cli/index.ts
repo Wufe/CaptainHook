@@ -1,5 +1,5 @@
 import * as Yargs from 'yargs';
-import * as Components from './CommandComponents';
+import { Option, Argument, Command } from './CommandComponents';
 import ArgumentParser from './ArgumentParser';
 const cmds = require("./commands.json");
 
@@ -10,7 +10,7 @@ export default class Cli{
     args: any[];
     opts: any;
     command: string;
-    availableCommands: Components.Command[];
+    availableCommands: Command[];
 
     parser: ArgumentParser;
 
@@ -18,7 +18,7 @@ export default class Cli{
         this.parser = new ArgumentParser();
         this.availableCommands = this.parser.prepareCommands(cmds);
 
-        console.log(util.inspect(this.availableCommands, {showHidden: false, depth: null}));
+        //console.log(util.inspect(this.availableCommands, {showHidden: false, depth: null}));
 
         let argv:any = Yargs.argv;
         this.parse(argv);

@@ -1,8 +1,8 @@
-import * as Components from './CommandComponents';
+import { Option, Argument, Command } from './CommandComponents';
 
 export default class Parser{
-    prepareCommands(cmds: any[]): Components.Command[]{
-        var commands: Components.Command[] = [];
+    prepareCommands(cmds: any[]): Command[]{
+        var commands: Command[] = [];
 
         for(var key in cmds){
             var tCmd = this.parseCommand(cmds[key], key);
@@ -12,24 +12,24 @@ export default class Parser{
         return commands;
     }
 
-    parseCommand(obj: any, name: string): Components.Command{
+    parseCommand(obj: any, name: string): Command{
         var description: string = obj.description;
         var opts = this.parseOpts(obj.opts);
         var args = this.parseArguments(obj.args);
         var callable: boolean = obj.callable;
 
-        var subcommands: Components.Command[] = [];
+        var subcommands: Command[] = [];
         var sc: any
         for(sc in obj.subcommands){
             var tSub = this.parseCommand(obj.subcommands[sc], sc);
             subcommands.push(tSub);
         }
 
-        return new Components.Command(name, description, opts, args, callable, subcommands);
+        return new Command(name, description, opts, args, callable, subcommands);
     }
 
-    parseArguments(arr: any): Components.Argument[]{
-        var args: Components.Argument[] = [];
+    parseArguments(arr: any): Argument[]{
+        var args: Argument[] = [];
         var argObj: any;
         for(var i in arr){
             argObj = arr[i];
@@ -37,15 +37,15 @@ export default class Parser{
             let description = argObj.description;
             let required = argObj.required;
 
-            let tArg = new Components.Argument(name, description, required)
+            let tArg = new Argument(name, description, required)
             args.push(tArg);
         }
 
         return args;
     }
 
-    parseOpts(arr: any): Components.Option[]{
-        var opts: Components.Option[] = [];
+    parseOpts(arr: any): Option[]{
+        var opts: Option[] = [];
 
         var optObj: any;
         for(var i in arr){
@@ -54,7 +54,7 @@ export default class Parser{
             let fullname = optObj.fullname;
             let description = optObj.description;
 
-            let tOpt = new Components.Option(name, fullname, description);
+            let tOpt = new Option(name, fullname, description);
             opts.push(tOpt);
         }
 
