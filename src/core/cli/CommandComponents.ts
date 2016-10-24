@@ -30,6 +30,8 @@ class Command{
     callable: boolean;
     subcommands: Command[];
 
+    func: Function;
+
     errState: any;
 
     constructor(cmd: string, description: string, opts: Option[], args: Argument[], callable: boolean, subcommands: Command[]){
@@ -42,6 +44,14 @@ class Command{
         this.errState = {};
     }
 
+    registerFunction(func: Function){
+        this.func = func;
+    }
+
+    call(cmd: string, args: any[], opts: any[]){
+        if (!this.canCall(cmd, args, opts)){
+            throw "Cannot Call this function with the given arguments";
+        }
     }
 
     canCall(cmd: string, args: any[], opts: any[]){
