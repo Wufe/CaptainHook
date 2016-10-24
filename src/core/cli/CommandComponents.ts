@@ -30,12 +30,18 @@ class Command{
     callable: boolean;
     subcommands: Command[];
 
+    errState: any;
+
     constructor(cmd: string, description: string, opts: Option[], args: Argument[], callable: boolean, subcommands: Command[]){
         this.cmd = cmd;
         this.opts = opts;
         this.args = args;
         this.callable = callable;
         this.subcommands = subcommands;
+
+        this.errState = {};
+    }
+
     }
 
     canCall(cmd: string, args: any[], opts: any[]){
@@ -62,11 +68,48 @@ class Command{
     }
 
     matchArgs(given: any[]): boolean{
+        var result: boolean = true;
         if(given.length < this.getRequiredArgumentCount() && given.length > this.args.length){
-            return false;
-        }else{
-            return true;
+            result = false;
+            var error: any = {};
+
+            if(given.length < this.getRequiredArgumentCount()){
+                var required_args = this.getRequiredArguments();
+                var strings: string[] = [];
+
+                var r_arg: Argument;
+                for (var i in required_args){
+                    r_arg = required_args[i];
+
+                    if (r_arg.required){
+                        strings.push(r_arg.name);
+                    }
+
+                }
+
+                error = {
+                    "type": "NotEnough",
+                    "given_out": [],
+                    "required": strings,
+                }
+
+                
+            }
+
+            if (given.length > this.args.length){
+                var left_args = given.slice(this.args.length)
+
+                error = {
+                    "type": "TooMany",
+                    "given_out": left_args,
+                    "required": [],
+                }
+            }
+
+            this.errState["args"] = error;
         }
+
+        return result
     }
 
     isValidOption(given: any): boolean{
