@@ -54,17 +54,21 @@ class Command{
     }
 
     getRequiredArgumentCount(): number{
-        var count = 0;
+         return this.getRequiredArguments().length;   
+    }
+
+    getRequiredArguments(): Argument[]{
+        var args: Argument[] = [];
 
         var arg: Argument;
         for(var i in this.args){
             arg = this.args[i];
             if(arg.required){
-                count++;
+                args.push(arg);
             }
         }
 
-        return count;
+        return args;
     }
 
     matchArgs(given: any[]): boolean{
