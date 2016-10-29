@@ -33,16 +33,16 @@ describe( 'Configuration.set', function(){
 		configuration = new Configuration();
 	});
 	it( 'should add a string configuration value', function(){
-		configuration.set( 'asd', 'lol' );
+		configuration.set( 'lol', 'asd' );
 		assert.equal( configuration.configuration.asd, 'lol' );
 	});
 	it( 'should add a array configuration value', function(){
-		configuration.set( 'asd', [ 'lol', 'rofl' ]);
+		configuration.set( [ 'lol', 'rofl' ], 'asd' );
 		assert.equal( configuration.configuration.asd[0], 'lol' );
 		assert.equal( configuration.configuration.asd[1], 'rofl' );
 	});
 	it( 'should add a object configuration value', function(){
-		configuration.set( 'asd', { lol: 'lol', rofl: 'rofl' });
+		configuration.set( { lol: 'lol', rofl: 'rofl' }, 'asd' );
 		assert.equal( configuration.configuration.asd.lol, 'lol' );
 		assert.equal( configuration.configuration.asd.rofl, 'rofl' );
 	});
@@ -51,8 +51,8 @@ describe( 'Configuration.set', function(){
 describe( 'Configuration.get', function(){
 	before( function(){
 		configuration = new Configuration();
-		configuration.set( 'asd', 'dsa' );
-		configuration.set( 'lol', { lal: 'rofl' });
+		configuration.set( 'dsa', 'asd' );
+		configuration.set({ lal: 'rofl' }, 'lol' );
 	});
 	it( 'should get a single value', function(){
 		let value = configuration.get( 'asd' );
