@@ -49,26 +49,7 @@ export default class Configuration{
 	}
 
 	get( ...keys: string[] ): any{
-		if( keys.length === 1 ){
-			return this.getByKey( keys[0] );
-		}else{
-			return this.getByPath( keys );
-		}
-		
-	}
-
-	getByKey( key: string ): any{
-		let value: any = this.configuration[ key ];
-		return value;
-	}
-
-	getByPath( path: string[] ): any{
-		let value: any = this.configuration;
-		let i: number = 0;
-		while( typeof value != 'undefined' && i < path.length ){
-			value = value[ path[i++] ];
-		}
-		return value;
+		return Utils.getNestedValue( this.configuration, ...keys );
 	}
 
 	set( key: string, value: any ): void{
