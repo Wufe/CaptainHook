@@ -1,8 +1,9 @@
 /// <reference path="../../../typings/globals/js-yaml/index.d.ts" />
 
 import * as Yaml from 'js-yaml';
-const path = require( 'path' );
-const fs = require( 'fs' );
+
+const Path = require( 'path' );
+const Fs = require( 'fs' );
 
 export default class Configuration{
 
@@ -10,7 +11,7 @@ export default class Configuration{
 	configuration: any;
 
 	constructor(){
-		this.configurationPath = path.resolve( "./chook.config.yml" );
+		this.configurationPath = Path.resolve( "./chook.config.yml" );
 		this.readConfiguration();
 	}
 
@@ -22,16 +23,16 @@ export default class Configuration{
 	getFileContent( filePath: string ): string{
 		let fileContent: string;
 		try{
-			fileContent = fs.readFileSync( filePath, 'utf8' );
+			fileContent = Fs.readFileSync( filePath, 'utf8' );
 		}catch( error ){
 			this.generateDefaultConfiguration();
-			fileContent = fs.readFileSync( filePath, 'utf8' );
+			fileContent = Fs.readFileSync( filePath, 'utf8' );
 		}
 		return fileContent;
 	}
 
 	dumpConfiguration( configurationObject: any ): void{
-		fs.writeFileSync( this.configurationPath, Yaml.safeDump( configurationObject ) );
+		Fs.writeFileSync( this.configurationPath, Yaml.safeDump( configurationObject ) );
 	}
 
 	generateDefaultConfiguration(): void{
