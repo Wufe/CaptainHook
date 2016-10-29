@@ -52,8 +52,8 @@ export default class Configuration{
 		return Utils.getNestedValue( this.configuration, ...keys );
 	}
 
-	set( key: string, value: any ): void{
-		this.configuration[ key ] = value;
+	set( value: any, ...keys: string[] ): void{
+		this.configuration = Utils.setNestedValue( this.configuration, value, ...keys );
 		this.dumpConfiguration( this.configuration );
 	}
 
