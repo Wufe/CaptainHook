@@ -1,3 +1,5 @@
+/// <reference path="../../../typings/globals/js-yaml/index.d.ts" />
+
 import * as Yaml from 'js-yaml';
 const path = require( 'path' );
 const fs = require( 'fs' );
