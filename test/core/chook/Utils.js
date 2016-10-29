@@ -51,4 +51,24 @@ describe( 'Utils', function(){
 		fs.unlinkSync( testFile );
 		fs.rmdirSync( testDirectory );
 	});
+	describe( 'setNestedValue', function(){
+		let obj = { deep1: 't' };
+		it( 'should create 3 level deep nested element in object', function(){
+			obj = Utils.setNestedValue( obj, 'nestedValue', 'deep1', 'deep2', 'deep3' );
+			obj.should.have.propertyByPath( 'deep1', 'deep2', 'deep3' ).eql( 'nestedValue' );
+		});
+	});
+	describe( 'getNestedValue', function(){
+		let obj = {
+			deep1: {
+				deep2: {
+					deep3: 'nestedValue'
+				}
+			}
+		};
+		it( 'should get 3 level deep nested value in object', function(){
+			let nestedValue = Utils.getNestedValue( obj, 'deep1', 'deep2', 'deep3' );
+			nestedValue.should.be.exactly( 'nestedValue' );
+		});
+	})
 });
