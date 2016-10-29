@@ -1,5 +1,6 @@
 /// <reference path="../../../typings/globals/js-yaml/index.d.ts" />
 
+import * as Utils from '../chook/Utils';
 import * as Yaml from 'js-yaml';
 
 const Path = require( 'path' );
