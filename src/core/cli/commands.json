@@ -1,0 +1,21 @@
+{
+    "config": {
+        "description": "Handles the configuration",
+        "opts": [],
+        "args": [],
+        "callable": false,
+        "subcommands": {
+            "get": {
+                "description": "Get a specific property",
+                "opts": [],
+                "args": [{
+                    "name": "property",
+                    "description": "the property to be got",
+                    "required": true
+                }],
+                "callable": true,
+                "subcommands": []
+            }
+        }
+    }
+}
