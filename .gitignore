@@ -9,10 +9,13 @@ npm-debug.log
 
 # Build artifacts
 /build/lib
+/build/resources/database.sqlite
+/build/resources/database.test.sqlite
 /build/resources/assets
 
 # Dist artifacts
 /dist/lib
+/dist/resources/database.sqlite
 /dist/resources/assets
 
 # Typescript
