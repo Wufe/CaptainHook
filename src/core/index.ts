@@ -1,5 +1,6 @@
 import Cli from './cli';
 import Configuration from './configuration/Configuration';
+import Database from './data/database';
 import EntryManager from './chook/EntryManager';
 import Environment from './chook/Environment';
 import FrontendRouter from './gui/FrontendRouter';
@@ -10,6 +11,7 @@ import * as Utils from './chook/Utils';
 export {
 	Cli,
 	Configuration,
+	Database,
 	EntryManager,
 	Environment,
 	FrontendRouter,
