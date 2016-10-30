@@ -17,7 +17,10 @@ export class Database{
 
 	setupDatabaseConnection(): void{
 		let databaseFilePath = Path.join( Environment.buildDirectory, 'resources', 'database.sqlite' );
-		this.sequelize = new Sequelize( databaseFilePath );
+		this.sequelize = new Sequelize( null, null, null, {
+			dialect: 'sqlite',
+			storage: databaseFilePath
+		});
 	}
 
 	testConnection(): void{
