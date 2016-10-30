@@ -7,11 +7,12 @@ module.exports = {
         extensions: [ "", ".webpack.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        chook: "./dist.ts"
+        chook: "./index.ts",
+        "../../migrations/models": [ "./data/models/index.ts" ]
     },
     output: {
         path: 'dist/lib',
-        filename: "chook.js",
+        filename: "[name].js",
         libraryTarget: 'umd'
     },
     target: 'node',
