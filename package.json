@@ -4,6 +4,7 @@
   "description": "Tasks ran by webhooks",
   "main": "build/lib/chook.js",
   "scripts": {
+    "compile": "npm-run-all core:compile frontend:compile",
     "dev": "npm-run-all --parallel core:dev frontend:dev",
     "dev:core": "npm run -s core:dev",
     "dev:frontend": "npm run -s frontend:dev",
@@ -13,7 +14,7 @@
     "frontend:dev": "npm run -s frontend:compile:watch",
     "frontend:compile": "webpack --config src/frontend/dev.webpack.js",
     "frontend:compile:watch": "npm run -s frontend:compile -- --watch",
-    "prepublish": "sequelize db:migrate",
+    "prepublish": "npm-run-all compile sequelize db:migrate",
     "test": "NODE_ENV=mocha mocha"
   },
   "bin": "build/bin/chook",
