@@ -13,6 +13,7 @@
     "frontend:dev": "npm run -s frontend:compile:watch",
     "frontend:compile": "webpack --config src/frontend/dev.webpack.js",
     "frontend:compile:watch": "npm run -s frontend:compile -- --watch",
+    "prepublish": "sequelize db:migrate",
     "test": "NODE_ENV=mocha mocha"
   },
   "bin": "build/bin/chook",
