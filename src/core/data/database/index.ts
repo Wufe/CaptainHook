@@ -3,16 +3,18 @@
 
 import Environment from '../../chook/Environment';
 
+import * as Models from '../models';
 import * as Path from 'path';
 import * as Sequelize from 'sequelize';
 
 export class Database{
 
 	sequelize: Sequelize.Sequelize;
+	models: any = {};
 
 	constructor(){
 		this.setupDatabaseConnection();
-		this.testConnection();
+		this.setupModelDefinitions();
 	}
 
 	setupDatabaseConnection(): void{
@@ -23,19 +25,24 @@ export class Database{
 		});
 	}
 
-	testConnection(): void{
-		this.sequelize
-			.authenticate()
-			.then(() => {
-				console.log( 'Authenticated' );
-			})
-			.catch(( error: any ) => {
-				console.log( 'Cannot authenticate into the database.' );
-				console.log( error );
-			});
+	setupModelDefinitions(): void{
+		let availableModels: any;
+		availableModels = Models;
+		for( let key in availableModels ){
+			let modelName: string = key;
+			this.models[ modelName ] = this.sequelize.define(
+				modelName,
+				availableModels[ modelName ]( Sequelize )
+			);
+		}
 	}
 
 }
 
 const database: Database = new Database();
+const models = database.models;
+export {
+	database,
+	models
+}
 export default database;
