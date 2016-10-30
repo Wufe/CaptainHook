@@ -1,3 +1,5 @@
+const externals = require( 'webpack-node-externals' );
+
 module.exports = {
     context: __dirname,
     devtool: "eval",
@@ -26,7 +28,7 @@ module.exports = {
             }
         ]
     },
-    externals: [ 'express', 'js-yaml', 'yargs', 'handlebars' ],
+    externals: [ externals() ],
     node:{
         __filename: true,
         __dirname: true
