@@ -1,10 +1,10 @@
-import Environment from './chook/Environment';
 import Cli from './cli';
+import Configuration from './configuration/Configuration';
 import EntryManager from './chook/EntryManager';
+import Environment from './chook/Environment';
 import FrontendRouter from './gui/FrontendRouter';
 import Server from './server/Server';
 import ServerManager from './server/ServerManager';
-import Configuration from './configuration/Configuration';
 import * as Utils from './chook/Utils';
 
 export {
