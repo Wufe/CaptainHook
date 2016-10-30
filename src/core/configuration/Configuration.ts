@@ -1,5 +1,6 @@
 /// <reference path="../../../typings/globals/js-yaml/index.d.ts" />
 
+import Environment from '../chook/Environment';
 import * as Utils from '../chook/Utils';
 import * as Yaml from 'js-yaml';
 
@@ -12,7 +13,7 @@ export default class Configuration{
 	configuration: any;
 
 	constructor(){
-		this.configurationPath = Path.resolve( "./chook.config.yml" );
+		this.configurationPath = Path.join( Environment.buildDirectory, 'resources', 'config.yml' );
 		this.readConfiguration();
 	}
 
