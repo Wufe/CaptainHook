@@ -28,8 +28,10 @@
   "contributors": [],
   "homepage": "https://github.com/wufe/captainhook#readme",
   "dependencies": {
-    "js-yaml": "^3.6.1",
     "express": "^4.14.0",
+    "js-yaml": "^3.6.1",
+    "sequelize": "^3.24.6",
+    "sqlite3": "^3.1.8",
     "yargs": "^6.0.0"
   },
   "devDependencies": {
@@ -48,6 +50,7 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "sass-loader": "^4.0.2",
+    "sequelize-cli": "^2.4.0",
     "should": "^11.1.1",
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
