@@ -7,13 +7,18 @@ import * as Yaml from 'js-yaml';
 const Path = require( 'path' );
 const Fs = require( 'fs' );
 
+const configFileName: string = 'config.yml';
+
 export default class Configuration{
 
 	configurationPath: string;
 	configuration: any;
 
 	constructor(){
-		this.configurationPath = Path.join( Environment.buildDirectory, 'resources', 'config.yml' );
+		let configurationFile: string = configFileName;
+		if( process.env.NODE_ENV == 'mocha' )
+			configurationFile = 'test.config.yml';
+		this.configurationPath = Path.join( Environment.buildDirectory, 'resources', configurationFile );
 		this.readConfiguration();
 	}
 
