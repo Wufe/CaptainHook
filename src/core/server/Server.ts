@@ -1,15 +1,24 @@
+import Configuration from '../configuration/Configuration';
+import * as BodyParser from 'body-parser';
 import * as Express from 'express';
+import * as Http from 'http';
 
 export default class Server{
 
-	expressServer: Express.Express;
+	express: Express.Express;
 
 	constructor(){
-		this.expressServer = Express();
+		this.express = Express();
+		this.express.use( BodyParser.urlencoded({ extended: false }) );
+		this.express.use( BodyParser.json() );
 	}
 
-	listen( port:number = 3000 ): void{
-		this.expressServer.listen( port );
+	listen(): void{
+		let server: {
+			hostname: string;
+			port: number;
+		} = Configuration.get( 'server' );
+		this.express.listen( server.port, server.hostname ).on( 'error', console.log );
 	}
 
 }
