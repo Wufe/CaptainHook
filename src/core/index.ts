@@ -26,8 +26,6 @@ export {
 
 /* Sample code */
 
-new Configuration();
-
 let args: string[] = process.argv;
 if( args[ 2 ] === "start:server" ){
 	let serverManager: ServerManager = new ServerManager();
