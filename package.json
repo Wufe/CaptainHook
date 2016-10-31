@@ -30,6 +30,7 @@
   "contributors": [],
   "homepage": "https://github.com/wufe/captainhook#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "express": "^4.14.0",
     "js-yaml": "^3.6.1",
     "sequelize": "^3.24.6",
