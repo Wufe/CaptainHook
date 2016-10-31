@@ -1,6 +1,8 @@
 /// <reference path="../../../typings/globals/js-yaml/index.d.ts" />
+/// <reference path="../../../typings/globals/node/index.d.ts" />
 
 import Environment from '../chook/Environment';
+import * as Crypto from 'crypto';
 import * as Utils from '../chook/Utils';
 import * as Yaml from 'js-yaml';
 
@@ -48,8 +50,12 @@ export default class Configuration{
 	}
 
 	getDefaultConfiguration(): any{
+		let jwtSecret: string = Crypto.randomBytes( 32 ).toString( 'hex' );
 		let defaultConfiguration: any = {
-			gui: false
+			gui: false,
+			security: {
+				jwt: `${jwtSecret}`
+			}
 		};
 		return defaultConfiguration;
 	}
