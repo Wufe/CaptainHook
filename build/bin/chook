@@ -1,3 +1,5 @@
 #!/usr/bin/env node
 
-new require( __dirname + '/../lib/chook.js' ).Cli();
+const CHook = require( __dirname + '/../lib/chook.js' );
+const Cli = CHook.Cli;
+new Cli();
