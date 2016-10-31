@@ -22,10 +22,10 @@ export default class FrontendRouter{
 	}
 
 	addFrontendRoutes(): void{
-		this.server.addRoute( 'all', '*', (request, response, next ) => {
+		this.server.expressServer.all( '*', ( request, response, next ) => {
 			this.serveAssets( request, response, next );
 		});	
-		this.server.addRoute( 'get', '/', (request, response, next ) => {
+		this.server.expressServer.get( '/', ( request, response, next ) => {
 			this.serveIndex( request, response, next );
 		});
 	}
