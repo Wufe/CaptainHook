@@ -13,14 +13,12 @@ npm-debug.log
 # Build artifacts
 /build/lib
 /build/resources/assets
-/build/resources/config.yml
 /build/resources/database.sqlite
 /build/resources/database.test.sqlite
 
 # Dist artifacts
 /dist/lib
 /dist/resources/assets
-/build/resources/config.yml
 /dist/resources/database.sqlite
 
 # Typescript
@@ -30,7 +28,7 @@ npm-debug.log
 test-results.xml
 
 # Configuration file
-chook.config.yml
+**config.yml
 
 # Yarn lock file
 yarn.lock
