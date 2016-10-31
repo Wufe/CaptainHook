@@ -11,7 +11,7 @@ const Fs = require( 'fs' );
 
 const configFileName: string = 'config.yml';
 
-export default class Configuration{
+class Configuration{
 
 	configurationPath: string;
 	configuration: any;
@@ -53,6 +53,10 @@ export default class Configuration{
 		let jwtSecret: string = Crypto.randomBytes( 32 ).toString( 'hex' );
 		let defaultConfiguration: any = {
 			gui: false,
+			server: {
+				hostname: '0.0.0.0',
+				port: 2555
+			},
 			security: {
 				jwt: `${jwtSecret}`
 			}
@@ -70,3 +74,6 @@ export default class Configuration{
 	}
 
 }
+
+const configuration: Configuration = new Configuration();
+export default configuration;
