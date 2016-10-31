@@ -17,12 +17,10 @@ export default class Cli{
 	constructor(){
         this.parser = new ArgumentParser();
         this.availableCommands = this.parser.prepareCommands(cmds);
-
         //console.log(util.inspect(this.availableCommands, {showHidden: false, depth: null}));
 
         let argv:any = Yargs.argv;
         this.parse(argv);
-        process.exit();
   	}
 
     parse = (argv: any): void => {
