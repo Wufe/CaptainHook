@@ -4,6 +4,7 @@ import Database from './data/database';
 import EntryManager from './chook/EntryManager';
 import Environment from './chook/Environment';
 import FrontendRouter from './gui/FrontendRouter';
+import GUIManager from './gui/GUIManager';
 import Server from './server/Server';
 import ServerManager from './server/ServerManager';
 import * as Authentication from './authentication';
@@ -17,6 +18,7 @@ export {
 	EntryManager,
 	Environment,
 	FrontendRouter,
+	GUIManager,
 	Server,
 	ServerManager,
 	Utils
