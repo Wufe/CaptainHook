@@ -6,9 +6,11 @@ import Environment from './chook/Environment';
 import FrontendRouter from './gui/FrontendRouter';
 import Server from './server/Server';
 import ServerManager from './server/ServerManager';
+import * as Authentication from './authentication';
 import * as Utils from './chook/Utils';
 
 export {
+	Authentication,
 	Cli,
 	Configuration,
 	Database,
