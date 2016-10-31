@@ -1,4 +1,5 @@
 import * as Authentication from '../authentication';
+import Configuration from '../configuration/Configuration';
 import GUIManager from '../gui/GUIManager';
 import Server from './Server';
 
@@ -13,8 +14,14 @@ export default class ServerManager{
 	}
 
 	initialize(): void{
-		this.initializeAuthentication();
-		this.initializeGui();
+		if( this.isGuiEnabled() ){
+			this.initializeAuthentication();
+			this.initializeGui();	
+		}
+	}
+
+	isGuiEnabled(): boolean{
+		return Configuration.get( 'gui' ) === true
 	}
 
 	initializeAuthentication(): void{
