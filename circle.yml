@@ -21,4 +21,5 @@ test:
   override:
     - mocha test --recursive --reporter mocha-junit-reporter:
         environment:
+          NODE_ENV: mocha
           MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml
