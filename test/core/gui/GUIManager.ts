@@ -1,4 +1,10 @@
-const ServerManager = require( '../../../build/lib/chook.js' ).ServerManager;
+/// <reference path="../../../typings/index.d.ts" />
+
+import * as Mocha from 'mocha';
+import * as Should from 'should';
+
+import ServerManager from '../../../src/core/server/ServerManager';
+
 const serverManager = new ServerManager();
 const guiManagerInstance = serverManager.createGuiManager();
 

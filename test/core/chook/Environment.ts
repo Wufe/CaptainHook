@@ -1,6 +1,10 @@
-const CHook = require( '../../../build/lib/chook.js' );
-const Environment = CHook.Environment;
-const Utils = CHook.Utils;
+/// <reference path="../../../typings/index.d.ts" />
+
+import * as Mocha from 'mocha';
+import * as Should from 'should';
+
+import Environment from '../../../src/core/chook/Environment';
+import * as Utils from '../../../src/core/chook/Utils';
 
 describe( 'Environment', function(){
 	describe( 'projectRoot', function(){

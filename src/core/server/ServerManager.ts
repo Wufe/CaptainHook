@@ -1,5 +1,5 @@
 import * as Authentication from '../authentication';
-import Configuration from '../configuration/Configuration';
+import Configuration from '../Configuration';
 import GUIManager from '../gui/GUIManager';
 import Server from './Server';
 

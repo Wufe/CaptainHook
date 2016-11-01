@@ -1,5 +1,5 @@
 import Cli from './cli';
-import Configuration from './configuration/Configuration';
+import Configuration from './Configuration';
 import Database from './data/Database';
 import EntryManager from './chook/EntryManager';
 import Environment from './chook/Environment';

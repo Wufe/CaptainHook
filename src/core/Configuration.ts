@@ -1,9 +1,8 @@
-/// <reference path="../../../typings/globals/js-yaml/index.d.ts" />
-/// <reference path="../../../typings/globals/node/index.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
-import Environment from '../chook/Environment';
+import Environment from './chook/Environment';
 import * as Crypto from 'crypto';
-import * as Utils from '../chook/Utils';
+import * as Utils from './chook/Utils';
 import * as Yaml from 'js-yaml';
 
 const Path = require( 'path' );

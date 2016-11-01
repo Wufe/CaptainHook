@@ -1,9 +1,13 @@
-const CHook = require( '../../../build/lib/chook.js' );
-const Server = CHook.Server;
-const FrontendRouter = CHook.FrontendRouter;
+/// <reference path="../../../typings/index.d.ts" />
+
+import * as Mocha from 'mocha';
+import * as Should from 'should';
+
+import FrontendRouter from '../../../src/core/gui/FrontendRouter';
+import Server from '../../../src/core/server/Server';
 
 describe( 'FrontendRouter', function(){
-	let frontendRouter;
+	let frontendRouter: FrontendRouter;
 	before(function(){
 		let server = new Server();
 		frontendRouter = new FrontendRouter( server );

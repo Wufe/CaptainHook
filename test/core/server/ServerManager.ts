@@ -1,14 +1,18 @@
-const CHook = require( '../../../build/lib/chook.js' );
-const ServerManager = CHook.ServerManager;
-const GUIManager = CHook.GUIManager;
-const AuthenticationRouter = CHook.Authentication.Router;
+/// <reference path="../../../typings/index.d.ts" />
+
+import * as Mocha from 'mocha';
+import * as Should from 'should';
+
+import {Router} from '../../../src/core/authentication';
+import GUIManager from '../../../src/core/gui/GUIManager';
+import ServerManager from '../../../src/core/server/ServerManager';
 
 describe( 'ServerManager', function(){
 	let serverManager = new ServerManager();
 	describe( 'createAuthenticationRouter', function(){
 		let authenticationRouter = serverManager.createAuthenticationRouter();
 		it( 'should create Authentication.Router instance', function(){
-			authenticationRouter.should.be.an.instanceOf( AuthenticationRouter );
+			authenticationRouter.should.be.an.instanceOf( Router );
 		});
 	})
 	describe( 'createGuiManager', function(){

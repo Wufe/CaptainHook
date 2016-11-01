@@ -1,6 +1,9 @@
-const CHook = require( '../../../build/lib/chook.js' );
-const Authentication = CHook.Authentication;
-const Encryption = Authentication.Encryption;
+/// <reference path="../../../typings/index.d.ts" />
+
+import {Encryption} from '../../../src/core/authentication';
+
+import * as Mocha from 'mocha';
+import * as Should from 'should';
 
 const password = 'plainText1234$_';
 

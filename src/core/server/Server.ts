@@ -1,4 +1,4 @@
-import Configuration from '../configuration/Configuration';
+import Configuration from '../Configuration';
 import * as BodyParser from 'body-parser';
 import * as Express from 'express';
 import * as Http from 'http';

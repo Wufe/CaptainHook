@@ -1,12 +1,18 @@
-const fs = require( 'fs' );
-const Utils = require( '../../../build/lib/chook.js' ).Utils;
+/// <reference path="../../../typings/index.d.ts" />
+
+import * as Mocha from 'mocha';
+import * as Should from 'should';
+
+import * as Fs from 'fs';
+
+import * as Utils from '../../../src/core/chook/Utils';
 
 describe( 'Utils', function(){
 	let testFile = './utils.test';
 	let testDirectory = './utils.test.dir';
 	before( function(){
-		fs.writeFileSync( testFile, '' );
-		fs.mkdirSync( testDirectory );
+		Fs.writeFileSync( testFile, '' );
+		Fs.mkdirSync( testDirectory );
 	});
 	describe( 'fileExists', function(){
 		it( 'should be a function', function(){
@@ -48,8 +54,8 @@ describe( 'Utils', function(){
 		});
 	});
 	after( function(){
-		fs.unlinkSync( testFile );
-		fs.rmdirSync( testDirectory );
+		Fs.unlinkSync( testFile );
+		Fs.rmdirSync( testDirectory );
 	});
 	describe( 'setNestedValue', function(){
 		let obj = { deep1: 't' };

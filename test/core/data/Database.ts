@@ -1,5 +1,9 @@
-const CHook = require( '../../../build/lib/chook.js' );
-const Database = CHook.Database;
+/// <reference path="../../../typings/index.d.ts" />
+
+import * as Mocha from 'mocha';
+import * as Should from 'should';
+
+import Database from '../../../src/core/data/Database';
 
 describe( 'Database', function(){
 	describe( 'models', function(){

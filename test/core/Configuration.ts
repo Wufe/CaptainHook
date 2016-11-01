@@ -1,6 +1,9 @@
-const assert = require( 'assert' );
-const expect = require( 'chai' ).expect;
-const Configuration = require( '../../../build/lib/chook.js' ).Configuration;
+/// <reference path="../../typings/index.d.ts" />
+
+import * as Mocha from 'mocha';
+import * as Should from 'should';
+
+import Configuration from '../../src/core/Configuration';
 
 describe( 'Configuration', function(){
 	describe( 'Configuration\'s instance', function(){
@@ -13,24 +16,25 @@ describe( 'Configuration', function(){
 describe( 'Configuration.readConfiguration', function(){
 	it( 'should produce a default configuration object', function(){
 		Configuration.readConfiguration();
-		assert.equal( typeof Configuration.configuration == 'undefined', false );
+		let typeOfConfigurationObject: string = typeof Configuration.configuration;
+		typeOfConfigurationObject.should.not.be.equal( "undefined" );
 	});
 });
 
 describe( 'Configuration.set', function(){
 	it( 'should add a string configuration value', function(){
 		Configuration.set( 'lol', 'asd' );
-		assert.equal( Configuration.configuration.asd, 'lol' );
+		Configuration.should.have.propertyByPath( 'configuration', 'asd' ).which.is.equal( "lol" );
 	});
 	it( 'should add a array configuration value', function(){
 		Configuration.set( [ 'lol', 'rofl' ], 'asd' );
-		assert.equal( Configuration.configuration.asd[0], 'lol' );
-		assert.equal( Configuration.configuration.asd[1], 'rofl' );
+		Configuration.should.have.propertyByPath( 'configuration', 'asd' ).which.is.Array;
+		Configuration.should.have.propertyByPath( 'configuration', 'asd' ).which.containDeep([ "lol", "rofl" ]);
 	});
 	it( 'should add a object configuration value', function(){
 		Configuration.set( { lol: 'lol', rofl: 'rofl' }, 'asd' );
-		assert.equal( Configuration.configuration.asd.lol, 'lol' );
-		assert.equal( Configuration.configuration.asd.rofl, 'rofl' );
+		Configuration.should.have.propertyByPath( 'configuration', 'asd', 'lol' ).which.equal( 'lol' );
+		Configuration.should.have.propertyByPath( 'configuration', 'asd', 'rofl' ).which.equal( 'rofl' );
 	});
 });
 
@@ -41,10 +45,10 @@ describe( 'Configuration.get', function(){
 	});
 	it( 'should get a single value', function(){
 		let value = Configuration.get( 'asd' );
-		assert.equal( value, 'dsa' );
+		value.should.equal( "dsa" );
 	})
 	it( 'should get nested element value', function(){
 		let value = Configuration.get( 'lol', 'lal' );
-		assert.equal( value, 'rofl' );
+		value.should.equal( "rofl" );
 	});
 });
