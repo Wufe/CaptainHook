@@ -1,27 +1,9 @@
 import Cli from './cli';
-import Configuration from './Configuration';
-import Database from './data/Database';
-import EntryManager from './chook/EntryManager';
-import Environment from './chook/Environment';
-import FrontendRouter from './gui/FrontendRouter';
-import GUIManager from './gui/GUIManager';
-import Server from './server/Server';
 import ServerManager from './server/ServerManager';
-import * as Authentication from './authentication';
-import * as Utils from './chook/Utils';
 
 export {
-	Authentication,
 	Cli,
-	Configuration,
-	Database,
-	EntryManager,
-	Environment,
-	FrontendRouter,
-	GUIManager,
-	Server,
-	ServerManager,
-	Utils
+	ServerManager
 };
 
 /* Sample code */
