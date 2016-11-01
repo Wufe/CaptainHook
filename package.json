@@ -15,7 +15,9 @@
     "frontend:dev": "npm run -s frontend:compile:watch",
     "frontend:compile": "webpack --config src/frontend/dev.webpack.js",
     "frontend:compile:watch": "npm run -s frontend:compile -- --watch",
+    "typings-install": "typings install",
     "migrate": "sequelize db:migrate",
+    "prepublish": "npm-run-all typings-install compile migrate",
     "test": "NODE_ENV=mocha mocha"
   },
   "bin": "build/bin/chook",

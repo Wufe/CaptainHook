@@ -10,14 +10,12 @@ dependencies:
   pre:
     - pwd
   override:
-    - npm install -g typings webpack
-    - npm install
-    - typings install
+    - npm install -g yarn
+    - yarn
     
 test:
   pre:
-    - npm run -s frontend:compile
-    - npm run -s core:compile
+    - npm run -s compile
   override:
     - mocha test --recursive --reporter mocha-junit-reporter:
         environment:
