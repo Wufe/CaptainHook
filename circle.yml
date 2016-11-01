@@ -14,8 +14,6 @@ dependencies:
     - yarn
     
 test:
-  pre:
-    - npm run -s compile
   override:
     - mocha test --recursive --reporter mocha-junit-reporter:
         environment:

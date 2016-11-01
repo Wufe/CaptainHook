@@ -3,6 +3,8 @@ declare let process: any;
 const Path = require( 'path' );
 const Fs = require( 'fs' );
 
+const circleCIBuildPath = '/home/ubuntu/CaptainHook/build';
+
 class Environment{
 
 	projectRoot: string;
@@ -27,7 +29,7 @@ class Environment{
 		if( isMocha ){
 			this.buildDirectory = Path.resolve( Path.join( Path.dirname( realPath ), '..', '..', '..', 'build' ) );
 		}else if( isCircleCI ){
-			this.buildDirectory = Path.resolve( Path.join( 'home', 'ubuntu', 'CaptainHook', 'build' ) );
+			this.buildDirectory = circleCIBuildPath;
 		}else{
 			this.buildDirectory = Path.resolve( Path.join( Path.dirname( realPath ), '..' ) );
 		}
