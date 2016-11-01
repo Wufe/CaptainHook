@@ -10,8 +10,7 @@ dependencies:
   pre:
     - pwd
   override:
-    - npm install -g yarn
-    - yarn
+    - npm install -s
     
 test:
   override:
