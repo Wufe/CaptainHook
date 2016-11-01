@@ -1,9 +1,9 @@
-/// <reference path="../../../../typings/globals/node/index.d.ts" />
-/// <reference path="../../../../typings/globals/sequelize/index.d.ts" />
+/// <reference path="../../../typings/globals/node/index.d.ts" />
+/// <reference path="../../../typings/globals/sequelize/index.d.ts" />
 
-import Environment from '../../chook/Environment';
+import Environment from '../chook/Environment';
 
-import * as Models from '../models';
+import * as Models from './models';
 import * as Path from 'path';
 import * as Sequelize from 'sequelize';
 
