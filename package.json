@@ -5,6 +5,7 @@
   "main": "build/lib/chook.js",
   "scripts": {
     "compile": "npm-run-all core:compile frontend:compile",
+    "cover": "NODE_ENV=mocha nyc npm t -s",
     "dev": "npm-run-all --parallel core:dev frontend:dev",
     "dev:core": "npm run -s core:dev",
     "dev:frontend": "npm run -s frontend:dev",
@@ -36,13 +37,13 @@
     "express": "^4.14.0",
     "js-yaml": "^3.6.1",
     "jsonwebtoken": "^7.1.9",
+    "nyc": "^8.3.2",
     "sequelize": "^3.24.6",
     "sqlite3": "^3.1.8",
     "yargs": "^6.0.0"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.34",
-    "assert": "^1.4.1",
     "chai": "^3.5.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
@@ -62,10 +63,31 @@
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
     "ts-loader": "^0.9.0",
+    "ts-node": "^1.6.1",
     "typescript": "^2.0.3",
     "typings": "^1.4.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-node-externals": "^1.5.4"
+  },
+  "nyc": {
+    "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "typings"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "json",
+      "html"
+    ],
+    "all": true
   }
 }

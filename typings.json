@@ -10,11 +10,13 @@
     "jsonwebtoken": "registry:dt/jsonwebtoken#0.0.0+20160720062725",
     "lodash": "registry:dt/lodash#4.14.0+20161004174455",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
     "node": "registry:dt/node#6.0.0+20161019125345",
     "react": "registry:dt/react#0.14.0+20161008064207",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "sequelize": "registry:dt/sequelize#3.4.1+20160929080558",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
+    "should": "registry:dt/should#8.1.1+20160608082854",
     "validator": "registry:dt/validator#5.7.0+20160928122927",
     "yargs": "registry:dt/yargs#0.0.0+20161006150200"
   }
