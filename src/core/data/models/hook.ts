@@ -1,5 +1,3 @@
-import * as Moment from 'moment';
-
 const hook = ( Sequelize: any ) => {
 	return {
 		id: {
