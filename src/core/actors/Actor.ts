@@ -4,8 +4,7 @@
 import * as Sequelize from 'sequelize';
 
 export default class Actor<T>{
-
-	static model: Sequelize.Model<any, any>;
+	
 	model: Sequelize.Model<any, any>;
 	data: any;
 
@@ -40,18 +39,6 @@ export default class Actor<T>{
 				.catch( ( error: any ) => reject );
 		})
 		
-	}
-
-	static findById( identifier?: number | string, options?: Sequelize.FindOptions ) : Promise<any>{
-		return Actor.model.findById( identifier, options );
-	}
-
-	static findOne( options? : Sequelize.FindOptions ) : Promise<any>{
-		return Actor.model.findOne( options );
-	}
-
-	static findAll( options? : Sequelize.FindOptions ) : Promise<any>{
-		return Actor.model.findAll( options );
 	}
 
 }
