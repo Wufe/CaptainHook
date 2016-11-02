@@ -21,7 +21,8 @@ export class Database{
 		let databaseFilePath = Path.join( Environment.buildDirectory, 'resources', 'database.sqlite' );
 		this.sequelize = new Sequelize( null, null, null, {
 			dialect: 'sqlite',
-			storage: databaseFilePath
+			storage: databaseFilePath,
+			logging: false
 		});
 	}
 
