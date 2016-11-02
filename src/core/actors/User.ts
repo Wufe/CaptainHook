@@ -4,10 +4,12 @@ import Actor from './Actor';
 import Database from '../data/Database';
 import * as Sequelize from 'sequelize';
 
+const model = Database.models.user;
+
 class User extends Actor<User>{
 
 	constructor( username: string, password: string ){
-		super({
+		super( model, {
 			username,
 			password
 		});
@@ -15,6 +17,6 @@ class User extends Actor<User>{
 
 }
 
-User.model = Database.models.user;
+User.model = model;
 
 export default User;

@@ -6,9 +6,11 @@ import * as Sequelize from 'sequelize';
 export default class Actor<T>{
 
 	static model: Sequelize.Model<any, any>;
+	model: Sequelize.Model<any, any>;
 	data: any;
 
-	constructor( data: any ){
+	constructor( model: Sequelize.Model<any, any>, data: any ){
+		this.model = model;
 		this.data = data;
 	}
 
@@ -20,8 +22,8 @@ export default class Actor<T>{
 		this.data[ key ] = value;
 	}
 
-	save(): Promise<void>{
-		return Actor.model.create( this.data );
+	save(): Promise<any>{
+		return this.model.create( this.data );
 	}
 
 	static findById( identifier?: number | string, options?: Sequelize.FindOptions ) : Promise<any>{
