@@ -30,11 +30,27 @@ export class Database{
 		availableModels = Models;
 		for( let key in availableModels ){
 			let modelName: string = key;
+			let modelAttributes: any = availableModels[ modelName ]( Sequelize );
+			let modelTimestamps: any = this.getTimestampsFromAttributes( modelAttributes );
 			this.models[ modelName ] = this.sequelize.define(
 				modelName,
-				availableModels[ modelName ]( Sequelize )
+				modelAttributes,
+				modelTimestamps
 			);
 		}
+	}
+
+	getTimestampsFromAttributes( attributes: any ){
+		let timestamps: any = {};
+		let isThereCreationTimestamp: boolean = attributes.created_at ? true : false;
+		let isThereUpdateTimestamp: boolean = attributes.updated_at ? true : false;
+		if( isThereCreationTimestamp || isThereUpdateTimestamp )
+			timestamps.timestamps = true;
+		if( isThereCreationTimestamp )
+			timestamps.createdAt = 'created_at';
+		if( isThereUpdateTimestamp )
+			timestamps.updatedAt = 'updated_at';
+		return timestamps;
 	}
 
 }
