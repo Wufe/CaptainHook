@@ -22,6 +22,13 @@ export default class Router{
 
 	getAuthenticationRouteHandler(): RequestHandler{
 		return ( request, response, next ) => {
+			let username: string = request.params.username;
+			let password: string = request.params.password;
+			if( !username || !password ){
+				response.status(400).send( 'Malformed request.' );
+			}else{
+				// 
+			}
 			next();
 		};
 	}
