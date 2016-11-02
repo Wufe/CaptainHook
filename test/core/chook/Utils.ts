@@ -5,7 +5,7 @@ import * as Should from 'should';
 
 import * as Fs from 'fs';
 
-import * as Utils from '../../../src/core/chook/Utils';
+import {Utils} from '../../../src/core/chook';
 
 describe( 'Utils', function(){
 	let testFile = './utils.test';

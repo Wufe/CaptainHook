@@ -3,8 +3,8 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import FrontendRouter from '../../../src/core/gui/FrontendRouter';
-import Server from '../../../src/core/server/Server';
+import {FrontendRouter} from '../../../src/core/gui';
+import {Server} from '../../../src/core/server';
 
 describe( 'FrontendRouter', function(){
 	let frontendRouter: FrontendRouter;

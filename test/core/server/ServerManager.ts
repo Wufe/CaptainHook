@@ -4,8 +4,8 @@ import * as Mocha from 'mocha';
 import * as Should from 'should';
 
 import {Router} from '../../../src/core/authentication';
-import GUIManager from '../../../src/core/gui/GUIManager';
-import ServerManager from '../../../src/core/server/ServerManager';
+import {GUIManager} from '../../../src/core/gui';
+import {ServerManager} from '../../../src/core/server';
 
 describe( 'ServerManager', function(){
 	let serverManager = new ServerManager();

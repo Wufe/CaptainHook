@@ -3,8 +3,7 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import Environment from '../../../src/core/chook/Environment';
-import * as Utils from '../../../src/core/chook/Utils';
+import {Environment, Utils} from '../../../src/core/chook';
 
 describe( 'Environment', function(){
 	describe( 'projectRoot', function(){

@@ -3,7 +3,7 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import Database from '../../../src/core/data/Database';
+import {Database} from '../../../src/core/data';
 
 describe( 'Database', function(){
 	describe( 'models', function(){
