@@ -1,19 +1,21 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import Actor from './Actor';
-import Database from '../data/Database';
+import {Access, AccessInterface, Database} from '../data';
 import * as Sequelize from 'sequelize';
 
 const model = Database.models.hook;
 
 class Hook extends Actor<Hook>{
 
-	constructor( hook: string ){
+	static find: AccessInterface<Hook>;
+
+	constructor( hook?: string ){
 		super( model, { hook });
 	}
 
 }
 
-Hook.model = model;
+Hook.find = ( new Access( Hook, model ) ).getInterface();
 
 export default Hook;

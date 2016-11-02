@@ -1,14 +1,16 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import Actor from './Actor';
-import Database from '../data/Database';
+import {Access, AccessInterface, Database} from '../data';
 import * as Sequelize from 'sequelize';
 
 const model = Database.models.user;
 
 class User extends Actor<User>{
 
-	constructor( username: string, password: string ){
+	static find: AccessInterface<User>;
+
+	constructor( username?: string, password?: string ){
 		super( model, {
 			username,
 			password
@@ -17,6 +19,6 @@ class User extends Actor<User>{
 
 }
 
-User.model = model;
+User.find = ( new Access( User, model ) ).getInterface();
 
 export default User;
