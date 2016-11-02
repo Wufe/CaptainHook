@@ -1,3 +1,5 @@
+import {Encryption} from '../../authentication';
+
 const user = ( Sequelize: any ) => {
 	return {
 		id: {
@@ -7,11 +9,16 @@ const user = ( Sequelize: any ) => {
 		},
 		username: {
 			type: Sequelize.STRING,
+			unique: true,
 			allowNull: false
 		},
 		password: {
 			type: Sequelize.STRING,
-			allowNull: false
+			allowNull: false,
+			set: function( value: string ){
+				let encryption: Encryption = new Encryption( value );
+				this.setDataValue( 'password', encryption.getHash() );
+			}
 		},
 		created_at: {
 			type: Sequelize.DATE

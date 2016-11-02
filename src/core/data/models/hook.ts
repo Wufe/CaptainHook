@@ -7,6 +7,7 @@ const hook = ( Sequelize: any ) => {
 		},
 		hook: {
 			type: Sequelize.STRING,
+			unique: true,
 			allowNull: false
 		},
 		created_at: {
