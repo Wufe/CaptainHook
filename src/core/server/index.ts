@@ -5,3 +5,5 @@ export {
 	Server,
 	ServerManager
 };
+
+export default Server;
