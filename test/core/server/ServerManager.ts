@@ -3,12 +3,21 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import {Router} from '../../../src/core/authentication';
+import Configuration from '../../../src/core/Configuration';
 import {GUIManager} from '../../../src/core/gui';
+import {Router} from '../../../src/core/authentication';
 import {ServerManager} from '../../../src/core/server';
 
 describe( 'ServerManager', function(){
+	Configuration.set( true, 'gui' );
 	let serverManager = new ServerManager();
+	describe( `initialize`, () => {
+		it( `should create instances for authenticationRouter and guiManager`, () => {
+			serverManager.initialize();
+			Should( typeof serverManager.authenticationRouter ).not.be.equal( "undefined" );
+			Should( typeof serverManager.guiManager ).not.be.equal( "undefined" );
+		});
+	});
 	describe( 'createAuthenticationRouter', function(){
 		let authenticationRouter = serverManager.createAuthenticationRouter();
 		it( 'should create Authentication.Router instance', function(){
