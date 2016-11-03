@@ -6,32 +6,11 @@ import * as Should from 'should';
 import * as Sequelize from 'sequelize';
 
 import {Actor, Hook, User} from '../../../src/core/actors';
+import {Actors, ActorType} from '.';
 import {AccessInterface, Database} from '../../../src/core/data';
 
-interface ActorType{
-	name: string;
-	class: any;
-	model: Sequelize.Model<any, any>;
-	table: string;
-};
-
-let actors: ActorType[] = [
-	{
-		name: 'User',
-		class: User,
-		model: Database.models.user,
-		table: 'users'
-	},
-	{
-		name: 'Hook',
-		class: Hook,
-		model: Database.models.hook,
-		table: 'hooks'
-	}
-];
-
 describe( 'Actor', () => {
-	actors.forEach( ( actor: ActorType ) => {
+	Actors.forEach( ( actor: ActorType ) => {
 		describe( actor.name, () => {
 			it( `should have a 'find' attribute`, () => {
 				let find: AccessInterface<any> = actor.class.find;
