@@ -1,7 +1,7 @@
 import Cli from './cli';
 import ServerManager from './server/ServerManager';
 
-import {User} from './actors';
+import {Actor, Hook, User} from './actors';
 import {Encryption} from './authentication';
 
 export {
@@ -21,10 +21,6 @@ if( args[ 2 ] === "start:server" ){
 	let encryption: Encryption = new Encryption( 'admin' );
 	let user: User = new User( 'admin', 'admin' );
 	user.save()
-		.then(( data ) => {
-			console.log( data );
-		})
-		.catch(( error: any ) => {
-			console.log( error );
-		})
+		.then( data => console.log )
+		.catch( error => console.log );
 }
