@@ -13,6 +13,8 @@ dependencies:
     - npm install -s
     
 test:
+  pre:
+    - npm run pretest
   override:
     - mocha test --recursive --reporter mocha-junit-reporter:
         environment:
