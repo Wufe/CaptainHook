@@ -17,8 +17,11 @@ class Configuration{
 
 	constructor(){
 		let configurationFile: string = configFileName;
-		if( process.env.NODE_ENV == 'mocha' )
+		if( process.env.NODE_ENV == 'mocha' ||
+			process.env.NODE_ENV == 'circleci' ||
+			process.env.NODE_ENV == 'test' ){
 			configurationFile = 'test.config.yml';
+		}
 		this.configurationPath = Path.join( Environment.buildDirectory, 'resources', configurationFile );
 		this.readConfiguration();
 	}
