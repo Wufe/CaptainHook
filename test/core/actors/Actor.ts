@@ -6,6 +6,7 @@ import * as Should from 'should';
 import * as Sequelize from 'sequelize';
 
 import {Actor, Hook, User} from '../../../src/core/actors';
+import {AccessInterface, Database} from '../../../src/core/data';
 
 interface ActorType{
 	name: string;
@@ -18,13 +19,13 @@ let actors: ActorType[] = [
 	{
 		name: 'User',
 		class: User,
-		model: User.model,
+		model: Database.models.user,
 		table: 'users'
 	},
 	{
 		name: 'Hook',
 		class: Hook,
-		model: Hook.model,
+		model: Database.models.hook,
 		table: 'hooks'
 	}
 ];
@@ -32,22 +33,23 @@ let actors: ActorType[] = [
 describe( 'Actor', () => {
 	actors.forEach( ( actor: ActorType ) => {
 		describe( actor.name, () => {
-			it( 'should have a model with a valid table name', () => {
-				let model: Sequelize.Model<any, any> = actor.model;
-				model.should.have.property( 'getTableName' );
+			it( `should have a 'find' attribute`, () => {
+				let find: AccessInterface<any> = actor.class.find;
+				Should( find ).have.a.property( 'byId' );
 			});
-			describe( 'model', () => {
-				it( `should have a table called ${actor.table}`, () => {
-					let model: Sequelize.Model<any, any> = actor.model;
-					model.getTableName().should.be.equal( actor.table );
+			describe( `created instanciating Actor with ${actor.name} data`, () => {
+				let actorInstance = new Actor( actor.model, { 'test': 'valu_e' });
+				describe( `get`, () => {
+					it( `should return previously set value`, () => {
+						actorInstance.get( 'test' ).should.be.equal( 'valu_e' );
+					});	
 				});
-			});
-		});
-	});
-	actors.forEach( ( actor: ActorType ) => {
-		describe( actor.name, () => {
-			it( `should reflect table named ${actor.table}`, () => {
-				actor.model.getTableName().should.be.equal( actor.table );
+				describe( `set`, () => {
+					it( `should set a value and return it correctly`, () => {
+						actorInstance.set( 'test', 'va_lue' );
+						actorInstance.get( 'test' ).should.be.exactly( 'va_lue' );
+					});
+				});
 			});
 		});
 	});
