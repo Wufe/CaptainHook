@@ -36,21 +36,25 @@ export default class Access<T>{
 		return actorInstance;
 	}
 
+	handleSingleDataInstance( instance: any, resolve: any, reject: any ): void{
+		if( instance ){
+			let dataValues: any = instance.dataValues;
+			if( !dataValues ){
+				reject( new Error( `No data returned.` ) );
+			}else{
+				let actorInstance: any = this.createActor( dataValues );
+				resolve( actorInstance );
+			}
+		}else{
+			reject( new Error( `No results found.` ) );
+		}
+	}
+
 	findById( identifier?: number | string, options?: Sequelize.FindOptions ) : Promise<T>{
 		return new Promise<T>( ( resolve, reject ) => {
 			this.model.findById( identifier, options )
 				.then( ( instance: any ) => {
-					if( instance ){
-						let dataValues: any = instance.dataValues;
-						if( !dataValues ){
-							reject( new Error( `No data returned.` ) );
-						}else{
-							let actorInstance: any = this.createActor( dataValues );
-							resolve( actorInstance );
-						}
-					}else{
-						reject( new Error( `No results found.` ) );
-					}
+					this.handleSingleDataInstance( instance, resolve, reject );
 				})
 				.catch( ( error: any ) => reject );
 		});
@@ -61,17 +65,7 @@ export default class Access<T>{
 		return new Promise<T>( ( resolve, reject ) => {
 			this.model.findOne( options )
 				.then( ( instance: any ) => {
-					if( instance ){
-						let dataValues: any = instance.dataValues;
-						if( !dataValues ){
-							reject( new Error( `No data returned.` ) );
-						}else{
-							let actorInstance: any = this.createActor( dataValues );
-							resolve( actorInstance );
-						}
-					}else{
-						reject( new Error( `No results found.` ) );
-					}
+					this.handleSingleDataInstance( instance, resolve, reject );
 				})
 				.catch( ( error: any ) => reject );
 		})
