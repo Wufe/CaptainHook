@@ -3,6 +3,8 @@
 
 import * as Sequelize from 'sequelize';
 
+import {Creator} from '../actors';
+
 export interface AccessInterface<T>{
 	byId: ( identifier?: number | string, options?: Sequelize.FindOptions ) => Promise<T>;
 	one: ( options? : Sequelize.FindOptions ) => Promise<any>;
@@ -27,26 +29,13 @@ export default class Access<T>{
 		};
 	}
 
-	createActor( data: any ): any{
-		let actorInstance: any = new this.actor();
-		for( let dataKey in data ){
-			let dataValue: any = data[ dataKey ];
-			actorInstance.set( dataKey, dataValue );
-		}
-		return actorInstance;
-	}
-
 	handleSingleDataInstance( instance: any, resolve: any, reject: any ): void{
-		if( instance ){
-			let dataValues: any = instance.dataValues;
-			if( !dataValues ){
-				reject( new Error( `No data returned.` ) );
-			}else{
-				let actorInstance: any = this.createActor( dataValues );
-				resolve( actorInstance );
-			}
-		}else{
-			reject( new Error( `No results found.` ) );
+		let creator: Creator = new Creator( this.actor );
+		try{
+			let actor: any = creator.makeFromDataInstance( instance );
+			resolve( actor );
+		}catch( error ){
+			reject( error );
 		}
 	}
 
