@@ -17,10 +17,6 @@ describe( 'Access', () => {
 			it( `should have a table name '${actor.table}'`, () => {
 				accessInstance.model.getTableName().should.be.exactly( actor.table );
 			});
-			it( `should be able to create an actor from random data`, () => {
-				let actorInstance: any = accessInstance.createActor({ random: 'data' });
-				Should( typeof actorInstance ).be.not.equal( "undefined" );
-			});
 			describe( `data instance manager`, () => {
 				it( `should return a valid actor instance if valid data provided`, ( done ) => {
 					let mockDatabaseResults: any = {
