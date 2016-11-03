@@ -18,7 +18,13 @@ export class Database{
 	}
 
 	setupDatabaseConnection(): void{
-		let databaseFilePath = Path.join( Environment.buildDirectory, 'resources', 'database.sqlite' );
+		let databaseFileName: string = 'database.sqlite';
+		if( process.env.NODE_ENV == 'mocha' ||
+			process.env.NODE_ENV == 'circleci' ||
+			process.env.NODE_ENV == 'test' ){
+			databaseFileName = 'database.test.sqlite';
+		}
+		let databaseFilePath = Path.join( Environment.buildDirectory, 'resources', databaseFileName );
 		this.sequelize = new Sequelize( null, null, null, {
 			dialect: 'sqlite',
 			storage: databaseFilePath,
