@@ -3,7 +3,7 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import {Server} from '../../../src/core/server';
+import {Server} from '../../../src/core/net';
 
 describe( 'Server', function(){
 	let server: Server;

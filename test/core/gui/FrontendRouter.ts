@@ -5,7 +5,7 @@ import * as Should from 'should';
 
 import {Environment} from '../../../src/core/chook';
 import {FrontendRouter, Renderer} from '../../../src/core/gui';
-import {Server} from '../../../src/core/server';
+import {Server} from '../../../src/core/net';
 
 describe( 'FrontendRouter', function(){
 	let server = new Server();

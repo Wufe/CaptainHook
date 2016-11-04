@@ -3,7 +3,7 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import {ServerManager} from '../../../src/core/server';
+import {ServerManager} from '../../../src/core/net';
 
 const serverManager = new ServerManager();
 const guiManagerInstance = serverManager.createGuiManager();

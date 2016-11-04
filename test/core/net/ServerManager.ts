@@ -6,7 +6,7 @@ import * as Should from 'should';
 import Configuration from '../../../src/core/Configuration';
 import {GUIManager} from '../../../src/core/gui';
 import {Router} from '../../../src/core/authentication';
-import {ServerManager} from '../../../src/core/server';
+import {ServerManager} from '../../../src/core/net';
 
 describe( 'ServerManager', function(){
 	Configuration.set( true, 'gui' );
