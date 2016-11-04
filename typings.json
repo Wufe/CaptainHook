@@ -18,6 +18,7 @@
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
     "should": "registry:dt/should#8.1.1+20160608082854",
     "validator": "registry:dt/validator#5.7.0+20160928122927",
+    "winston": "registry:dt/winston#0.0.0+20161006194546",
     "yargs": "registry:dt/yargs#0.0.0+20161006150200"
   }
 }
