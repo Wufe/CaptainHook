@@ -9,11 +9,15 @@ class Environment{
 
 	projectRoot: string;
 	buildDirectory: string;
+	debug: boolean = false;
 
 	constructor(){
+		this.checkDebugEnvironment();
 		this.checkBuildDirectory();
 		this.checkProjectRoot();
 	}
+
+	checkDebugEnvironment(): void{}
 
 	checkProjectRoot(): void{
 		let projectRoot: string = Path.resolve( Path.join( this.buildDirectory, '..' ) );
