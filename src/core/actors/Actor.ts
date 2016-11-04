@@ -6,7 +6,8 @@ import * as Sequelize from 'sequelize';
 export default class Actor<T>{
 	
 	model: Sequelize.Model<any, any>;
-	data: any;
+	private data: any;
+	protected hidden: string[];
 
 	constructor( model: Sequelize.Model<any, any>, data: any ){
 		this.model = model;
