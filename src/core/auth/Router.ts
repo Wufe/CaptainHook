@@ -33,7 +33,8 @@ export default class Router{
 			if( !validBody ){
 				this.sendMalformedRequest( response );
 			}else{
-				this.validateCredentials( request )
+				let credentials: Credentials = this.getCredentials( request );
+				this.validateCredentials( credentials )
 					.then( ( user: User ) => {
 						response.status( 200 ).send( user.get( 'username' ) );
 					})
@@ -72,9 +73,8 @@ export default class Router{
 		};
 	}
 
-	validateCredentials( request: Request ): Promise<User>{
+	validateCredentials( credentials: Credentials ): Promise<User>{
 		return new Promise<User>( ( resolve, reject ) => {
-			let credentials: Credentials = this.getCredentials( request );
 			User.find.one({
 				where: {
 					username: credentials.username
