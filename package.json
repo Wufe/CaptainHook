@@ -18,7 +18,7 @@
     "typings-install": "typings install",
     "migrate": "sequelize db:migrate",
     "prepublish": "npm-run-all typings-install compile migrate",
-    "pretest": "NODE_ENV=mocha sequelize db:migrate:undo:all --env test && NODE_ENV=mocha sequelize db:migrate --env test && NODE_ENV=mocha sequelize db:seed:all --env test",
+    "pretest": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test",
     "test": "NODE_ENV=mocha mocha"
   },
   "bin": "build/bin/chook",
