@@ -1,5 +1,5 @@
 import Cli from './cli';
-import ServerManager from './server/ServerManager';
+import {ServerManager} from './net';
 
 import {Actor, Hook, User, Test} from './actors';
 import {Encryption} from './authentication';

@@ -3,7 +3,7 @@ const Url = require( 'url' );
 const Path = require( 'path' );
 
 import Frontend from './Frontend';
-import Server from '../server/Server';
+import {Server} from '../net';
 
 export default class GUIManager{
 

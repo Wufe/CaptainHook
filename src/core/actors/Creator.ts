@@ -19,10 +19,10 @@ export default class Creator{
 		let dataValues: any = sequelizeInstance.dataValues;
 		if( !dataValues )
 			throw new Error( `No data returned.` );
-		return this.createActorFromData( dataValues );
+		return this.create( dataValues );
 	}
 
-	createActorFromData( data: any ): any{
+	create( data: any ): any{
 		let actorInstance: any = new this.actor();
 		for( let dataKey in data ){
 			let dataValue: any = data[ dataKey ];

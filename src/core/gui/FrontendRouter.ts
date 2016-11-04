@@ -2,7 +2,7 @@ declare let require: any;
 const Path = require( 'path' );
 const Url = require( 'url' );
 
-import Server from '../server/Server';
+import {Server} from '../net';
 import Environment from '../chook/Environment';
 import Renderer from './Renderer';
 import * as Utils from '../chook/Utils';

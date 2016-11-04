@@ -1,7 +1,7 @@
 import * as Authentication from '../authentication';
 import Configuration from '../Configuration';
 import GUIManager from '../gui/GUIManager';
-import Server from './Server';
+import {Server} from '.';
 
 export default class ServerManager{
 
