@@ -60,7 +60,10 @@ class Configuration{
 				port: 2555
 			},
 			security: {
-				jwt: `${jwtSecret}`
+				jwt: {
+					secret: `${jwtSecret}`,
+					expiration_hours: 1
+				}
 			}
 		};
 		return defaultConfiguration;
