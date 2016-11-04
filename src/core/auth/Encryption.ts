@@ -13,7 +13,21 @@ export default class Encryption{
 	}
 
 	getHash(): string{
-		return Bcrypt.hashSync( this.plainData, saltRounds );
+		let alreadyHashed: boolean = this.checkAlreadyHashed();
+		if( !alreadyHashed ){
+			return Bcrypt.hashSync( this.plainData, saltRounds );	
+		}else{
+			return this.plainData;
+		}
+	}
+
+	checkAlreadyHashed(): boolean{
+		try{
+			let rounds: number = Bcrypt.getRounds( this.plainData );
+			return true;
+		}catch( error ){
+			return false;
+		}
 	}
 
 	compare( hashedData: string ): boolean{
