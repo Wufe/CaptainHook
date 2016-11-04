@@ -1,8 +1,15 @@
 /// <reference path="../../../typings/globals/express/index.d.ts" />
 /// <reference path="../../../typings/globals/express-serve-static-core/index.d.ts" />
 
+import {Encryption} from '.';
 import {NextFunction, Request, RequestHandler, Response} from 'express';
 import {Server} from '../net';
+import {User} from '../actors';
+
+interface Credentials{
+	username: string;
+	password: string;
+}
 
 export default class Router{
 
@@ -22,28 +29,74 @@ export default class Router{
 
 	getAuthenticationRouteHandler(): RequestHandler{
 		return ( request: Request, response: Response, next: NextFunction ) => {
-			try{
-				this.checkCredentials( request );
-				response.status( 200 ).send( 'OK' );
-			}catch( error ){
-				this.sendMalformedRequest( response, error.message );
+			let validBody: boolean = this.isBodyValid( request );
+			if( !validBody ){
+				this.sendMalformedRequest( response );
+			}else{
+				this.validateCredentials( request )
+					.then( ( user: User ) => {
+						response.status( 200 ).send( user.get( 'username' ) );
+					})
+					.catch( error => {
+						this.sendUnauthorized( response );
+					});
 			}
 		};
 	}
 
-	sendMalformedRequest( response: any, message: string = `Malformed request.` ): void{
+	sendMalformedRequest( response: Response, message: string = `Malformed request.` ): void{
 		response.status( 400 ).send( message );
 	}
 
-	checkCredentials( request: any ): void{
+	sendUnauthorized( response: Response, message: string = `Unauthorized.` ): void{
+		response.status( 401 ).send( message );
+	}
+
+	isBodyValid( request: Request ): boolean{
+		let credentials: Credentials = this.getCredentials( request );
+		if( !credentials )
+			return false;
+		return true;
+	}
+
+	getCredentials( request: Request ): Credentials{
 		let body: any = request.body;
-		if( !body ){
-			throw new Error( `Empty body.` );
-		}
+		if( !body )
+			return null;
 		let {username, password} = body;
-		if( !username || !password ){
-			throw new Error( `Malformed request.` );
-		}
+		if( !username || !password )
+			return null;
+		return {
+			username,
+			password
+		};
+	}
+
+	validateCredentials( request: Request ): Promise<User>{
+		return new Promise<User>( ( resolve, reject ) => {
+			let credentials: Credentials = this.getCredentials( request );
+			User.find.one({
+				where: {
+					username: credentials.username
+				}
+			})
+			.then( ( user: User ) => {
+				let isPasswordValid: boolean = this.validatePassword( user.get( 'password' ), credentials.password );
+				if( !isPasswordValid ){
+					reject();
+				}else{
+					resolve( user );
+				}
+			})
+			.catch( ( error: any ) => {
+				reject( error );
+			});
+		});
+	}
+
+	validatePassword( hashedPassword: string, plainPassword: string ): boolean{
+		let encryption: Encryption = new Encryption( plainPassword );
+		return encryption.compare( hashedPassword );
 	}
 
 }
