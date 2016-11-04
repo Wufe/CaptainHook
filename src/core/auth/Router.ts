@@ -1,12 +1,12 @@
 /// <reference path="../../../typings/globals/express/index.d.ts" />
 /// <reference path="../../../typings/globals/express-serve-static-core/index.d.ts" />
 
-import {Encryption} from '.';
+import {Authentication, Encryption} from '.';
 import {NextFunction, Request, RequestHandler, Response} from 'express';
 import {Server} from '../net';
 import {User} from '../actors';
 
-interface Credentials{
+export interface Credentials{
 	username: string;
 	password: string;
 }
@@ -74,29 +74,8 @@ export default class Router{
 	}
 
 	validateCredentials( credentials: Credentials ): Promise<User>{
-		return new Promise<User>( ( resolve, reject ) => {
-			User.find.one({
-				where: {
-					username: credentials.username
-				}
-			})
-			.then( ( user: User ) => {
-				let isPasswordValid: boolean = this.validatePassword( user.get( 'password' ), credentials.password );
-				if( !isPasswordValid ){
-					reject();
-				}else{
-					resolve( user );
-				}
-			})
-			.catch( ( error: any ) => {
-				reject( error );
-			});
-		});
-	}
-
-	validatePassword( hashedPassword: string, plainPassword: string ): boolean{
-		let encryption: Encryption = new Encryption( plainPassword );
-		return encryption.compare( hashedPassword );
+		let authentication: Authentication = new Authentication( credentials );
+		return authentication.validateCredentials();
 	}
 
 }
