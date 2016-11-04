@@ -15,6 +15,10 @@ class User extends Actor<User>{
 			username,
 			password
 		});
+		this.hidden = [
+			"password",
+			"updated_at"
+		];
 	}
 
 }
