@@ -1,4 +1,4 @@
-import * as Authentication from '../authentication';
+import * as Authentication from '../auth';
 import Configuration from '../Configuration';
 import GUIManager from '../gui/GUIManager';
 import {Server} from '.';

@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import {Encryption} from '../../../src/core/authentication';
+import {Encryption} from '../../../src/core/auth';
 
 import * as Mocha from 'mocha';
 import * as Should from 'should';

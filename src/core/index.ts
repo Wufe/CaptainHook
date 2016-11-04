@@ -2,7 +2,7 @@ import Cli from './cli';
 import {ServerManager} from './net';
 
 import {Actor, Hook, User, Test} from './actors';
-import {Encryption} from './authentication';
+import {Encryption} from './auth';
 
 export {
 	Cli,
