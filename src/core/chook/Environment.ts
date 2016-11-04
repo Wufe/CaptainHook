@@ -17,7 +17,9 @@ class Environment{
 		this.checkProjectRoot();
 	}
 
-	checkDebugEnvironment(): void{}
+	checkDebugEnvironment(): void{
+		// TODO
+	}
 
 	checkProjectRoot(): void{
 		let projectRoot: string = Path.resolve( Path.join( this.buildDirectory, '..' ) );
