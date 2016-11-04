@@ -7,7 +7,7 @@ export default class Actor<T>{
 	
 	model: Sequelize.Model<any, any>;
 	private data: any;
-	protected hidden: string[];
+	protected hidden: string[] = [];
 
 	constructor( model: Sequelize.Model<any, any>, data: any ){
 		this.model = model;
@@ -16,8 +16,18 @@ export default class Actor<T>{
 
 	get( key?: string ): any{
 		if( !key )
-			return this.data;
+			return this.getVisibleData();
 		return this.data[ key ];
+	}
+
+	getVisibleData(): any{
+		let visibleData: any = {};
+		for( let dataKey in this.data ){
+			if( this.hidden.indexOf( dataKey ) == -1 ){
+				visibleData[ dataKey ] = this.data[ dataKey ];
+			}
+		}
+		return visibleData;
 	}
 
 	set( key: string, value: any ): void{
