@@ -36,7 +36,7 @@ export default class Router{
 				let credentials: Credentials = this.getCredentials( request );
 				this.validateCredentials( credentials )
 					.then( ( user: User ) => {
-						response.status( 200 ).send( user.get( 'username' ) );
+						response.status( 200 ).json( user.get() );
 					})
 					.catch( error => {
 						this.sendUnauthorized( response );
