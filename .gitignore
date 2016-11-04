@@ -36,3 +36,7 @@ yarn.lock
 # Test and coverage output
 .nyc_output
 coverage
+
+# Log files
+/build/resources/log
+/dist/resources/log
