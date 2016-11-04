@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/globals/express/index.d.ts" />
 /// <reference path="../../../typings/globals/express-serve-static-core/index.d.ts" />
 
-import {Authentication, Encryption} from '.';
+import {Authentication, Encryption, Token} from '.';
 import {NextFunction, Request, RequestHandler, Response} from 'express';
 import {Server} from '../net';
 import {User} from '../actors';
@@ -36,7 +36,7 @@ export default class Router{
 				let credentials: Credentials = this.getCredentials( request );
 				this.validateCredentials( credentials )
 					.then( ( user: User ) => {
-						response.status( 200 ).json( user.get() );
+						response.status( 200 ).send( this.createToken( user ) );
 					})
 					.catch( error => {
 						this.sendUnauthorized( response );
@@ -76,6 +76,11 @@ export default class Router{
 	validateCredentials( credentials: Credentials ): Promise<User>{
 		let authentication: Authentication = new Authentication( credentials );
 		return authentication.validateCredentials();
+	}
+
+	createToken( user: User ): string{
+		let token: Token = new Token( user );
+		return token.get();
 	}
 
 }
