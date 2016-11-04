@@ -13,7 +13,9 @@ export default class Actor<T>{
 		this.data = data;
 	}
 
-	get( key: string ): any{
+	get( key?: string ): any{
+		if( !key )
+			return this.data;
 		return this.data[ key ];
 	}
 
