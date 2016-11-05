@@ -16,6 +16,7 @@ export class Log{
 	constructor(){}
 
 	setup(): void{
+		this.log = this.log.bind( this );
 		this.checkDirectory();
 		this.createLogger();
 	}
@@ -28,17 +29,34 @@ export class Log{
 	}
 
 	createLogger(): void{
-		let logger: Winston.LoggerInstance = new Winston.Logger();
-		
+		let logger: Winston.LoggerInstance = new Winston.Logger({
+			transports: this.getTransports()
+		});
+		this.logger = logger;
+	}
+
+	getTransports(): Winston.TransportInstance[]{
+		let transports: Winston.TransportInstance[] = [];
+		transports.push(
+			new Winston.transports.File({
+				filename: Path.join( logDirectory, 'generic.log' )
+			})
+		);
+		if( Environment.debug ){
+			transports.push(
+				new Winston.transports.Console()
+			);
+		}
+		return transports;
+	}
+
+	log( level: string, message: string, ...meta: any[] ): void{
+		this.logger.log( level, message, meta );
 	}
 
 }
 
-const log: Log = new Log();
-log.setup();
+const logInstance: Log = new Log();
+logInstance.setup();
+const log: ( level: string, message: string, ...meta: any[] ) => void = logInstance.log;
 export default log;
-
-// transports: [
-//       new (winston.transports.Console)(),
-//       new (winston.transports.File)({ filename: 'somefile.log' })
-//     ]
