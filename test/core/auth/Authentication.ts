@@ -55,6 +55,21 @@ describe( `Authentication`, () => {
 					done();
 				});
 		});
+		it( `should catch a error if trying to login with empty username`, ( done: ( error?: any ) => void ) => {
+			let emptyAuthentication: Authentication = new Authentication({
+				username: null,
+				password: credentials.password
+			});
+			let emptyValidation: Promise<User> = emptyAuthentication.validateCredentials();
+			Should( typeof emptyValidation ).not.be.equal( "undefined" );
+			emptyValidation
+				.then( ( user: User ) => {
+					done( new Error( `Validation should not work.` ) );
+				})
+				.catch( ( error: any ) => {
+					done();
+				});
+		});
 		it( `should catch a error if trying to login with wrong username`, ( done: ( error?: any ) => void ) => {
 			let wrongAuthentication: Authentication = new Authentication({
 				username: 'admo',
