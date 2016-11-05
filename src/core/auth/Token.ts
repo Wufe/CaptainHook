@@ -50,7 +50,7 @@ export default class Token{
 	}
 
 	getMaxAge(): number{
-		return jwtSettings.expiration_hours * 60 * 60;
+		return jwtSettings.expiration_hours * 60 * 60 * 1000;
 	}
 
 	getIssuer(): any{
