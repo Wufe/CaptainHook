@@ -54,8 +54,21 @@ export default class Router{
 	}
 
 	sendAuthenticated( response: Response, user: User, message: string = `OK` ): void{
-		let token: string = this.createToken( user );
+		response = this.setResponseCookie( response, user );
 		response.status( 200 ).send( message );
+	}
+
+	setResponseCookie( response: Response, user: User ): Response{
+		let jwt: Token = this.createJwt( user );
+		let token: string = jwt.get();
+		return response.cookie( 'jwt', token, {
+			maxAge: jwt.getMaxAge()
+		});
+	}
+
+	createJwt( user: User ): Token{
+		let token: Token = new Token( user );
+		return token;
 	}
 
 	isBodyValid( request: Request ): boolean{
@@ -81,11 +94,6 @@ export default class Router{
 	validateCredentials( credentials: Credentials ): Promise<User>{
 		let authentication: Authentication = new Authentication( credentials );
 		return authentication.validateCredentials();
-	}
-
-	createToken( user: User ): string{
-		let token: Token = new Token( user );
-		return token.get();
 	}
 
 }
