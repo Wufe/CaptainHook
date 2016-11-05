@@ -1,4 +1,4 @@
-import Encryption from '../../auth/Encryption';
+import {Encryption} from '../../auth';
 
 const user = ( Sequelize: any ) => {
 	return {
