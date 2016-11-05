@@ -50,7 +50,7 @@ export class Log{
 				})
 			);
 		}
-		if( Environment.debug ){
+		if( !Environment.quiet ){
 			transports.push(
 				new Winston.transports.Console()
 			);
