@@ -9,7 +9,7 @@ class Environment{
 
 	projectRoot: string;
 	buildDirectory: string;
-	debug: boolean = true;
+	quiet: boolean = false;
 
 	constructor(){
 		this.checkDebugEnvironment();
