@@ -1,6 +1,7 @@
 /// <reference path="../../typings/index.d.ts" />
 
 import Environment from './chook/Environment';
+import Log from './chook/Log';
 import * as Crypto from 'crypto';
 import * as Utils from './chook/Utils';
 import * as Yaml from 'js-yaml';
@@ -36,14 +37,23 @@ class Configuration{
 		try{
 			fileContent = Fs.readFileSync( filePath, 'utf8' );
 		}catch( error ){
+			Log( 'warn', `Cannot find configuration file.`, filePath );
 			this.generateDefaultConfiguration();
-			fileContent = Fs.readFileSync( filePath, 'utf8' );
+			try{
+				fileContent = Fs.readFileSync( filePath, 'utf8' );
+			}catch( error ){
+				Log( 'error', `Configuration file read failed.`, error );
+			}
 		}
 		return fileContent;
 	}
 
 	dumpConfiguration( configurationObject: any ): void{
-		Fs.writeFileSync( this.configurationPath, Yaml.safeDump( configurationObject ) );
+		try{
+			Fs.writeFileSync( this.configurationPath, Yaml.safeDump( configurationObject ) );
+		}catch( error ){
+			Log( 'error', `Cannot write configuration.`, this.configurationPath, error );
+		}
 	}
 
 	generateDefaultConfiguration(): void{
