@@ -22,6 +22,10 @@ describe( 'Encryption', function(){
 			let secondHash = encryption.getHash();
 			hash.should.be.not.equal( secondHash );
 		});
+		it( `should return the hash, if it is already calculated`, () => {
+			let alreadyEncrypted: Encryption = new Encryption( hash );
+			Should( alreadyEncrypted.getHash() ).be.equal( hash );
+		});
 	});
 
 	describe( 'compare', function(){
