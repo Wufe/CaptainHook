@@ -4,6 +4,7 @@ import * as Mocha from 'mocha';
 import * as Should from 'should';
 
 import {Authentication, Credentials} from '../../../src/core/auth';
+import {User} from '../../../src/core/actors';
 
 describe( `Authentication`, () => {
 	let credentials: Credentials = {
@@ -11,4 +12,18 @@ describe( `Authentication`, () => {
 		password: 'admin'
 	};
 	let authentication: Authentication = new Authentication( credentials );
+	describe( `validateCredentials`, () => {
+		it( `should return a promise with a user value, containing the admin data`, ( done: ( error?: any ) => void ) => {
+			let validation: Promise<User> = authentication.validateCredentials();
+			Should( typeof validation ).not.be.equal( "undefined" );
+			validation
+				.then( ( user: User ) => {
+					user.get().should.have.property( 'username' ).which.is.equal( 'admin' );
+					done();
+				})
+				.catch( ( error: any ) => {
+					done( error );
+				});
+		});
+	});
 });
