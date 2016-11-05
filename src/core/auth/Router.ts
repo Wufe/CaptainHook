@@ -2,6 +2,7 @@
 /// <reference path="../../../typings/globals/express-serve-static-core/index.d.ts" />
 
 import {Authentication, Encryption, Token} from '.';
+import {Log} from '../chook';
 import {NextFunction, Request, RequestHandler, Response} from 'express';
 import {Server} from '../net';
 import {User} from '../actors';
@@ -36,10 +37,15 @@ export default class Router{
 				let credentials: Credentials = this.getCredentials( request );
 				this.validateCredentials( credentials )
 					.then( ( user: User ) => {
+						Log( 'info', `User ${user.get( 'username' )} authenticated.` );
 						this.sendAuthenticated( response, user );
 					})
-					.catch( error => {
-						console.log( error.message );
+					.catch( ( error?: any ) => {
+						let logCredentials: Credentials = credentials;
+						logCredentials.password = '*******';
+						Log( 'warn', `Someone logged with wrong credentials.`, logCredentials );
+						if( error )
+							Log( 'error', error.message );
 						this.sendUnauthorized( response );
 					});
 			}
