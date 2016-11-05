@@ -12,6 +12,7 @@ const logDirectory = Path.join( Environment.buildDirectory, 'resources', 'log' )
 export class Log{
 
 	logger: Winston.LoggerInstance;
+	directoryFound: boolean = false;
 
 	constructor(){}
 
@@ -22,9 +23,14 @@ export class Log{
 	}
 
 	checkDirectory(): void{
-		let directoryExists: boolean = Utils.isDirectory( logDirectory );
-		if( !directoryExists ){
-			Fs.mkdirSync( logDirectory );
+		try{
+			let directoryExists: boolean = Utils.isDirectory( logDirectory );
+			if( !directoryExists ){
+				Fs.mkdirSync( logDirectory );
+			}
+			this.directoryFound = true;
+		}catch( error ){
+			this.directoryFound = false;
 		}
 	}
 
@@ -37,11 +43,13 @@ export class Log{
 
 	getTransports(): Winston.TransportInstance[]{
 		let transports: Winston.TransportInstance[] = [];
-		transports.push(
-			new Winston.transports.File({
-				filename: Path.join( logDirectory, 'generic.log' )
-			})
-		);
+		if( this.directoryFound ){
+			transports.push(
+				new Winston.transports.File({
+					filename: Path.join( logDirectory, 'generic.log' )
+				})
+			);
+		}
 		if( Environment.debug ){
 			transports.push(
 				new Winston.transports.Console()
