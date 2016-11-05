@@ -36,7 +36,7 @@ export default class Router{
 				let credentials: Credentials = this.getCredentials( request );
 				this.validateCredentials( credentials )
 					.then( ( user: User ) => {
-						response.status( 200 ).send( this.createToken( user ) );
+						this.sendAuthenticated( response, user );
 					})
 					.catch( error => {
 						this.sendUnauthorized( response );
@@ -51,6 +51,11 @@ export default class Router{
 
 	sendUnauthorized( response: Response, message: string = `Unauthorized.` ): void{
 		response.status( 401 ).send( message );
+	}
+
+	sendAuthenticated( response: Response, user: User, message: string = `OK` ): void{
+		let token: string = this.createToken( user );
+		response.status( 200 ).send( message );
 	}
 
 	isBodyValid( request: Request ): boolean{
