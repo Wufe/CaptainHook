@@ -39,6 +39,7 @@ export default class Router{
 						this.sendAuthenticated( response, user );
 					})
 					.catch( error => {
+						console.log( error.message );
 						this.sendUnauthorized( response );
 					});
 			}
@@ -61,8 +62,9 @@ export default class Router{
 	setResponseCookie( response: Response, user: User ): Response{
 		let jwt: Token = this.createJwt( user );
 		let token: string = jwt.get();
+		let maxAge: number = jwt.getMaxAge();
 		return response.cookie( 'jwt', token, {
-			maxAge: jwt.getMaxAge()
+			maxAge: maxAge
 		});
 	}
 
