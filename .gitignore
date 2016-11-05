@@ -28,7 +28,8 @@ npm-debug.log
 test-results.xml
 
 # Configuration file
-**config.yml
+/build/resources/*config.yml
+/dist/resources/*config.yml
 
 # Yarn lock file
 yarn.lock
