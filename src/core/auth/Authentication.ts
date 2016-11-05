@@ -1,4 +1,7 @@
+/// <reference path="../../../typings/index.d.ts" />
+
 import {Credentials, Encryption} from '.';
+import {Response} from 'express';
 import {User} from '../actors';
 
 export default class Authentication{
@@ -34,5 +37,7 @@ export default class Authentication{
 		let encryption: Encryption = new Encryption( plainPassword );
 		return encryption.compare( hashedPassword );
 	}
+
+	setResponseCookie( response: Response, user: User ): void{}
 
 }
