@@ -51,6 +51,7 @@ class Configuration{
 	dumpConfiguration( configurationObject: any ): void{
 		try{
 			Fs.writeFileSync( this.configurationPath, Yaml.safeDump( configurationObject ) );
+			Log( 'silly', `Configuration updated.` );
 		}catch( error ){
 			Log( 'error', `Cannot write configuration.`, this.configurationPath, error );
 		}
