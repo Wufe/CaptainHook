@@ -38,18 +38,4 @@ export default class Authentication{
 		return encryption.compare( hashedPassword );
 	}
 
-	setResponseCookie( response: Response, user: User ): Response{
-		let jwt: Token = this.createJwt( user );
-		let token: string = jwt.get();
-		response.cookie( 'jwt', {
-			maxAge: jwt.getMaxAge()
-		});
-		return response;
-	}
-
-	createJwt( user: User ): Token{
-		let token: Token = new Token( user );
-		return token;
-	}
-
 }
