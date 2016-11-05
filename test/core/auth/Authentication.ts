@@ -55,5 +55,20 @@ describe( `Authentication`, () => {
 					done();
 				});
 		});
+		it( `should catch a error if trying to login with wrong username`, ( done: ( error?: any ) => void ) => {
+			let wrongAuthentication: Authentication = new Authentication({
+				username: 'admo',
+				password: credentials.password
+			});
+			let wrongValidation: Promise<User> = wrongAuthentication.validateCredentials();
+			Should( typeof wrongValidation ).not.be.equal( "undefined" );
+			wrongValidation
+				.then( ( user: User ) => {
+					done( new Error( `Validation should not work.` ) );
+				})
+				.catch( ( error: any ) => {
+					done();
+				});
+		});
 	});
 });
