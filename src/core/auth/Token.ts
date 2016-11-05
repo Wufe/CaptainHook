@@ -6,7 +6,12 @@ import * as Jwt from 'jsonwebtoken';
 import Configuration from '../Configuration';
 import {User} from '../actors';
 
-const jwtSecret: string = Configuration.get( 'security', 'jwt', 'secret' );
+interface JWTSettings{
+	secret: string;
+	expiration_hours: number;
+}
+
+const jwtSettings: JWTSettings = Configuration.get( 'security', 'jwt' );
 
 export default class Token{
 
@@ -17,7 +22,7 @@ export default class Token{
 	}
 
 	get(): string{
-		if( !jwtSecret )
+		if( !jwtSettings.secret )
 			throw new Error( `JWT secret not set.` );
 		if( !this.user )
 			throw new Error( `User not set.` );
@@ -25,7 +30,7 @@ export default class Token{
 			iat: this.getActualDate(),
 			exp: this.getExpirationDate(),
 			issuer: this.getIssuer()
-		}, jwtSecret );
+		}, jwtSettings.secret );
 		return token;
 	}
 
@@ -36,7 +41,9 @@ export default class Token{
 	}
 
 	getExpirationDate(): number{
-		let jwtExpirationHours: number = Configuration.get( 'security', 'jwt', 'expiration_hours' );
+		let jwtExpirationHours: number = jwtSettings.expiration_hours;
+		if( !jwtExpirationHours )
+			throw new Error( `JWT expiration_hours not set.` );
 		let unixMilliseconds: number = Moment().add( jwtExpirationHours, 'hour' ).valueOf();
 		let unixSeconds: number = Math.floor( unixMilliseconds / 1000 );
 		return unixSeconds;
