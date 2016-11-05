@@ -49,6 +49,10 @@ export default class Token{
 		return unixSeconds;
 	}
 
+	getMaxAge(): number{
+		return jwtSettings.expiration_hours * 60 * 60;
+	}
+
 	getIssuer(): any{
 		return this.user.get( 'id' );
 	}
