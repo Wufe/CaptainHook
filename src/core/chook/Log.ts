@@ -52,7 +52,12 @@ export class Log{
 		}
 		if( !Environment.quiet ){
 			transports.push(
-				new Winston.transports.Console()
+				new Winston.transports.Console({
+					level: 'debug',
+					prettyPrint: true,
+					colorize: true,
+					timestamp: false
+				})
 			);
 		}
 		return transports;
