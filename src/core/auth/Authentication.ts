@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import {Credentials, Encryption} from '.';
+import {Credentials, Encryption, Token} from '.';
 import {Response} from 'express';
 import {User} from '../actors';
 
@@ -38,6 +38,18 @@ export default class Authentication{
 		return encryption.compare( hashedPassword );
 	}
 
-	setResponseCookie( response: Response, user: User ): void{}
+	setResponseCookie( response: Response, user: User ): Response{
+		let jwt: Token = this.createJwt( user );
+		let token: string = jwt.get();
+		response.cookie( 'jwt', {
+			maxAge: jwt.getMaxAge()
+		});
+		return response;
+	}
+
+	createJwt( user: User ): Token{
+		let token: Token = new Token( user );
+		return token;
+	}
 
 }
