@@ -25,5 +25,20 @@ describe( `Authentication`, () => {
 					done( error );
 				});
 		});
+		it( `should catch a error if trying to login with empty password`, ( done: ( error?: any ) => void ) => {
+			let emptyAuthentication: Authentication = new Authentication({
+				username: credentials.username,
+				password: null
+			});
+			let emptyValidation: Promise<User> = emptyAuthentication.validateCredentials();
+			Should( typeof emptyValidation ).not.be.equal( "undefined" );
+			emptyValidation
+				.then( ( user: User ) => {
+					done( new Error( `Validation should not work.` ) );
+				})
+				.catch( ( error: any ) => {
+					done();
+				});
+		});
 	});
 });
