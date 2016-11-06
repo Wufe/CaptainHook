@@ -3,19 +3,19 @@
 import * as ArgParse from 'argparse';
 import {ArgumentParser} from 'argparse';
 
+import Creator from './Creator';
 import {Environment} from '../chook';
 
 export default class Entrypoint{
 
 	argumentParser: ArgumentParser;
-	constructor(){}
+	constructor(){
+		this.setup();
+	}
 
-	createArgumentParser(): void{
-		let argumentParser: ArgumentParser = new ArgumentParser({
-			version: Environment.package.version,
-			description: Environment.package.description,
-			addHelp: true
-		});
+	setup(): void{
+		let creator: Creator = new Creator();
+		this.argumentParser = creator.createArgumentParser();
 	}
 
 }
