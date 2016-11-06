@@ -32,9 +32,11 @@ export default class Creator{
 			title,
 			dest
 		});
-		commands.forEach( ( command: any ) => {
-			this.addCommand( subparser, command );
-		});
+		if( commands ){
+			commands.forEach( ( command: any ) => {
+				this.addCommand( subparser, command );
+			});
+		}
 	}
 
 	addCommand( subparser: SubParser, command: any ): void{
