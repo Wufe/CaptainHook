@@ -1,7 +1,6 @@
 {
 	"title": "Actions",
 	"dest": "action",
-	"required": true,
 	"commands": [
 		{
 			"id": "start",
@@ -42,7 +41,6 @@
 			"sub": {
 				"title": "Config",
 				"dest": "configAction",
-				"required": true,
 				"commands": [
 					{
 						"id": "get",
