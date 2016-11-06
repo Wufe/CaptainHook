@@ -12,9 +12,8 @@ class Environment{
 
 	projectRoot: string;
 	buildDirectory: string;
-	args: any = {
-		quiet: false
-	};
+	args: any;
+	quiet: boolean = false;
 	package: any = {};
 
 	constructor(){
