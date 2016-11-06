@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
 const CHook = require( __dirname + '/../lib/chook.js' );
-const Cli = CHook.Cli;
-new Cli();
+const Entrypoint = CHook.Entrypoint;
+new Entrypoint();
