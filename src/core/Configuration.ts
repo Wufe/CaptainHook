@@ -67,6 +67,7 @@ class Configuration{
 		let jwtSecret: string = Crypto.randomBytes( 32 ).toString( 'hex' );
 		let defaultConfiguration: any = {
 			gui: false,
+			debug: false,
 			server: {
 				hostname: '0.0.0.0',
 				port: 2555
