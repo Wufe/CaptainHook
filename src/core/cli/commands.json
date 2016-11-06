@@ -38,6 +38,7 @@
 			"id": "config",
 			"addHelp": true,
 			"aliases": [ "c" ],
+			"help": "Get and set configuration values.",
 			"sub": {
 				"title": "Config",
 				"dest": "configAction",
