@@ -38,6 +38,7 @@
 		{
 			"id": "config",
 			"addHelp": true,
+			"aliases": [ "c" ],
 			"sub": {
 				"title": "Config",
 				"dest": "configAction",
