@@ -5,7 +5,7 @@
   "main": "build/lib/chook.js",
   "scripts": {
     "compile": "npm-run-all core:compile frontend:compile",
-    "cover": "NODE_ENV=mocha nyc npm t -s",
+    "cover": "NODE_ENV=mocha nyc npm t -s && open coverage/index.html",
     "dev": "npm-run-all --parallel core:dev frontend:dev",
     "dev:core": "npm run -s core:dev",
     "dev:frontend": "npm run -s frontend:dev",
