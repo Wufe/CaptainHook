@@ -3,7 +3,7 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import {ArgumentParser, SubArgumentParserOptions, SubParser, SubparserOptions} from 'argparse';
+import {ArgumentOptions, ArgumentParser, SubArgumentParserOptions, SubParser, SubparserOptions} from 'argparse';
 import {Creator} from '../../../src/core/cli';
 
 describe( `Creator`, () => {
@@ -49,5 +49,21 @@ describe( `Creator`, () => {
 				help: 'help_'
 			});
 		});
-	})
+	});
+	describe( `addArgument`, () => {
+		it( `should call ArgumentParser.addArgument`, ( done ) => {
+			let mockArgumentParser: ArgumentParser;
+			mockArgumentParser = <ArgumentParser>({
+				addArgument: ( args : string[], options?: ArgumentOptions ): void => {
+					Should( args ).be.equal( "arg_" );
+					Should( options ).have.property( "action" ).which.is.equal( "store" );
+					done();
+				}
+			});
+			creator.addArgument( mockArgumentParser, {
+				id: "arg_",
+				action: "store"
+			});
+		});
+	});
 });
