@@ -16,7 +16,7 @@ export default class Entrypoint{
 	setup(): void{
 		let creator: Creator = new Creator();
 		this.argumentParser = creator.createArgumentParser();
-		this.argumentParser.parseArgs();
+		Environment.set( this.argumentParser.parseArgs(), 'args' );
 	}
 
 }
