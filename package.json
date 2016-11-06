@@ -41,6 +41,7 @@
   "contributors": [],
   "homepage": "https://github.com/wufe/captainhook#readme",
   "dependencies": {
+    "argparse": "^1.0.9",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
