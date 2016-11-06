@@ -27,11 +27,50 @@
 		},
 		{
 			"id": "stop",
-			"addHelp": true
+			"addHelp": true,
+			"help": "Stops the server."
 		},
 		{
 			"id": "status",
-			"addHelp": true
+			"addHelp": true,
+			"help": "Print the application status."
+		},
+		{
+			"id": "config",
+			"addHelp": true,
+			"sub": {
+				"title": "Config",
+				"dest": "configAction",
+				"required": true,
+				"commands": [
+					{
+						"id": "get",
+						"addHelp": true,
+						"help": "Get configuration value.",
+						"args": [
+							{
+								"id": "key",
+								"action": "store"
+							}
+						]
+					},
+					{
+						"id": "set",
+						"addHelp": true,
+						"help": "Set configuration value.",
+						"args": [
+							{
+								"id": "key",
+								"action": "store"
+							},
+							{
+								"id": "value",
+								"action": "store"
+							}
+						]
+					}
+				]
+			}
 		}
 	]
 }
