@@ -50,7 +50,14 @@ export class Log{
 				})
 			);
 		}
-		if( !Environment.args.quiet ){
+		let quiet: boolean = false;
+		let argsQuiet: any = Environment.get( 'args', 'quiet' );
+		if( argsQuiet === undefined ){
+			quiet = Environment.quiet;
+		}else{
+			quiet = argsQuiet;
+		}
+		if( !quiet ){
 			transports.push(
 				new Winston.transports.Console({
 					level: 'debug',
