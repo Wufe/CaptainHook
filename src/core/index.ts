@@ -1,12 +1,10 @@
-import Cli from './cli';
-import Entrypoint from './cli/Entrypoint';
+import {Entrypoint} from './cli';
 import {ServerManager} from './net';
 
 import {Actor, Hook, User, Test} from './actors';
 import {Encryption} from './auth';
 
 export {
-	Cli,
 	Entrypoint,
 	ServerManager
 };
