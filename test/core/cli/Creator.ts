@@ -25,8 +25,10 @@ describe( `Creator`, () => {
 					return null;
 				}
 			});
-			creator.addSubparser( , {} );
+			creator.addSubparser( mockArgumentParser, {
+				title: 'title_',
+				dest: 'dest_'
+			});
 		})
-		
 	});
 });
