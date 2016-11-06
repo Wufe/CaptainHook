@@ -27,7 +27,16 @@
 		{
 			"id": "stop",
 			"addHelp": true,
-			"help": "Stops the server."
+			"help": "Stops the server.",
+			"args": [
+				{
+					"id": [ "--quiet" ],
+					"help": "Suppress output.",
+					"nargs": 0,
+					"action": "storeTrue",
+					"defaultValue": false
+				}
+			]
 		},
 		{
 			"id": "status",
