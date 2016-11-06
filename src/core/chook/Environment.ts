@@ -12,18 +12,15 @@ class Environment{
 
 	projectRoot: string;
 	buildDirectory: string;
-	quiet: boolean = false;
+	args: any = {
+		quiet: false
+	};
 	package: any = {};
 
 	constructor(){
-		this.checkDebugEnvironment();
 		this.checkBuildDirectory();
 		this.checkProjectRoot();
 		this.checkPackage();
-	}
-
-	private checkDebugEnvironment(): void{
-		// TODO
 	}
 
 	private checkBuildDirectory(): void{
