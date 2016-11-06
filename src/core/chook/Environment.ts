@@ -22,11 +22,11 @@ class Environment{
 		this.checkPackage();
 	}
 
-	checkDebugEnvironment(): void{
+	private checkDebugEnvironment(): void{
 		// TODO
 	}
 
-	checkBuildDirectory(): void{
+	private checkBuildDirectory(): void{
 		let isMocha: boolean = process.env.NODE_ENV == 'mocha';
 		let isCircleCI: boolean = process.env.NODE_ENV == 'circleci';
 		let args: string[] = process.argv;
@@ -41,26 +41,27 @@ class Environment{
 		}
 	}
 
-	checkProjectRoot(): void{
+	private checkProjectRoot(): void{
 		let projectRoot: string = Path.resolve( Path.join( this.buildDirectory, '..' ) );
 		this.projectRoot = projectRoot;
 	}
 
-	checkPackage(): void{
+	private checkPackage(): void{
 		this.package = Package;
 		this.package.get = ( ...keys: string[] ): any => {
 			return Utils.getNestedValue( this.package, ...keys );
 		};
 	}
 
+	public get( ...keys: any[] ): any{
+		return Utils.getNestedValue( this, ...keys );
+	}
+
+	public set( value: any, ...keys: any[] ): void{
+		Utils.setNestedValue( this, value, ...keys );
+	}
+
 }
 
 const environment: Environment = new Environment();
-let {projectRoot, buildDirectory, quiet} = environment;
-let _package: any = environment.package;
-export default {
-	projectRoot,
-	buildDirectory,
-	package: _package,
-	quiet
-};
+export default environment;
