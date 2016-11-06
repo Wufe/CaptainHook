@@ -1,21 +1,37 @@
 {
-    "config": {
-        "description": "Handles the configuration",
-        "opts": [],
-        "args": [],
-        "callable": false,
-        "subcommands": {
-            "get": {
-                "description": "Get a specific property",
-                "opts": [],
-                "args": [{
-                    "name": "property",
-                    "description": "the property to be got",
-                    "required": true
-                }],
-                "callable": true,
-                "subcommands": []
-            }
-        }
-    }
+	"title": "Actions",
+	"dest": "action",
+	"required": true,
+	"commands": [
+		{
+			"id": "start",
+			"addHelp": true,
+			"aliases": [ "s" ],
+			"help": "Starts hook and frontend server.",
+			"args": [
+				{
+					"id": [ "--attached" ],
+					"help": "Start the server attached to the cli process.",
+					"nargs": 0,
+					"action": "storeTrue",
+					"defaultValue": false
+				},
+				{
+					"id": [ "--quiet" ],
+					"help": "Suppress output.",
+					"nargs": 0,
+					"action": "storeTrue",
+					"defaultValue": false
+				}
+			]
+		},
+		{
+			"id": "stop",
+			"addHelp": true
+		},
+		{
+			"id": "status",
+			"addHelp": true
+		}
+	]
 }
