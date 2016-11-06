@@ -41,6 +41,7 @@ class Configuration{
 			this.generateDefaultConfiguration();
 			try{
 				fileContent = Fs.readFileSync( filePath, 'utf8' );
+				Log( 'info', `Configuration file created.` );
 			}catch( error ){
 				Log( 'error', `Configuration file read failed.`, error );
 			}
