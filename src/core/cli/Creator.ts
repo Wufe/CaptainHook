@@ -33,31 +33,35 @@ export default class Creator{
 			dest
 		});
 		commands.forEach( ( command: any ) => {
-			let {id, args, sub}: {
+			this.addCommand( subparser, command );
+		});
+	}
+
+	addCommand( subparser: SubParser, command: any ): void{
+		let {id, args, sub}: {
 				id?: any;
 				args?: any[];
 				sub?: any;
 			} = command;
-			if( command.args )
-				delete command.args;
-			if( command.sub )
-				delete command.sub;
-			if( command.id )
-				delete command.id;
+			delete command.args;
+			delete command.sub;
+			delete command.id;
 			let parser: ArgumentParser = subparser.addParser( id, command );
 			if( args ){
 				args.forEach( ( arg: any ) => {
-					let {id}: {
-						id?: any;
-					} = arg;
-					if( arg.id )
-						delete arg.id;
-					parser.addArgument( id, arg );
+					this.addArgument( parser, arg );
 				});
 			}
 			if( sub )
 				this.addSubparser( parser, sub );
-		});
+	}
+
+	addArgument( parser: ArgumentParser, argument: any ){
+		let {id}: {
+			id?: any;
+		} = argument;
+		delete argument.id;
+		parser.addArgument( id, argument );
 	}
 
 }
