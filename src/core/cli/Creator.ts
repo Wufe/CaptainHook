@@ -23,10 +23,9 @@ export default class Creator{
 	}
 
 	addSubparser( rootParser: ArgumentParser, properties: any ): void{
-		let {title, dest, required, commands}: {
+		let {title, dest, commands}: {
 			title?: string;
 			dest?: string;
-			required?: boolean;
 			commands?: any[];
 		} = properties;
 		let subparser: SubParser = rootParser.addSubparsers({
