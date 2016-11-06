@@ -3,7 +3,7 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import {ArgumentParser, SubParser, SubparserOptions} from 'argparse';
+import {ArgumentParser, SubArgumentParserOptions, SubParser, SubparserOptions} from 'argparse';
 import {Creator} from '../../../src/core/cli';
 
 describe( `Creator`, () => {
@@ -18,7 +18,7 @@ describe( `Creator`, () => {
 		it( `should call ArgumentParser.addSubparser`, ( done ) => {
 			let mockArgumentParser: ArgumentParser;
 			mockArgumentParser = <ArgumentParser>({
-				addSubparsers: ( options? : SubparserOptions ): SubParser => {
+				addSubparsers: ( options?: SubparserOptions ): SubParser => {
 					Should( options ).have.property( 'title' ).which.is.equal( 'title_' );
 					Should( options ).have.property( 'dest' ).which.is.equal( 'dest_' );
 					done();
@@ -31,4 +31,23 @@ describe( `Creator`, () => {
 			});
 		})
 	});
+	describe( `addCommand`, () => {
+		it( `should call SubParser.addParser`, ( done ) => {
+			let mockSubParser: SubParser;
+			mockSubParser = <SubParser>({
+				addParser: ( name: string, options?: SubArgumentParserOptions ): ArgumentParser => {
+					Should( name ).be.equal( 'name_' );
+					Should( options ).have.property( 'addHelp' ).which.is.equal( true );
+					Should( options ).have.property( 'help' ).which.is.equal( "help_" );
+					done();
+					return null;
+				}
+			});
+			creator.addCommand( mockSubParser, {
+				id: 'name_',
+				addHelp: true,
+				help: 'help_'
+			});
+		});
+	})
 });
