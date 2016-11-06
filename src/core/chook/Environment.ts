@@ -57,10 +57,10 @@ class Environment{
 
 const environment: Environment = new Environment();
 let {projectRoot, buildDirectory, quiet} = environment;
-let pack: any = environment.package;
+let _package: any = environment.package;
 export default {
 	projectRoot,
 	buildDirectory,
-	package: pack,
+	package: _package,
 	quiet
 };
