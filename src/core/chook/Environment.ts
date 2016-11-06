@@ -1,7 +1,10 @@
-declare let require: any;
-declare let process: any;
-const Path = require( 'path' );
-const Fs = require( 'fs' );
+/// <reference path="../../../typings/index.d.ts" />
+
+import * as Path from 'path';
+import * as Fs from 'fs';
+import * as Utils from './Utils';
+
+const Package = require( '../../../package.json' );
 
 const circleCIBuildPath = '/home/ubuntu/CaptainHook/build';
 
@@ -10,20 +13,17 @@ class Environment{
 	projectRoot: string;
 	buildDirectory: string;
 	quiet: boolean = false;
+	package: any = {};
 
 	constructor(){
 		this.checkDebugEnvironment();
 		this.checkBuildDirectory();
 		this.checkProjectRoot();
+		this.checkPackage();
 	}
 
 	checkDebugEnvironment(): void{
 		// TODO
-	}
-
-	checkProjectRoot(): void{
-		let projectRoot: string = Path.resolve( Path.join( this.buildDirectory, '..' ) );
-		this.projectRoot = projectRoot;
 	}
 
 	checkBuildDirectory(): void{
@@ -39,10 +39,28 @@ class Environment{
 		}else{
 			this.buildDirectory = Path.resolve( Path.join( Path.dirname( realPath ), '..' ) );
 		}
-		
+	}
+
+	checkProjectRoot(): void{
+		let projectRoot: string = Path.resolve( Path.join( this.buildDirectory, '..' ) );
+		this.projectRoot = projectRoot;
+	}
+
+	checkPackage(): void{
+		this.package = Package;
+		this.package.get = ( ...keys: string[] ): any => {
+			return Utils.getNestedValue( this.package, ...keys );
+		};
 	}
 
 }
 
 const environment: Environment = new Environment();
-export default environment;
+let {projectRoot, buildDirectory, quiet} = environment;
+let pack: any = environment.package;
+export default {
+	projectRoot,
+	buildDirectory,
+	package: pack,
+	quiet
+};
