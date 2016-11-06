@@ -2,4 +2,14 @@
 
 import * as ArgParse from 'argparse';
 
-export default class Entrypoint{}
+export default class Entrypoint{
+
+	argumentParser: ArgParse.ArgumentParser;
+
+	constructor(){}
+
+	createArgumentParser(): void{
+		
+	}
+
+}
