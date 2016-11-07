@@ -50,4 +50,14 @@ describe( 'Configuration', () => {
 			Should( value ).have.property( 'e' ).which.is.equal( 'f' );
 		});
 	});
+	describe( `getDefaultConfiguration`, () => {
+		it( `should create a default jwt secret`, () => {
+			Should( Configuration.getDefaultConfiguration() )
+				.have
+				.propertyByPath( 'security', 'jwt', 'secret', 'length' )
+				.which
+				.is
+				.equal( 64 );
+		});
+	})
 });
