@@ -15,11 +15,24 @@ class Environment{
 	args: any;
 	quiet: boolean = false;
 	package: any = {};
+	test: boolean = false;
 
 	constructor(){
+		this.checkTestEnvironment();
 		this.checkBuildDirectory();
 		this.checkProjectRoot();
 		this.checkPackage();
+	}
+
+	private checkTestEnvironment(): void{
+		let env: string = process.env.NODE_ENV;
+		if( env == 'mocha' 
+			|| env == 'circleci' 
+			|| env == 'test' ){
+			this.test = true;
+		}else{
+			this.test = false;	
+		}
 	}
 
 	private checkBuildDirectory(): void{
