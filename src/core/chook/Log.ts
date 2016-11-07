@@ -61,11 +61,16 @@ export class Log{
 					level: 'debug',
 					prettyPrint: true,
 					colorize: true,
+					silent: this.isTest() ? true : false,
 					timestamp: this.getTimestamp
 				})
 			);
 		}
 		return transports;
+	}
+
+	isTest(): boolean{
+		return Environment.test;
 	}
 
 	isQuiet(): boolean{
