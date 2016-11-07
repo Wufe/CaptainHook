@@ -6,7 +6,7 @@ import * as Utils from './Utils';
 
 const Package = require( '../../../package.json' );
 
-const circleCIBuildPath = '/home/ubuntu/CaptainHook/build';
+const circleCIBuildPath = `/home/ubuntu/${process.env.CIRCLE_PROJECT_REPONAME}/build`;
 
 class Environment{
 
