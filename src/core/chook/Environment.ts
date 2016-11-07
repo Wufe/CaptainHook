@@ -44,9 +44,6 @@ class Environment{
 
 	private checkPackage(): void{
 		this.package = Package;
-		this.package.get = ( ...keys: string[] ): any => {
-			return Utils.getNestedValue( this.package, ...keys );
-		};
 	}
 
 	public get( ...keys: any[] ): any{
