@@ -11,7 +11,7 @@ const Fs = require( 'fs' );
 
 const configFileName: string = 'config.yml';
 
-class Configuration{
+export class Configuration{
 
 	configurationPath: string;
 	configuration: any;
