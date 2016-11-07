@@ -22,17 +22,17 @@ describe( 'Configuration', () => {
 	describe( `set`, () => {
 		it( 'should add a string configuration value', () => {
 			Configuration.set( 'lol', 'asd' );
-			Configuration.should.have.propertyByPath( 'configuration', 'asd' ).which.is.equal( "lol" );
+			Configuration.should.have.propertyByPath( 'configuration', 'content', 'asd' ).which.is.equal( "lol" );
 		});
 		it( 'should add a array configuration value', () => {
 			Configuration.set( [ 'lol', 'rofl' ], 'asd' );
-			Configuration.should.have.propertyByPath( 'configuration', 'asd' ).which.is.Array;
-			Configuration.should.have.propertyByPath( 'configuration', 'asd' ).which.containDeep([ "lol", "rofl" ]);
+			Configuration.should.have.propertyByPath( 'configuration', 'content', 'asd' ).which.is.Array;
+			Configuration.should.have.propertyByPath( 'configuration', 'content', 'asd' ).which.containDeep([ "lol", "rofl" ]);
 		});
 		it( 'should add a object configuration value', () => {
 			Configuration.set( { lol: 'lol', rofl: 'rofl' }, 'asd' );
-			Configuration.should.have.propertyByPath( 'configuration', 'asd', 'lol' ).which.equal( 'lol' );
-			Configuration.should.have.propertyByPath( 'configuration', 'asd', 'rofl' ).which.equal( 'rofl' );
+			Configuration.should.have.propertyByPath( 'configuration', 'content', 'asd', 'lol' ).which.equal( 'lol' );
+			Configuration.should.have.propertyByPath( 'configuration', 'content', 'asd', 'rofl' ).which.equal( 'rofl' );
 		});
 	});
 	describe( `get`, () => {
@@ -63,16 +63,16 @@ describe( 'Configuration', () => {
 	});
 	describe( `getFileContent`, () => {
 		it( `should fail with wrong path`, () => {
-			Should( typeof Configuration.getFileContent( `/dev/null/config.yml` ) )
+			Should( Configuration.getFileContent( `/dev/null/config.yml` ) )
 				.be
-				.equal( "undefined" );
+				.equal( null );
 		});
 	});
 	describe( `dumpConfiguration`, () => {
 		it( `should fail with wrong path`, () => {
 			let conf: Conf.Configuration = new Conf.Configuration();
 			conf.configurationPath = '/dev/null/config.yml';
-			conf.dumpConfiguration({});
+			Should( conf.dumpConfiguration({}) ).be.equal( false );
 		});
 	});
 });
