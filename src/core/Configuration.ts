@@ -29,7 +29,8 @@ export class Configuration{
 
 	readConfiguration(): void{
 		let fileContent: string = this.getFileContent( this.configurationPath );
-		this.configuration = Yaml.safeLoad( fileContent );
+		let loadedContent: any = Yaml.safeLoad( fileContent );
+		this.configuration = loadedContent || {};
 	}
 
 	getFileContent( filePath: string ): string{
