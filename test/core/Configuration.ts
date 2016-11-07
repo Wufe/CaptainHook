@@ -4,6 +4,7 @@ import * as Mocha from 'mocha';
 import * as Should from 'should';
 
 import Configuration from '../../src/core/Configuration';
+import * as Conf from '../../src/core/Configuration';
 
 describe( 'Configuration', () => {
 	describe( `its instance`, () => {
@@ -63,8 +64,15 @@ describe( 'Configuration', () => {
 	describe( `getFileContent`, () => {
 		it( `should fail with wrong path`, () => {
 			Should( typeof Configuration.getFileContent( `/dev/null/config.yml` ) )
-			.be
-			.equal( "undefined" );
+				.be
+				.equal( "undefined" );
+		});
+	});
+	describe( `dumpConfiguration`, () => {
+		it( `should fail with wrong path`, () => {
+			let conf: Conf.Configuration = new Conf.Configuration();
+			conf.configurationPath = '/dev/null/config.yml';
+			conf.dumpConfiguration({});
 		});
 	});
 });
