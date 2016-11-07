@@ -14,7 +14,7 @@ const configFileName: string = 'config.yml';
 export class Configuration{
 
 	configurationPath: string;
-	configuration: any;
+	configuration: any = {};
 
 	constructor(){
 		let configurationFile: string = configFileName;
