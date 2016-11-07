@@ -22,6 +22,7 @@ export class Log{
 
 	setup(): void{
 		this.log = this.log.bind( this );
+		this.getTimestamp = this.getTimestamp.bind( this );
 		this.checkDirectory();
 		this.createLogger();
 	}
@@ -60,9 +61,7 @@ export class Log{
 					level: 'debug',
 					prettyPrint: true,
 					colorize: true,
-					timestamp: () => {
-						return `[${ Chalk.grey( this.getTime() ) }]`
-					}
+					timestamp: this.getTimestamp
 				})
 			);
 		}
@@ -82,6 +81,10 @@ export class Log{
 
 	getTime(): string{
 		return ( Moment() ).format( 'ddd, DD MMM YYYY - HH:mm:ss' );
+	}
+
+	getTimestamp(): string{
+		return `[${ Chalk.grey( this.getTime() ) }]`;
 	}
 
 	log( level: string, message: string, ...meta: any[] ): void{
