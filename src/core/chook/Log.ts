@@ -53,14 +53,7 @@ export class Log{
 				})
 			);
 		}
-		let quiet: boolean = false;
-		let argsQuiet: any = Environment.get( 'args', 'quiet' );
-		if( argsQuiet === undefined ){
-			quiet = Environment.quiet;
-		}else{
-			quiet = argsQuiet;
-		}
-		if( !quiet ){
+		if( !this.isQuiet() ){
 			transports.push(
 				new Winston.transports.Console({
 					level: 'debug',
@@ -73,6 +66,17 @@ export class Log{
 			);
 		}
 		return transports;
+	}
+
+	isQuiet(): boolean{
+		let quiet: boolean = false;
+		let argsQuiet: any = Environment.get( 'args', 'quiet' );
+		if( argsQuiet === undefined ){
+			quiet = Environment.quiet;
+		}else{
+			quiet = argsQuiet;
+		}
+		return quiet;
 	}
 
 	getTime(): string{
