@@ -59,5 +59,12 @@ describe( 'Configuration', () => {
 				.is
 				.equal( 64 );
 		});
-	})
+	});
+	describe( `getFileContent`, () => {
+		it( `should fail with wrong path`, () => {
+			Should( typeof Configuration.getFileContent( `/dev/null/config.yml` ) )
+			.be
+			.equal( "undefined" );
+		});
+	});
 });
