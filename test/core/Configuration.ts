@@ -35,15 +35,19 @@ describe( 'Configuration', () => {
 		});
 	});
 	describe( `get`, () => {
-		Configuration.set( 'dsa', 'asd' );
-		Configuration.set({ lal: 'rofl' }, 'lol' );
+		Configuration.set({
+			b: 'c',
+			d: {
+				e: 'f'
+			}
+		}, 'a' );
 		it( 'should get a single value', () => {
-			let value = Configuration.get( 'asd' );
-			value.should.equal( "dsa" );
+			let value = Configuration.get( 'a', 'b' );
+			value.should.equal( "c" );
 		})
 		it( 'should get nested element value', () => {
-			let value = Configuration.get( 'lol', 'lal' );
-			value.should.equal( "rofl" );
+			let value = Configuration.get( 'a', 'd' );
+			Should( value ).have.property( 'e' ).which.is.equal( 'f' );
 		});
 	});
 });
