@@ -1,4 +1,5 @@
 const externals = require( 'webpack-node-externals' );
+const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
 
 module.exports = {
     context: __dirname,
@@ -30,6 +31,13 @@ module.exports = {
         ]
     },
     externals: [ externals() ],
+    plugins: [
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            reportFilename: '../../analysis/report.html',
+            openAnalyzer: false
+        })
+    ],
     node:{
         __filename: true,
         __dirname: true
