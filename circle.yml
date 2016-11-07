@@ -9,6 +9,7 @@ machine:
 dependencies:
   pre:
     - pwd
+    - echo $CIRCLE_PROJECT_REPONAME
   override:
     - npm install -s
     
