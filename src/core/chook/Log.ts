@@ -3,6 +3,9 @@
 import Environment from './Environment';
 import * as Utils from './Utils';
 
+import * as Chalk from 'chalk';
+import * as Moment from 'moment';
+
 import * as Fs from 'fs';
 import * as Path from 'path';
 import * as Winston from 'winston';
@@ -63,11 +66,17 @@ export class Log{
 					level: 'debug',
 					prettyPrint: true,
 					colorize: true,
-					timestamp: false
+					timestamp: () => {
+						return `[${ Chalk.grey( this.getTime() ) }]`
+					}
 				})
 			);
 		}
 		return transports;
+	}
+
+	getTime(): string{
+		return ( Moment() ).format( 'ddd, DD MMM YYYY - HH:mm:ss' );
 	}
 
 	log( level: string, message: string, ...meta: any[] ): void{
