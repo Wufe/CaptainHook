@@ -2,66 +2,131 @@
 
 import Environment from './chook/Environment';
 import Log from './chook/Log';
+
 import * as Crypto from 'crypto';
+import * as Fs from 'fs';
+import * as Path from 'path';
 import * as Utils from './chook/Utils';
 import * as Yaml from 'js-yaml';
 
-const Path = require( 'path' );
-const Fs = require( 'fs' );
+const configurationFilename: string = 'config.yml';
 
-const configFileName: string = 'config.yml';
+export interface ConfigurationType{
+	store: "memory" | "file";
+	filename: string;
+	directory: string;
+	filepath: string;
+	content: any;
+}
 
 export class Configuration{
 
 	configurationPath: string;
-	configuration: any = {};
+	configuration: ConfigurationType = {
+		store: "file",
+		filename: null,
+		directory: null,
+		filepath: null,
+		content: null
+	};
 
-	constructor(){
-		let configurationFile: string = configFileName;
-		if( process.env.NODE_ENV == 'mocha' ||
-			process.env.NODE_ENV == 'circleci' ||
-			process.env.NODE_ENV == 'test' ){
-			configurationFile = 'test.config.yml';
-		}
-		this.configurationPath = Path.join( Environment.buildDirectory, 'resources', configurationFile );
+	constructor(){}
+
+	setup(): void{
+		this.loadFile();
+		this.checkStore();
 		this.readConfiguration();
 	}
 
-	readConfiguration(): void{
-		let fileContent: string = this.getFileContent( this.configurationPath );
-		let loadedContent: any = Yaml.safeLoad( fileContent );
-		this.configuration = loadedContent || {};
+	loadFile(): void{
+		let isTestEnvironment: boolean =
+			process.env.NODE_ENV == 'mocha' ||
+			process.env.NODE_ENV == 'circleci' ||
+			process.env.NODE_ENV == 'test';
+
+		this.configuration.filename = isTestEnvironment ? `test.${configurationFilename}` : configurationFilename;
+		this.configuration.directory = Path.join( Environment.buildDirectory, 'resources' );
+		this.configuration.filepath = Path.join( this.configuration.directory, this.configuration.filename );
+		this.configuration.content = {};
 	}
 
-	getFileContent( filePath: string ): string{
-		let fileContent: string;
-		try{
-			fileContent = Fs.readFileSync( filePath, 'utf8' );
-		}catch( error ){
-			Log( 'warn', `Cannot find configuration file.`, filePath );
-			this.generateDefaultConfiguration();
+	checkStore(): void{
+		let isDirectoryReady: boolean = this.checkDirectory();
+		if( !isDirectoryReady ){
+			this.configuration.store = "memory";
+			return;
+		}
+		let isFileReady: boolean = this.checkFile();
+		if( !isFileReady )
+			this.configuration.store = "memory";
+	}
+
+	checkDirectory(): boolean{
+		let directoryExists: boolean = Utils.isDirectory( this.configuration.directory );
+		if( !directoryExists ){
+			Log( 'warn', `Cannot find configuration directory.` );
 			try{
-				fileContent = Fs.readFileSync( filePath, 'utf8' );
-				Log( 'info', `Configuration file created.` );
+				Fs.mkdirSync( this.configuration.directory );
+				Log( 'info', `Configuration directory created.` );
+				return true;
 			}catch( error ){
-				Log( 'error', `Configuration file read failed.`, error );
+				Log( 'error', `Cannot create configuration directory.`, this.configuration, error );
+				return false;
 			}
 		}
-		return fileContent;
+		return true;
 	}
 
-	dumpConfiguration( configurationObject: any ): void{
-		try{
-			Fs.writeFileSync( this.configurationPath, Yaml.safeDump( configurationObject ) );
-			Log( 'silly', `Configuration updated.` );
-		}catch( error ){
-			Log( 'error', `Cannot write configuration.`, this.configurationPath, error );
+	checkFile(): boolean{
+		let fileExists: boolean = Utils.isFile( this.configuration.filepath );
+		if( !fileExists ){
+			Log( 'warn', `Cannot find configuration file.` );
+			let writeSucceded: boolean = this.dumpConfiguration( this.getDefaultConfiguration() );
+			if( !writeSucceded ){
+				Log( 'error', `Cannot create configuration file.`, this.configuration );
+				return false;
+			}else{
+				Log( 'info', `Configuration file created.` );
+				return true;
+			}
+		}
+		return true;
+	}
+
+	readConfiguration(): void{
+		let fileContent: string = this.getFileContent( this.configuration.filepath );
+		if( !fileContent ){
+			this.configuration.content = this.getDefaultConfiguration();
+		}else{
+			this.configuration.content = Yaml.safeLoad( fileContent );
 		}
 	}
 
-	generateDefaultConfiguration(): void{
-		let defaultConfiguration: any = this.getDefaultConfiguration();
-		this.dumpConfiguration( defaultConfiguration );
+	getFileContent( filepath: string ): string{
+		if( this.configuration.store == "file" ){
+			try{
+				let content: string = Fs.readFileSync( filepath, 'utf8' );
+				return content;
+			}catch( error ){
+				Log( 'error', `Cannot read from configuration file.`, this.configuration, error );
+				return null;
+			}
+		}
+		return null;
+	}
+
+	dumpConfiguration( configurationObject: any ): boolean{
+		if( this.configuration.store == "file" ){
+			try{
+				Fs.writeFileSync( this.configuration.filepath, Yaml.safeDump( configurationObject ) );
+				Log( 'silly', `Configuration updated.` );
+				return true;
+			}catch( error ){
+				Log( 'error', `Cannot write configuration.`, this.configuration, error );
+				return false;
+			}
+		}
+		return false;
 	}
 
 	getDefaultConfiguration(): any{
@@ -84,15 +149,16 @@ export class Configuration{
 	}
 
 	get( ...keys: string[] ): any{
-		return Utils.getNestedValue( this.configuration, ...keys );
+		return Utils.getNestedValue( this.configuration.content, ...keys );
 	}
 
 	set( value: any, ...keys: string[] ): void{
-		this.configuration = Utils.setNestedValue( this.configuration, value, ...keys );
-		this.dumpConfiguration( this.configuration );
+		this.configuration.content = Utils.setNestedValue( this.configuration.content, value, ...keys );
+		this.dumpConfiguration( this.configuration.content );
 	}
 
 }
 
 const configuration: Configuration = new Configuration();
+configuration.setup();
 export default configuration;
