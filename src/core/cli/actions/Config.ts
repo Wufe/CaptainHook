@@ -1,6 +1,6 @@
 import Action from './Action';
 
-export default class Config extends Action{
+class Config extends Action{
 
 	constructor(){
 		super();
@@ -8,3 +8,6 @@ export default class Config extends Action{
 	}
 
 }
+
+const config: Config = new Config();
+export default config;
