@@ -9,10 +9,12 @@ export default class Action{
 				return true;
 		}
 		if( this.actions ){
+			let found: boolean = false;
 			this.actions.forEach( ( act: string ) => {
 				if( act == action )
-					return true;
+					found = true;
 			});
+			return found;
 		}
 		return false;
 	}
