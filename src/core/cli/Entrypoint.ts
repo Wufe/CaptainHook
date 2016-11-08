@@ -3,7 +3,7 @@
 import * as ArgParse from 'argparse';
 import {ArgumentParser} from 'argparse';
 
-import Creator from './Creator';
+import {Creator, dispatch} from '.';
 import {Environment} from '../chook';
 
 export default class Entrypoint{
@@ -20,6 +20,10 @@ export default class Entrypoint{
 
 	parseArgs(): void{
 		Environment.set( this.argumentParser.parseArgs(), 'args' );
+	}
+
+	run(){
+		dispatch();
 	}
 
 }
