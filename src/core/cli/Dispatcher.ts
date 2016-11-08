@@ -1,4 +1,5 @@
 import * as Actions from './actions';
+import {Action} from '.';
 import {Environment} from '../chook';
 
 export class Dispatcher{
@@ -11,8 +12,15 @@ export class Dispatcher{
 		let args: any = Environment.get( 'args' );
 		if( !args )
 			return;
-		if( !args.action )
+		if( !args[ 'action' ] )
 			return;
+		let availableActions: any = Actions;
+		for( let actionName in Actions ){
+			let action: Action = <Action>(availableActions[ actionName ]);
+			if( action.matches( args[ 'action' ] ) ){
+				action.run();
+			}
+		}
 	}
 
 }
