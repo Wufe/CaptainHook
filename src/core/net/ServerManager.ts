@@ -1,6 +1,7 @@
 import * as Authentication from '../auth';
 import Configuration from '../Configuration';
 import GUIManager from '../gui/GUIManager';
+import {Log} from '../chook';
 import {Server} from '.';
 
 export default class ServerManager{
@@ -40,6 +41,10 @@ export default class ServerManager{
 
 	createGuiManager(): GUIManager{
 		return new GUIManager( this.serverInstance );
+	}
+
+	start(): void{
+		this.serverInstance.listen();
 	}
 
 }
