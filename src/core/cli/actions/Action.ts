@@ -17,4 +17,6 @@ export default class Action{
 		return false;
 	}
 
+	public run(){}
+
 }
