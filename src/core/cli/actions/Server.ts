@@ -1,6 +1,15 @@
 import Action from './Action';
 
+import {Environment} from '../../chook';
+import {ServerManager} from '../../net';
+
 class Server extends Action{
+
+	args: {
+		action: string;
+		attached: boolean;
+		quiet: boolean;
+	};
 
 	constructor(){
 		super();
@@ -9,7 +18,18 @@ class Server extends Action{
 
 	run(): void{
 		super.run();
-		console.log( 'Calling server component' );
+		this.args = Environment.get( 'args' );
+		if( this.args[ 'action' ] == 'start' ){
+			this.startServer();
+		}
+	}
+
+	startServer(): void{
+		if( this.args.attached ){
+			let serverManager: ServerManager = new ServerManager();
+			serverManager.initialize();
+			serverManager.start();
+		}
 	}
 
 }
