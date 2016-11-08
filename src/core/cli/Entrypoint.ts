@@ -9,9 +9,7 @@ import {Environment} from '../chook';
 export default class Entrypoint{
 
 	argumentParser: ArgumentParser;
-	constructor(){
-		this.setup();
-	}
+	constructor(){}
 
 	setup(): void{
 		let creator: Creator = new Creator();
@@ -23,6 +21,8 @@ export default class Entrypoint{
 	}
 
 	run(){
+		this.setup();
+		this.parseArgs();
 		dispatch();
 	}
 

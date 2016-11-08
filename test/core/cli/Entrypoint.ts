@@ -12,6 +12,7 @@ describe( `Entrypoint`, () => {
 	});
 	it( `should create an argumentParser after instantiation`, () => {
 		let entrypoint: Entrypoint = new Entrypoint();
+		entrypoint.setup();
 		Should( typeof entrypoint.argumentParser ).not.be.equal( "undefined" );
 	});
 });
