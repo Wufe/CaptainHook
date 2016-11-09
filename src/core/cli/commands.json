@@ -21,6 +21,13 @@
 					"nargs": 0,
 					"action": "storeTrue",
 					"defaultValue": false
+				},
+				{
+					"id": [ "--gui" ],
+					"help": "Start gui ignoring configuration directives.",
+					"nargs": 0,
+					"action": "storeTrue",
+					"defaultValue": false
 				}
 			]
 		},

@@ -9,6 +9,7 @@ class Server extends Action{
 		action: string;
 		attached: boolean;
 		quiet: boolean;
+		gui: boolean;
 	};
 
 	constructor(){
