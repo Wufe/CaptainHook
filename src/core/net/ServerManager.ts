@@ -1,7 +1,11 @@
+/// <reference path="../../../typings/index.d.ts" />
+
+import * as Path from 'path';
+
 import * as Authentication from '../auth';
 import Configuration from '../Configuration';
 import GUIManager from '../gui/GUIManager';
-import {Environment, Log} from '../chook';
+import {Environment, Log, Process, ProcessManager} from '../chook';
 import {Server} from '.';
 
 export default class ServerManager{
@@ -45,6 +49,31 @@ export default class ServerManager{
 
 	start(): void{
 		this.serverInstance.listen();
+	}
+
+	startDetached(): void{
+		let processArguments: string[] = [ 'start', '--attached' ];
+		if( Environment.get( 'args', 'gui' ) )
+			processArguments.push( '--gui' );
+		if( Environment.get( 'args', 'quiet' ) )
+			processArguments.push( '--quiet' );
+		let processInfo: Process = {
+			binary: Path.join( Environment.buildDirectory, 'bin', 'chook' ),
+			arguments: processArguments
+		};
+		let processManager: ProcessManager = new ProcessManager( processInfo );
+		processManager.spawnProcess();
+		processManager.saveProcess();
+		Log( 'info', 'Server started and saved.' );
+	}
+
+	stop(): void{
+		let processManager: ProcessManager = ProcessManager.loadProcess();
+		if( processManager ){
+			processManager.killProcess();
+			processManager.deleteProcess();	
+			Log( 'info', 'Server stopped and deleted.' );
+		}
 	}
 
 }

@@ -19,7 +19,7 @@ export interface Process{
 export class ProcessManager{
 
 	processInfo: Process;
-	defaultArguments = [];
+	defaultArguments: string[] = [];
 
 	constructor( processInfo: Process ){
 		if( !processInfo.arguments )
