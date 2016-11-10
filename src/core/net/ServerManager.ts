@@ -1,12 +1,13 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as Path from 'path';
+import * as Request from 'request';
 
 import * as Authentication from '../auth';
 import Configuration from '../Configuration';
 import GUIManager from '../gui/GUIManager';
 import {Environment, Log, Process, ProcessManager} from '../chook';
-import {Server} from '.';
+import {Controller, Server} from '.';
 
 export default class ServerManager{
 
@@ -19,10 +20,16 @@ export default class ServerManager{
 	}
 
 	initialize(): void{
+		this.initializeControlRoutes();
 		if( this.isGuiEnabled() ){
 			this.initializeAuthentication();
 			this.initializeGui();	
 		}
+	}
+
+	initializeControlRoutes(): void{
+		let controller: Controller = new Controller( this.serverInstance );
+		controller.setup();
 	}
 
 	isGuiEnabled(): boolean{
@@ -74,6 +81,44 @@ export default class ServerManager{
 			processManager.deleteProcess();	
 			Log( 'info', 'Server stopped and deleted.' );
 		}
+	}
+
+	pingPid(): Promise<string>{
+		let server: {
+			hostname: string;
+			port: number;
+		} = Configuration.get( 'server' );
+		let token: string = Configuration.get( 'security', 'token' );
+		return new Promise<string>( ( resolve, reject ) => {
+			Request.post( `http://${server.hostname}:${server.port}/ping`, {
+				timeout: 1000,
+				json: {
+					token
+				}
+			}, ( error: any, response: any, body: any ) => {
+				if( error ){
+					reject( new Error( `Request error.` ) );
+				}else if( response.statusCode == 401 ){
+					reject( new Error( `Wrong security token.` ) );
+				}else if( response.statusCode != 200 ){
+					reject( new Error( `Wrong response code.` ) );
+				}else{
+					resolve( body );
+				}
+			});
+		});
+	}
+
+	isOnline(): Promise<boolean>{
+		return new Promise<boolean>( ( resolve ) => {
+			this.pingPid()
+				.then(() => {
+					resolve( true );
+				})
+				.catch(() => {
+					resolve( false );
+				});
+		});
 	}
 
 }

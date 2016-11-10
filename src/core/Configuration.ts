@@ -131,6 +131,7 @@ export class Configuration{
 
 	getDefaultConfiguration(): any{
 		let jwtSecret: string = Crypto.randomBytes( 32 ).toString( 'hex' );
+		let securityToken: string = Crypto.randomBytes( 32 ).toString( 'hex' );
 		let defaultConfiguration: any = {
 			gui: false,
 			debug: false,
@@ -142,7 +143,8 @@ export class Configuration{
 				jwt: {
 					secret: `${jwtSecret}`,
 					expiration_hours: 1
-				}
+				},
+				token: `${securityToken}`
 			}
 		};
 		return defaultConfiguration;

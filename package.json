@@ -50,6 +50,7 @@
     "jsonwebtoken": "^7.1.9",
     "moment": "^2.15.2",
     "nyc": "^8.3.2",
+    "request": "^2.78.0",
     "sequelize": "^3.24.6",
     "sqlite3": "^3.1.8",
     "winston": "^2.3.0",

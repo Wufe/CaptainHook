@@ -1,5 +1,8 @@
-import Action from './Action';
+/// <reference path="../../../../typings/index.d.ts" />
 
+import * as Chalk from 'chalk';
+
+import Action from './Action';
 import {Environment} from '../../chook';
 import {ServerManager} from '../../net';
 
@@ -24,6 +27,8 @@ class Server extends Action{
 			this.startServer();
 		}else if( this.args[ 'action' ] == 'stop' ){
 			this.stopServer();
+		}else if( this.args[ 'action' ] == 'status' ){
+			this.getServerStatus();
 		}
 	}
 
@@ -40,6 +45,19 @@ class Server extends Action{
 	stopServer(): void{
 		let serverManager: ServerManager = new ServerManager();
 		serverManager.stop();
+	}
+
+	getServerStatus(): void{
+		let serverManager: ServerManager = new ServerManager();
+		serverManager
+			.isOnline()
+			.then( ( online: boolean ) => {
+				if( !online ){
+					console.log( Chalk.red( `The server is not online.` ) );
+				}else{
+					console.log( Chalk.green( `The server is online.` ) );
+				}
+			});
 	}
 
 }
