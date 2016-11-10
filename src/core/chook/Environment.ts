@@ -6,7 +6,11 @@ import * as Utils from './Utils';
 
 const Package = require( '../../../package.json' );
 
-const circleCIBuildPath = `/home/ubuntu/${process.env.CIRCLE_PROJECT_REPONAME}/build`;
+const circleCIBuildPath = Path.join(
+	process.env.HOME || "",
+	process.env.CIRCLE_PROJECT_REPONAME || "",
+	"build"
+);
 
 class Environment{
 
@@ -26,12 +30,12 @@ class Environment{
 
 	private checkTestEnvironment(): void{
 		let env: string = process.env.NODE_ENV;
-		if( env == 'mocha' 
-			|| env == 'circleci' 
+		if( env == 'mocha'
+			|| env == 'circleci'
 			|| env == 'test' ){
 			this.test = true;
 		}else{
-			this.test = false;	
+			this.test = false;
 		}
 	}
 
