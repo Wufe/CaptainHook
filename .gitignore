@@ -31,6 +31,10 @@ test-results.xml
 /build/resources/*config.yml
 /dist/resources/*config.yml
 
+# Process file
+/build/resources/process.yml
+/dist/resources/process.yml
+
 # Yarn lock file
 yarn.lock
 
