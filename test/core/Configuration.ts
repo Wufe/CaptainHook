@@ -5,6 +5,7 @@ import * as Should from 'should';
 
 import Configuration from '../../src/core/Configuration';
 import * as Configurations from '../../src/core/Configuration';
+import {defaultConfiguration} from '../../src/core/chook';
 
 describe( 'Configuration', () => {
 	describe( `its instance`, () => {
@@ -51,9 +52,9 @@ describe( 'Configuration', () => {
 			Should( value ).have.property( 'e' ).which.is.equal( 'f' );
 		});
 	});
-	describe( `getDefaultConfiguration`, () => {
+	describe( `defaultConfiguration`, () => {
 		it( `should create a default jwt secret`, () => {
-			Should( Configuration.getDefaultConfiguration() )
+			Should( defaultConfiguration )
 				.have
 				.propertyByPath( 'security', 'jwt', 'secret', 'length' )
 				.which

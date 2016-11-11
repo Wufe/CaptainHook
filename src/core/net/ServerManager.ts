@@ -33,7 +33,7 @@ export default class ServerManager{
 	}
 
 	isGuiEnabled(): boolean{
-		return Environment.get( 'args', 'gui' ) || Configuration.get( 'gui' ) === true
+		return Environment.get( 'args', 'gui' ) || Configuration.get( 'gui' );
 	}
 
 	initializeAuthentication(): void{

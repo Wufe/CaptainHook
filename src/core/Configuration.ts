@@ -1,23 +1,15 @@
 /// <reference path="../../typings/index.d.ts" />
 
+import {ConfigurationContentType, ConfigurationType, defaultConfiguration} from './chook';
 import Environment from './chook/Environment';
 import Log from './chook/Log';
 
-import * as Crypto from 'crypto';
 import * as Fs from 'fs';
 import * as Path from 'path';
 import * as Utils from './chook/Utils';
 import * as Yaml from 'js-yaml';
 
 const configurationFilename: string = 'config.yml';
-
-export interface ConfigurationType{
-	store: "memory" | "file";
-	filename: string;
-	directory: string;
-	filepath: string;
-	content: any;
-}
 
 export class Configuration{
 
@@ -47,7 +39,7 @@ export class Configuration{
 		this.configuration.filename = isTestEnvironment ? `test.${configurationFilename}` : configurationFilename;
 		this.configuration.directory = Path.join( Environment.buildDirectory, 'resources' );
 		this.configuration.filepath = Path.join( this.configuration.directory, this.configuration.filename );
-		this.configuration.content = {};
+		this.configuration.content = defaultConfiguration;
 	}
 
 	checkStore(): void{
@@ -81,7 +73,7 @@ export class Configuration{
 		let fileExists: boolean = Utils.isFile( this.configuration.filepath );
 		if( !fileExists ){
 			Log( 'warn', `Cannot find configuration file.` );
-			let writeSucceded: boolean = this.dumpConfiguration( this.getDefaultConfiguration() );
+			let writeSucceded: boolean = this.dumpConfiguration( defaultConfiguration );
 			if( !writeSucceded ){
 				Log( 'error', `Cannot create configuration file.`, this.configuration );
 				return false;
@@ -96,7 +88,7 @@ export class Configuration{
 	readConfiguration(): void{
 		let fileContent: string = this.getFileContent( this.configuration.filepath );
 		if( !fileContent ){
-			this.configuration.content = this.getDefaultConfiguration();
+			this.configuration.content = defaultConfiguration;
 		}else{
 			this.configuration.content = Yaml.safeLoad( fileContent );
 		}
@@ -129,32 +121,23 @@ export class Configuration{
 		return false;
 	}
 
-	getDefaultConfiguration(): any{
-		let jwtSecret: string = Crypto.randomBytes( 32 ).toString( 'hex' );
-		let securityToken: string = Crypto.randomBytes( 32 ).toString( 'hex' );
-		let defaultConfiguration: any = {
-			gui: false,
-			debug: false,
-			server: {
-				hostname: '0.0.0.0',
-				port: 2555
-			},
-			security: {
-				jwt: {
-					secret: `${jwtSecret}`,
-					expiration_hours: 1
-				},
-				token: `${securityToken}`
-			}
-		};
-		return defaultConfiguration;
-	}
-
 	get( ...keys: string[] ): any{
 		return Utils.getNestedValue( this.configuration.content, ...keys );
 	}
 
 	set( value: any, ...keys: string[] ): void{
+		let defaultValue: any = Utils.getNestedValue( defaultConfiguration, ...keys );
+		let typeOfDefaultValue: string = typeof defaultValue;
+		if( typeOfDefaultValue !== undefined ){
+			if( typeOfDefaultValue == 'boolean' ){
+				if( value === 'true' || value === '1' || value === 1 )
+					value = true;
+				if( value === 'false' || value === '0' || value === 1 )
+					value = false;
+			}else if( typeOfDefaultValue == 'number' ){
+				value = Number( value );
+			}
+		}
 		this.configuration.content = Utils.setNestedValue( this.configuration.content, value, ...keys );
 		this.dumpConfiguration( this.configuration.content );
 	}
