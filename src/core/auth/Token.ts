@@ -3,7 +3,7 @@
 
 import * as Moment from 'moment';
 import * as Jwt from 'jsonwebtoken';
-import Configuration from '../Configuration';
+import {Configuration} from '../chook/';
 import {User} from '../actors';
 
 interface JWTSettings{

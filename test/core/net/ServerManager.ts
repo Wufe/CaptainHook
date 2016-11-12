@@ -3,7 +3,7 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import Configuration from '../../../src/core/Configuration';
+import {Configuration} from '../../../src/core/chook';
 import {GUIManager} from '../../../src/core/gui';
 import {Router} from '../../../src/core/auth';
 import {ServerManager} from '../../../src/core/net';

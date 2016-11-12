@@ -4,9 +4,8 @@ import * as Path from 'path';
 import * as Request from 'request';
 
 import * as Authentication from '../auth';
-import Configuration from '../Configuration';
 import GUIManager from '../gui/GUIManager';
-import {Environment, Log, Process, ProcessManager} from '../chook';
+import {Configuration, Environment, Log, Process, ProcessManager} from '../chook';
 import {Controller, Server} from '.';
 
 export default class ServerManager{

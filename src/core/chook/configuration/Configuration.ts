@@ -1,17 +1,18 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../../typings/index.d.ts" />
 
-import {ConfigurationContentType, ConfigurationType, defaultConfiguration} from './chook';
-import Environment from './chook/Environment';
-import Log from './chook/Log';
+import {ConfigurationContentType, ConfigurationType} from './ConfigurationType';
+import configurationDefault from './configurationDefault';
+import Environment from '../Environment';
+import Log from '../Log';
 
 import * as Fs from 'fs';
 import * as Path from 'path';
-import * as Utils from './chook/Utils';
+import * as Utils from '../Utils';
 import * as Yaml from 'js-yaml';
 
 const configurationFilename: string = 'config.yml';
 
-export class Configuration{
+export class ConfigurationClass{
 
 	configurationPath: string;
 	configuration: ConfigurationType = {
@@ -39,7 +40,7 @@ export class Configuration{
 		this.configuration.filename = isTestEnvironment ? `test.${configurationFilename}` : configurationFilename;
 		this.configuration.directory = Path.join( Environment.buildDirectory, 'resources' );
 		this.configuration.filepath = Path.join( this.configuration.directory, this.configuration.filename );
-		this.configuration.content = defaultConfiguration;
+		this.configuration.content = configurationDefault;
 	}
 
 	checkStore(): void{
@@ -73,7 +74,7 @@ export class Configuration{
 		let fileExists: boolean = Utils.isFile( this.configuration.filepath );
 		if( !fileExists ){
 			Log( 'warn', `Cannot find configuration file.` );
-			let writeSucceded: boolean = this.dumpConfiguration( defaultConfiguration );
+			let writeSucceded: boolean = this.dumpConfiguration( configurationDefault );
 			if( !writeSucceded ){
 				Log( 'error', `Cannot create configuration file.`, this.configuration );
 				return false;
@@ -88,7 +89,7 @@ export class Configuration{
 	readConfiguration(): void{
 		let fileContent: string = this.getFileContent( this.configuration.filepath );
 		if( !fileContent ){
-			this.configuration.content = defaultConfiguration;
+			this.configuration.content = configurationDefault;
 		}else{
 			this.configuration.content = Yaml.safeLoad( fileContent );
 		}
@@ -126,7 +127,7 @@ export class Configuration{
 	}
 
 	set( value: any, ...keys: string[] ): void{
-		let defaultValue: any = Utils.getNestedValue( defaultConfiguration, ...keys );
+		let defaultValue: any = Utils.getNestedValue( configurationDefault, ...keys );
 		let typeOfDefaultValue: string = typeof defaultValue;
 		if( typeOfDefaultValue !== undefined ){
 			if( typeOfDefaultValue == 'boolean' ){
@@ -144,6 +145,6 @@ export class Configuration{
 
 }
 
-const configuration: Configuration = new Configuration();
-configuration.setup();
-export default configuration;
+const Configuration: ConfigurationClass = new ConfigurationClass();
+Configuration.setup();
+export default Configuration;

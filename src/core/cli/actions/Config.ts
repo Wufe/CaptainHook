@@ -1,7 +1,6 @@
 import Action from './Action';
 
-import Configuration from '../../Configuration';
-import {Environment} from '../../chook';
+import {Configuration, Environment} from '../../chook';
 
 class Config extends Action{
 

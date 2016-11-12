@@ -1,11 +1,10 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../../typings/index.d.ts" />
 
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import Configuration from '../../src/core/Configuration';
-import * as Configurations from '../../src/core/Configuration';
-import {defaultConfiguration} from '../../src/core/chook';
+import {Configuration, ConfigurationClass} from '../../../../src/core/chook';
+import {configurationDefault} from '../../../../src/core/chook';
 
 describe( 'Configuration', () => {
 	describe( `its instance`, () => {
@@ -52,9 +51,9 @@ describe( 'Configuration', () => {
 			Should( value ).have.property( 'e' ).which.is.equal( 'f' );
 		});
 	});
-	describe( `defaultConfiguration`, () => {
+	describe( `default configuration`, () => {
 		it( `should create a default jwt secret`, () => {
-			Should( defaultConfiguration )
+			Should( configurationDefault )
 				.have
 				.propertyByPath( 'security', 'jwt', 'secret', 'length' )
 				.which
@@ -71,7 +70,7 @@ describe( 'Configuration', () => {
 	});
 	describe( `dumpConfiguration`, () => {
 		it( `should fail with wrong path`, () => {
-			let conf: Configurations.Configuration = new Configurations.Configuration();
+			let conf: ConfigurationClass = new ConfigurationClass();
 			conf.configurationPath = '/dev/null/config.yml';
 			Should( conf.dumpConfiguration({}) ).be.equal( false );
 		});

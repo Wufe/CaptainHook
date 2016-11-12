@@ -1,5 +1,4 @@
-import Configuration from '../Configuration';
-import {Log} from '../chook';
+import {Configuration, Log} from '../chook';
 import * as BodyParser from 'body-parser';
 import * as Express from 'express';
 import * as Http from 'http';

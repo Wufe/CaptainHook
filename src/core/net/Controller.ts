@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import Configuration from '../Configuration';
-import {Log} from '../chook';
+import {Configuration, Log} from '../chook';
 import {NextFunction, Request, RequestHandler, Response} from 'express';
 import {Server} from '.';
 
