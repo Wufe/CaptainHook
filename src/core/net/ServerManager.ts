@@ -22,7 +22,7 @@ export default class ServerManager{
 		this.initializeControlRoutes();
 		if( this.isGuiEnabled() ){
 			this.initializeAuthentication();
-			this.initializeGui();	
+			this.initializeGui();
 		}
 	}
 
@@ -76,10 +76,35 @@ export default class ServerManager{
 	stop(): void{
 		let processManager: ProcessManager = ProcessManager.loadProcess();
 		if( processManager ){
-			processManager.killProcess();
-			processManager.deleteProcess();	
-			Log( 'info', 'Server stopped and deleted.' );
+			let processKilled: boolean = processManager.killProcess();
+			if( processKilled ){
+				processManager.deleteProcess();
+				Log( 'info', 'Server stopped.' );
+			}else{
+				this.forceStop();
+			}
+		}else{
+			this.forceStop();
 		}
+	}
+
+	forceStop(): void{
+		this.pingPid()
+			.then( ( pidBody: string ) => {
+				let pid: number = Number( pidBody );
+				let processManager: ProcessManager = new ProcessManager({
+					pid
+				});
+				let processKilled: boolean = processManager.killProcess();
+				if( !processKilled ){
+					Log( 'error', 'Cannot force-stop the server.' );
+				}else{
+					Log( 'info', 'Server stopped.' );
+				}
+			})
+			.catch( error => {
+				Log( 'error', 'Cannot force-stop the server.', error );
+			});
 	}
 
 	pingPid(): Promise<string>{

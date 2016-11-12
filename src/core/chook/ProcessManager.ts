@@ -9,7 +9,7 @@ import * as Path from 'path';
 import * as Yaml from 'js-yaml';
 
 export interface Process{
-	binary: string;
+	binary?: string;
 	arguments?: string[];
 	cwd?: string;
 	pid?: number;
@@ -22,6 +22,8 @@ export class ProcessManager{
 	defaultArguments: string[] = [];
 
 	constructor( processInfo: Process ){
+		if( !processInfo.binary )
+			processInfo.binary = process.argv[1];
 		if( !processInfo.arguments )
 			processInfo.arguments = this.defaultArguments;
 		if( !processInfo.cwd )
