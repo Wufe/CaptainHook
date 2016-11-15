@@ -1,15 +1,15 @@
-/// <reference path="../../../typings/index.d.ts" />
+/// <reference path="../../../../../typings/index.d.ts" />
 
 import * as React from 'react';
-import './App.scss';
-import {actions} from './actions';
-import {App as AppState} from './states';
+import './style.scss';
+import {actions} from '../../actions';
+import {App as AppState} from '../../states';
 import {Component} from 'react';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-import {PageLoadingBar} from './components';
-import {setPageLoading, setPageLoaded} from './actions/app';
-import {store} from './StoreProvider';
+import {PageLoadingBar} from '..';
+import {setPageLoading, setPageLoaded} from '../../actions/app';
+import {store} from '../../';
 
 export interface AppProps{
 	children ?: any;
@@ -17,7 +17,7 @@ export interface AppProps{
 	setPageLoaded?: any;
 }
 
-class App extends Component<AppProps, any>{
+class Structure extends Component<AppProps, any>{
 
 	componentDidMount(){
 		setTimeout( () => {
@@ -48,4 +48,4 @@ let mapDispatchToProps: ( dispatch: Dispatch<AppState> ) => any =
 		};
 	};
 
-export default connect( null, mapDispatchToProps )( App );
+export default connect( null, mapDispatchToProps )( Structure );

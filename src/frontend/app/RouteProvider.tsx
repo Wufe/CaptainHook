@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import App from './App';
+import {Structure} from './components';
 import {loader} from './lib';
 import * as React from 'react';
 import * as ReactRouter from 'react-router';
@@ -12,7 +12,7 @@ class RouteProvider{
 	get(){
 		return (
 			<Router history={history}>
-				<Route path="/" component={App}>
+				<Route path="/" component={Structure}>
 					<IndexRoute getComponent={loader( "index" )} />
 				</Route>
 			</Router>

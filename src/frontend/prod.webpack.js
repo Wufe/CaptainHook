@@ -22,8 +22,8 @@ module.exports = {
         loaders: [
             {
                 test: /\.tsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'ts-loader'
+                exclude: /node_modules/,
+                loader: 'babel-loader!ts-loader'
             },
             {
                 test: /\.css$/,
@@ -41,7 +41,7 @@ module.exports = {
     },
     plugins: [
     	new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             debug: false,
             minimize: true,

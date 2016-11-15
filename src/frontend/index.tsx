@@ -1,19 +1,33 @@
 /// <reference path="../../typings/index.d.ts" />
+/// <reference path="../typings/react-hot-loader/index.d.ts" />
 
+import 'react-hot-loader/patch';
+import {AppContainer} from 'react-hot-loader';
 import * as React from 'react';
+import {Component} from 'react';
 import {render as DOMRender, unmountComponentAtNode} from 'react-dom';
-import App from './app/App';
-import {Provider} from 'react-redux';
+import Root from './app/Root';
+
 import {browserHistory} from 'react-router';
-import {history, routes, store} from './app';
 
 const appRoot = document.getElementById( 'app' );
 
-const renderApp = () => {
+const renderApp = ( App: any ) => {
 	DOMRender(
-		<Provider store={store} children={routes} />,
+		<AppContainer>
+			<App />
+		</AppContainer>,
 		appRoot
 	);
 };
 
-renderApp();
+renderApp( Root );
+
+declare let module: any;
+if( module.hot ){
+	module.hot.accept( './app/Root', () => {
+		const NextApp = require( './app/Root' ).default;
+		unmountComponentAtNode( appRoot );
+		renderApp( NextApp );
+	})
+}

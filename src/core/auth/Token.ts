@@ -1,5 +1,4 @@
 /// <reference path="../../../typings/index.d.ts" />
-/// <reference path="../../../node_modules/@types/core-js/index.d.ts" />
 
 import * as Moment from 'moment';
 import * as Jwt from 'jsonwebtoken';
