@@ -21,7 +21,7 @@ export default class Controller{
 		let body: any = request.body;
 		let securityToken: string = Configuration.get( 'security', 'token' );
 		if( !body || !body.token || body.token != securityToken ){
-			Log( 'warn', `Ping failed with token [${body.token}].` );
+			Log( 'warning', `Ping failed with token [${body.token}].` );
 			this.sendUnauthorized( response );
 		}else{
 			Log( 'info', `Sent process id via ping request.` );

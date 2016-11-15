@@ -41,7 +41,7 @@ class Environment{
 
 	private checkBuildDirectory(): void{
 		let isMocha: boolean = process.env.NODE_ENV == 'mocha';
-		let isCircleCI: boolean = process.env.NODE_ENV == 'circleci';
+		let isCircleCI: boolean = process.env.CIRCLECI || process.env.NODE_ENV == 'circleci';
 		let args: string[] = process.argv;
 		let scriptPath: string = args[1];
 		let realPath = Fs.realpathSync( scriptPath );

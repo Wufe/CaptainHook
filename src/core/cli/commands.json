@@ -28,6 +28,13 @@
 					"nargs": 0,
 					"action": "storeTrue",
 					"defaultValue": false
+				},
+				{
+					"id": [ "--debug" ],
+					"help": "Start the server with debug features, like hrm.",
+					"nargs": 0,
+					"action": "storeTrue",
+					"defaultValue": false
 				}
 			]
 		},

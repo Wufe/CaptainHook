@@ -1,0 +1,1 @@
+export const PAGE_LOADING = "app/PAGE_LOADING";

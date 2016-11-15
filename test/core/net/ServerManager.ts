@@ -18,16 +18,4 @@ describe( 'ServerManager', function(){
 			Should( typeof serverManager.guiManager ).not.be.equal( "undefined" );
 		});
 	});
-	describe( 'createAuthenticationRouter', function(){
-		let authenticationRouter = serverManager.createAuthenticationRouter();
-		it( 'should create Authentication.Router instance', function(){
-			authenticationRouter.should.be.an.instanceOf( Router );
-		});
-	})
-	describe( 'createGuiManager', function(){
-		let guiManager = serverManager.createGuiManager();
-		it( 'should create GUIManager instance', function(){
-			guiManager.should.be.an.instanceOf( GUIManager );
-		});
-	})
 });

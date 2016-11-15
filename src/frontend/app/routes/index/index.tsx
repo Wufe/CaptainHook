@@ -12,7 +12,9 @@ interface State{}
 export default class Index extends Component<Props, State>{
 	render(){
 		return (
-			<h2>Main Route: index</h2>
+			<div>
+				<h2>Main Route [Index]</h2>
+			</div>
 		);
 	}
 }

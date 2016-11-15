@@ -8,10 +8,19 @@ import * as Moment from 'moment';
 
 import * as Fs from 'fs';
 import * as Path from 'path';
+
 import {Logger, LoggerInstance, transports, TransportInstance} from 'winston';
 
 const {Console, File} = transports;
 const logDirectory = Path.join( Environment.buildDirectory, 'resources', 'log' );
+
+type LogLevels = {
+	[level: string]: number;
+};
+
+type LogColors = {
+	[level: string]: string;
+};
 
 export class Log{
 
@@ -41,9 +50,36 @@ export class Log{
 
 	createLogger(): void{
 		let logger: LoggerInstance = new Logger({
-			transports: this.getTransports()
+			transports: this.getTransports(),
+			levels: this.getSyslogLevels()
 		});
 		this.logger = logger;
+	}
+
+	getSyslogLevels(): LogLevels{
+		return {
+			emerg: 0,
+			alert: 1,
+			crit: 2,
+			error: 3,
+			warning: 4,
+			notice: 5,
+			info: 6,
+			debug: 7
+		};
+	}
+
+	getSyslogColors(): LogColors{
+		return {
+			emerg: 'red',
+			alert: 'yellow',
+			crit: 'red',
+			error: 'red',
+			warning: 'red',
+			notice: 'yellow',
+			info: 'green',
+			debug: 'blue'
+		};
 	}
 
 	getTransports(): TransportInstance[]{
@@ -55,10 +91,11 @@ export class Log{
 				})
 			);
 		}
+		let logLevel: string = this.isDebug() ? 'debug' : 'info';
 		if( !this.isQuiet() ){
 			transports.push(
 				new Console({
-					level: 'debug',
+					level: logLevel,
 					prettyPrint: true,
 					colorize: true,
 					silent: this.isTest() ? true : false,
@@ -84,6 +121,10 @@ export class Log{
 		return quiet;
 	}
 
+	isDebug(): boolean{
+		return Environment.get( 'args', 'debug' ) ? true : false;
+	}
+
 	getTime(): string{
 		return ( Moment() ).format( 'ddd, DD MMM YYYY - HH:mm:ss' );
 	}
@@ -101,4 +142,7 @@ export class Log{
 const logInstance: Log = new Log();
 logInstance.setup();
 const log: ( level: string, message: string, ...meta: any[] ) => void = logInstance.log;
+export {
+	logInstance
+};
 export default log;

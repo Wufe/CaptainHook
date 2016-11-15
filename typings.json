@@ -21,6 +21,7 @@
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "react-redux": "registry:dt/react-redux#4.4.0+20160908183346",
     "react-router": "registry:dt/react-router#2.0.0+20160928130202",
+    "react-router-redux": "registry:dt/react-router-redux#4.0.0+20160930121107",
     "react-router/history": "registry:dt/react-router/history#2.0.0+20160830150755",
     "redux": "registry:dt/redux#3.5.2+20160703092728",
     "redux-immutable-state-invariant": "registry:dt/redux-immutable-state-invariant#1.2.0+20160316155526",
@@ -30,8 +31,11 @@
     "sequelize": "registry:dt/sequelize#3.4.1+20160929080558",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
     "should": "registry:dt/should#8.1.1+20160608082854",
+    "source-map": "registry:dt/source-map#0.0.0+20161003134342",
+    "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526",
     "validator": "registry:dt/validator#5.7.0+20160928122927",
-    "winston": "registry:dt/winston#0.0.0+20161006194546",
+    "webpack": "registry:dt/webpack#1.12.9+20161025142220",
+    "winston": "registry:dt/winston#0.0.0+20161108133445",
     "yargs": "registry:dt/yargs#0.0.0+20161006150200"
   }
 }

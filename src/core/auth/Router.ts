@@ -2,7 +2,7 @@
 /// <reference path="../../../typings/globals/express-serve-static-core/index.d.ts" />
 
 import {Authentication, Encryption, Token} from '.';
-import {Log} from '../chook';
+import {Configuration, Environment, Log} from '../chook';
 import {NextFunction, Request, RequestHandler, Response} from 'express';
 import {Server} from '../net';
 import {User} from '../actors';
@@ -20,7 +20,13 @@ export default class Router{
 		this.server = server;
 	}
 
+	isGuiEnabled(): boolean{
+		return Environment.get( 'args', 'gui' ) || Configuration.get( 'gui' );
+	}
+
 	setup(): void{
+		if( !this.isGuiEnabled() )
+			return;
 		this.addAuthenticationRoutes();
 	}
 
@@ -43,7 +49,7 @@ export default class Router{
 					.catch( ( error?: any ) => {
 						let logCredentials: Credentials = credentials;
 						logCredentials.password = '*******';
-						Log( 'warn', `Someone logged with wrong credentials.`, logCredentials );
+						Log( 'warning', `Someone logged with wrong credentials.`, logCredentials );
 						if( error )
 							Log( 'error', error.message );
 						this.sendUnauthorized( response );

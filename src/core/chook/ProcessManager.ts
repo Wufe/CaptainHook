@@ -60,7 +60,7 @@ export class ProcessManager{
 	deleteProcess( filename: string = 'process.yml' ){
 		let filepath: string = Path.join( Environment.buildDirectory, 'resources', filename );
 		if( !Utils.isFile( filepath ) ){
-			Log( 'warn', `Process information file does not exist [${filename}].` );
+			Log( 'warning', `Process information file does not exist [${filename}].` );
 			return;
 		}
 		try{

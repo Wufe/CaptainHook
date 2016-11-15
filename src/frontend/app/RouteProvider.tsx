@@ -4,15 +4,18 @@ import App from './App';
 import {loader} from './lib';
 import * as React from 'react';
 import * as ReactRouter from 'react-router';
-import {browserHistory, IndexRoute, Route} from 'react-router';
+import {browserHistory, IndexRoute, Route, Router} from 'react-router';
+import {history} from './StoreProvider';
 
 class RouteProvider{
 
 	get(){
 		return (
-			<Route path="/" component={App}>
-				<IndexRoute getComponent={loader( "index" )} />
-			</Route>
+			<Router history={history}>
+				<Route path="/" component={App}>
+					<IndexRoute getComponent={loader( "index" )} />
+				</Route>
+			</Router>
 		);
 	}
 

@@ -4,7 +4,7 @@ import * as ArgParse from 'argparse';
 import {ArgumentParser} from 'argparse';
 
 import {Creator, dispatch} from '.';
-import {Environment} from '../chook';
+import {Environment, logInstance} from '../chook';
 
 export default class Entrypoint{
 
@@ -18,6 +18,7 @@ export default class Entrypoint{
 
 	parseArgs(): void{
 		Environment.set( this.argumentParser.parseArgs(), 'args' );
+		logInstance.setup();
 	}
 
 	run(){

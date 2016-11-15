@@ -57,7 +57,7 @@ export class ConfigurationClass{
 	checkDirectory(): boolean{
 		let directoryExists: boolean = Utils.isDirectory( this.configuration.directory );
 		if( !directoryExists ){
-			Log( 'warn', `Cannot find configuration directory.` );
+			Log( 'warning', `Cannot find configuration directory.` );
 			try{
 				Fs.mkdirSync( this.configuration.directory );
 				Log( 'info', `Configuration directory created.` );
@@ -73,7 +73,7 @@ export class ConfigurationClass{
 	checkFile(): boolean{
 		let fileExists: boolean = Utils.isFile( this.configuration.filepath );
 		if( !fileExists ){
-			Log( 'warn', `Cannot find configuration file.` );
+			Log( 'warning', `Cannot find configuration file.` );
 			let writeSucceded: boolean = this.dumpConfiguration( configurationDefault );
 			if( !writeSucceded ){
 				Log( 'error', `Cannot create configuration file.`, this.configuration );
@@ -112,7 +112,7 @@ export class ConfigurationClass{
 		if( this.configuration.store == "file" ){
 			try{
 				Fs.writeFileSync( this.configuration.filepath, Yaml.safeDump( configurationObject ) );
-				Log( 'silly', `Configuration updated.` );
+				Log( 'debug', `Configuration updated.` );
 				return true;
 			}catch( error ){
 				Log( 'error', `Cannot write configuration.`, this.configuration, error );

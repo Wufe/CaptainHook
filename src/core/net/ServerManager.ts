@@ -6,7 +6,7 @@ import * as Request from 'request';
 import * as Authentication from '../auth';
 import GUIManager from '../gui/GUIManager';
 import {Configuration, Environment, Log, Process, ProcessManager} from '../chook';
-import {Controller, Server} from '.';
+import {Controller, Hmr, Server} from '.';
 
 export default class ServerManager{
 
@@ -19,11 +19,15 @@ export default class ServerManager{
 	}
 
 	initialize(): void{
+		this.initializeHmr();
 		this.initializeControlRoutes();
-		if( this.isGuiEnabled() ){
-			this.initializeAuthentication();
-			this.initializeGui();
-		}
+		this.initializeAuthentication();
+		this.initializeGui();
+	}
+
+	initializeHmr(): void{
+		let hmr: Hmr = new Hmr( this.serverInstance );
+		hmr.setup();
 	}
 
 	initializeControlRoutes(): void{
@@ -31,26 +35,14 @@ export default class ServerManager{
 		controller.setup();
 	}
 
-	isGuiEnabled(): boolean{
-		return Environment.get( 'args', 'gui' ) || Configuration.get( 'gui' );
-	}
-
 	initializeAuthentication(): void{
-		this.authenticationRouter = this.createAuthenticationRouter();
+		this.authenticationRouter = new Authentication.Router( this.serverInstance );
 		this.authenticationRouter.setup();
 	}
 
-	createAuthenticationRouter(): Authentication.Router{
-		return new Authentication.Router( this.serverInstance );
-	}
-
 	initializeGui(): void{
-		this.guiManager = this.createGuiManager();
+		this.guiManager = new GUIManager( this.serverInstance );
 		this.guiManager.setup();
-	}
-
-	createGuiManager(): GUIManager{
-		return new GUIManager( this.serverInstance );
 	}
 
 	start(): void{
