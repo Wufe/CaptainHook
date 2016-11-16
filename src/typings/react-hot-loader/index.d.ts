@@ -1,3 +1,8 @@
+// Type definitions for react-hot-loader 3.0
+// Project: https://github.com/gaearon/react-hot-loader
+// Definitions by: Jacek Jagiello <https://github.com/jacekjagiello/>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
 declare module "react-hot-loader"{
 	import * as React from "react";
 	
