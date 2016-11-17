@@ -1,6 +1,6 @@
 interface Action<T>{
 	type: string;
-	payload: T | any;
+	payload?: T | any;
 	error?: boolean;
 	meta?: any;
 }

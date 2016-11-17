@@ -2,6 +2,7 @@
 /// <reference path="../typings/react-hot-loader/index.d.ts" />
 
 import 'react-hot-loader/patch';
+import 'babel-polyfill';
 import {AppContainer} from 'react-hot-loader';
 import * as React from 'react';
 import {Component} from 'react';
@@ -23,7 +24,11 @@ const renderApp = ( App: any ) => {
 
 renderApp( Root );
 
-declare let module: any;
+interface HotNodeModule extends NodeModule {
+  hot: { accept: Function };
+}
+
+declare let module: HotNodeModule;
 if( module.hot ){
 	module.hot.accept( './app/Root', () => {
 		const NextApp = require( './app/Root' ).default;

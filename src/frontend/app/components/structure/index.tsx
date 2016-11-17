@@ -8,11 +8,12 @@ import {Component} from 'react';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import {PageLoadingBar} from '..';
-import {setPageLoading, setPageLoaded} from '../../actions/app';
+import {ping, setPageLoading, setPageLoaded} from '../../actions/app';
 import {store} from '../../';
 
 export interface AppProps{
 	children ?: any;
+	ping?: any;
 	setPageLoading?: any;
 	setPageLoaded?: any;
 }
@@ -20,6 +21,9 @@ export interface AppProps{
 class Structure extends Component<AppProps, any>{
 
 	componentDidMount(){
+		setInterval( () => {
+			this.props.ping();
+		}, 60000 );
 		setTimeout( () => {
 			this.props.setPageLoading();
 		}, 1000 );
@@ -44,7 +48,8 @@ let mapDispatchToProps: ( dispatch: Dispatch<AppState> ) => any =
 	( dispatch ) => {
 		return {
 			setPageLoading: () => dispatch( setPageLoading() ),
-			setPageLoaded: () => dispatch( setPageLoaded() )
+			setPageLoaded: () => dispatch( setPageLoaded() ),
+			ping: () => dispatch( ping() )
 		};
 	};
 

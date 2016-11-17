@@ -1,15 +1,17 @@
 {
     "compilerOptions": {
-        "outDir": "../../build/resources/assets/javascript/",
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "commonjs",
-        "target": "es6",
+        "target": "es2015",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "jsx": "react",
         "removeComments": true
     },
     "files": [
-        "./index.tsx"
+        "./index.tsx",
+        "../../typings/index.d.ts"
     ],
     "exclude": [
         "node_modules"

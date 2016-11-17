@@ -26,6 +26,7 @@
     "redux": "registry:dt/redux#3.5.2+20160703092728",
     "redux-immutable-state-invariant": "registry:dt/redux-immutable-state-invariant#1.2.0+20160316155526",
     "redux-logger": "registry:dt/redux-logger#2.6.0+20160619033847",
+    "redux-saga": "registry:dt/redux-saga#0.9.1+20160703120921",
     "redux-thunk": "registry:dt/redux-thunk#2.1.0+20160703120921",
     "request": "registry:dt/request#0.0.0+20160726020908",
     "sequelize": "registry:dt/sequelize#3.4.1+20160929080558",
