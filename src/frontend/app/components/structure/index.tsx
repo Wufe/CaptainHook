@@ -7,6 +7,7 @@ import {App as AppState} from '../../states';
 import {Component} from 'react';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
+import {NotificationContainer} from '../../containers';
 import {PageLoadingBar} from '..';
 import {ping, setPageLoading, setPageLoaded} from '../../actions/app';
 import {store} from '../../';
@@ -36,6 +37,7 @@ class Structure extends Component<AppProps, any>{
 		return (
 			<div>
 				<PageLoadingBar />
+				<NotificationContainer />
 				<h1>Captain Hook</h1>
 				{this.props.children}
 			</div>

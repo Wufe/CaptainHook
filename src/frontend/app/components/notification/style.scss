@@ -1,0 +1,30 @@
+@mixin background(){
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a7c7dc+0,85b2d3+100;Blue+Grey+3D */
+	background: #a7c7dc; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #a7c7dc 0%, #85b2d3 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg,  #a7c7dc 0%,#85b2d3 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg,  #a7c7dc 0%,#85b2d3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7c7dc', endColorstr='#85b2d3',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.notification{
+	display: inline-block;
+	min-width: 250px;
+	min-height: 30px;
+	box-sizing: border-box;
+	padding: 5px 15px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	border-radius: 4px;
+	margin: 10px 5px;
+	transition: 		opacity 0.5s;
+	-moz-transition:    opacity 0.5s;
+	-ms-transition:     opacity 0.5s;
+	-o-transition:      opacity 0.5s;
+	-webkit-transition: opacity 0.5s;
+	color: black;
+	font-size: 14px;
+	@include background();
+	border: 1px solid #6d88b7;
+	box-shadow: inset 0px 1px 0px #DDD;
+}
