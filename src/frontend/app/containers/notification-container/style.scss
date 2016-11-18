@@ -3,3 +3,33 @@
 	right: 5px;
 	top: 5px;
 }
+
+:global{
+	.notification-fade-enter{
+        opacity: 0.01;
+
+        &.notification-fade-enter-active{
+	        opacity: 1;
+	        transition: opacity 500ms ease-in;
+	    }
+    }
+
+    .notification-fade-leave{
+        opacity: 1;
+
+        &.notification-fade-leave-active{
+            opacity: 0.01;
+            transition: opacity 500ms ease-in;
+        }
+    }
+
+    .notification-fade-appear{
+        opacity: 0.01;
+
+        &.notification-fade-appear-active{
+	        opacity: 1;
+	        transition: opacity 500ms ease-in;
+	    }
+    }
+    
+}

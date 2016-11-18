@@ -7,6 +7,7 @@ import {App as AppState} from '../../states';
 import {Notification} from '../../components';
 import {Dispatch} from 'redux';
 import {deleteNotification} from '../../actions/app';
+import * as ReactCSS from 'react-addons-css-transition-group';
 import './style.scss';
 
 interface DispatchProps{
@@ -28,14 +29,23 @@ class NotificationContainer extends Component<Props, any>{
 					key={notification.id}
 					id={notification.id}
 					text={notification.text}
-					timeout={5000}
+					timeout={3000}
 					deleteNotification={this.props.deleteNotification.bind(this)}/>
 				);
 		});
 
 		return (
 			<div className="notificationContainer">
-				{notificationComponents}
+				<ReactCSS
+					transitionName="notification-fade"
+					transitionAppear={true}
+      				transitionAppearTimeout={500}
+      				transitionEnter={true}
+					transitionEnterTimeout={500}
+					transitionLeave={true}
+					transitionLeaveTimeout={500}>
+					{notificationComponents}
+				</ReactCSS>
 			</div>
 		);
 	}

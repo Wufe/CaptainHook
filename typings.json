@@ -18,6 +18,8 @@
     "moment": "registry:dt/moment#2.11.1+20161010105546",
     "node": "registry:dt/node#6.0.0+20161019125345",
     "react": "registry:dt/react#0.14.0+20161024223416",
+    "react-addons-css-transition-group": "registry:dt/react-addons-css-transition-group#0.14.0+20160316155526",
+    "react-addons-transition-group": "registry:dt/react-addons-transition-group#0.14.0+20160701001352",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "react-redux": "registry:dt/react-redux#4.4.0+20160908183346",
     "react-router": "registry:dt/react-router#2.0.0+20160928130202",
