@@ -12,6 +12,8 @@ import {syncHistoryWithStore} from 'react-router-redux';
 import {root as rootReducer} from './reducers';
 import {root as rootSaga} from './sagas';
 
+const saga = Saga();
+
 type State = {
 	app: App
 };
@@ -22,17 +24,23 @@ class StoreProvider{
 
 	constructor( initialState?: State ){
 
-		const saga = Saga();
-
 		this.store = createStore(
 			rootReducer,
 			initialState,
 			compose(
-				applyMiddleware( saga, ImmutableState(), Logger({ collapsed: true }) ),
+				applyMiddleware( saga, ...( this.getMiddlewares() ) ),
 				window.devToolsExtension ? window.devToolsExtension() : f => f
 			)
 		);
 		saga.run( rootSaga );
+	}
+
+	private getMiddlewares(): any[]{
+		let middlewares: any[] = [ saga ];
+		if( !( process.env.NODE_ENV == "production" ) ){
+			return [ ...middlewares, Logger({ collapsed: true }), ImmutableState() ];
+		}
+		return middlewares;
 	}
 
 	get(): Store<State>{
