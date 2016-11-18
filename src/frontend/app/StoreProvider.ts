@@ -4,7 +4,6 @@ declare let window: any;
 
 import * as ImmutableState from 'redux-immutable-state-invariant';
 import * as Logger from 'redux-logger';
-import Thunk from 'redux-thunk';
 import {App} from './states';
 import {applyMiddleware, createStore, compose, Store} from 'redux';
 import {browserHistory} from 'react-router';
@@ -29,7 +28,7 @@ class StoreProvider{
 			rootReducer,
 			initialState,
 			compose(
-				applyMiddleware( saga, Thunk, ImmutableState(), Logger({ collapsed: true }) ),
+				applyMiddleware( saga, ImmutableState(), Logger({ collapsed: true }) ),
 				window.devToolsExtension ? window.devToolsExtension() : f => f
 			)
 		);
