@@ -6,6 +6,7 @@
     "chalk": "registry:dt/chalk#0.4.0+20160317120654",
     "express": "registry:dt/express#4.0.0+20160708185218",
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20161012061536",
+    "faker": "registry:dt/faker#3.1.0+20161003184239",
     "form-data": "registry:dt/form-data#0.0.0+20160724024111",
     "handlebars": "registry:dt/handlebars#4.0.5+20160804082238",
     "history": "registry:dt/history#1.8.0+20160316155526",
