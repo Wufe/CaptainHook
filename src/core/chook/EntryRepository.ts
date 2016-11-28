@@ -1,7 +1,7 @@
 import {Entry, IEntry} from '.';
 import {Server} from '../net';
 
-class EntryManager{
+class EntryRepository{
 
 	entries: Entry[] = [];
 	server: Server;
@@ -27,4 +27,4 @@ class EntryManager{
 	}
 }
 
-export default EntryManager;
+export default EntryRepository;
