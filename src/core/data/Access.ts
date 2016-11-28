@@ -34,7 +34,9 @@ export default class Access<T>{
 				.then( ( instance: any ) => {
 					resolve( this.getActorByInstance( instance ) );
 				})
-				.catch( ( error: any ) => reject );
+				.catch( ( error: any ) => {
+					reject( error );
+				});
 		});
 		
 	}
@@ -45,7 +47,9 @@ export default class Access<T>{
 				.then( ( instance: any ) => {
 					resolve( this.getActorByInstance( instance ) );
 				})
-				.catch( ( error: any ) => reject );
+				.catch( ( error: any ) => {
+					reject( error );
+				});
 		})
 	}
 
@@ -59,7 +63,9 @@ export default class Access<T>{
 						return this.getActorByInstance( instance );
 					}));
 				})
-				.catch( ( error: any ) => reject );
+				.catch( ( error: any ) => {
+					reject( error );
+				});
 		})
 	}
 

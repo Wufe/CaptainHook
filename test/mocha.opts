@@ -3,3 +3,4 @@
 --ui bdd
 --recursive
 --compilers ts:ts-node/register
+--timeout 5000
