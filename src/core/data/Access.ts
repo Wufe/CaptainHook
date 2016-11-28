@@ -28,21 +28,11 @@ export default class Access<T>{
 		};
 	}
 
-	handleSingleDataInstance( instance: any, resolve: any, reject: any ): void{
-		let creator: Creator = new Creator( this.actor );
-		try{
-			let actor: any = creator.makeFromDataInstance( instance );
-			resolve( actor );
-		}catch( error ){
-			reject( error );
-		}
-	}
-
 	findById( identifier?: number | string, options?: Sequelize.FindOptions ) : Promise<T>{
 		return new Promise<T>( ( resolve, reject ) => {
 			this.model.findById( identifier, options )
 				.then( ( instance: any ) => {
-					this.handleSingleDataInstance( instance, resolve, reject );
+					resolve( this.getActorByInstance( instance ) );
 				})
 				.catch( ( error: any ) => reject );
 		});
@@ -53,13 +43,29 @@ export default class Access<T>{
 		return new Promise<T>( ( resolve, reject ) => {
 			this.model.findOne( options )
 				.then( ( instance: any ) => {
-					this.handleSingleDataInstance( instance, resolve, reject );
+					resolve( this.getActorByInstance( instance ) );
 				})
 				.catch( ( error: any ) => reject );
 		})
 	}
 
 	findAll( options? : Sequelize.FindOptions ) : Promise<any[]>{
-		return this.model.findAll( options );
+		return new Promise<any[]>( ( resolve, reject ) => {
+			this
+				.model
+				.findAll( options )
+				.then( ( instances: Sequelize.Instance<any>[] ) => {
+					resolve( instances.map( ( instance: Sequelize.Instance<any> ) => {
+						return this.getActorByInstance( instance );
+					}));
+				})
+				.catch( ( error: any ) => reject );
+		})
+	}
+
+	getActorByInstance( instance: any ): any{
+		let creator: Creator = new Creator( this.actor );
+		let actor: any = creator.makeFromDataInstance( instance );
+		return actor;
 	}
 }

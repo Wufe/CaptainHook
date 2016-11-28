@@ -10,7 +10,7 @@ const entry = ( Sequelize: any ) => {
 			unique: true,
 			allowNull: false
 		},
-		descrition: {
+		description: {
 			type: Sequelize.STRING,
 			unique: false,
 			allowNull: true

@@ -55,10 +55,39 @@ let setNestedValue = ( obj: any, value: any, ...keys: string[] ) => {
     return obj;
 };
 
+let printTableFromArray = ( data: any[], padding: number = 2 ): void => {
+    if( !data || data.length == 0 )
+        return;
+    let max: any = {};
+    let keys: any = {}
+    Object.keys( data[0] ).forEach( ( key: string ) => {
+        keys[key] = key;
+    });
+    data = [ keys, ...data ];
+    data.forEach( ( element: any ) => {
+        for( let key in element ){
+            let length: number = `${element[key]}`.length;
+            if( !max[key] || length > max[key] )
+                max[key] = length;
+        }
+    });
+    let p: string = " ".repeat( padding );
+    data.forEach( ( element: any ) => {
+        let values: string[] = [];
+        for( let key in element ){
+            let length: number = `${element[key]}`.length;
+            let additionalSpace: number = max[key] - length;
+            values.push( `${element[key]}${" ".repeat( additionalSpace )}` );
+        }
+        console.log( `${p}${values.join( `${p}|${p}` )}${p}` );
+    });
+};
+
 export {
 	fileExists,
     getNestedValue,
 	isFile,
 	isDirectory,
+    printTableFromArray,
     setNestedValue
 };

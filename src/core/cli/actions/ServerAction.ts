@@ -6,7 +6,7 @@ import Action from './Action';
 import {Environment} from '../../chook';
 import {ServerManager} from '../../net';
 
-class Server extends Action{
+class ServerAction extends Action{
 
 	args: {
 		action: string;
@@ -62,5 +62,5 @@ class Server extends Action{
 
 }
 
-const server: Server = new Server();
+const server: ServerAction = new ServerAction();
 export default server;

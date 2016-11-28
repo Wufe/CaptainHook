@@ -5,7 +5,7 @@ import {ArgumentParser, SubParser, SubparserOptions} from 'argparse';
 
 import {Environment} from '../chook';
 
-const commands = require( './commands.json' );
+const commands = require( './commands.yml' );
 
 export default class Creator{
 

@@ -10,7 +10,7 @@ class Entry extends Actor<Entry>{
 
 	static find: AccessInterface<Entry>;
 
-	constructor( name: string, description: string, uri: string ){
+	constructor( name?: string, description?: string, uri?: string ){
 		super( model, { name, description, uri });
 	}
 

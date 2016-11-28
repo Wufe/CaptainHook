@@ -2,7 +2,7 @@ import Action from './Action';
 
 import {Configuration, Environment} from '../../chook';
 
-class Config extends Action{
+class ConfigAction extends Action{
 
 	args: {
 		action: string;
@@ -49,5 +49,5 @@ class Config extends Action{
 
 }
 
-const config: Config = new Config();
+const config: ConfigAction = new ConfigAction();
 export default config;

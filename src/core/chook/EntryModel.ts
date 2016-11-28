@@ -4,12 +4,15 @@ import {randomBytes} from 'crypto';
 import {fake} from 'faker';
 
 import {EntryRepository} from '.';
+import {Entry} from '../actors';
 
 export type IEntry = {
 	id?: number,
 	name?: string;
 	description?: string;
 	uri: string;
+	created_at?: Date;
+	updated_at?: Date;
 	tasks?: string[];
 };
 
@@ -21,7 +24,7 @@ const defaultData: IEntry = {
 	tasks: []
 };
 
-export default class Entry{
+export default class EntryModel{
 
 	entryRepository: EntryRepository;
 	data: IEntry;
@@ -39,6 +42,28 @@ export default class Entry{
 			this.data.uri = this.createUri();
 		if( !this.data.name )
 			this.data.name = this.createName();
+	}
+
+	save(): Promise<Entry>{
+		return new Promise<Entry>( ( resolve, reject ) => {
+			let {name, description, uri} = this.data;
+			let entry: Entry = new Entry( name, description, uri );
+			entry
+				.save()
+				.then( ( entry: Entry ) => {
+					let {created_at, description, id, name, updated_at, uri} = entry.get();
+					this.data.id = id;
+					this.data.name = name
+					this.data.description = description;
+					this.data.uri = uri;
+					this.data.created_at = created_at;
+					this.data.updated_at = updated_at;
+					resolve( entry );
+				}).catch( ( error: any ) => {
+					console.log( error );
+				});
+		});
+		
 	}
 
 	createUri(): string{

@@ -1,7 +1,9 @@
-import Config from './Config';
-import Server from './Server';
+import ConfigAction from './ConfigAction';
+import EntryAction from './EntryAction';
+import ServerAction from './ServerAction';
 
 export {
-	Config,
-	Server
+	ConfigAction,
+	EntryAction,
+	ServerAction
 };
