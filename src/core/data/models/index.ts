@@ -4,6 +4,7 @@ import user from './user';
 import test from './test';
 
 export {
+	entry,
 	hook,
 	user,
 	test
