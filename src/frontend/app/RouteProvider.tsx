@@ -6,6 +6,7 @@ import * as React from 'react';
 import * as ReactRouter from 'react-router';
 import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import {history} from './StoreProvider';
+import Home from './routes/Home';
 
 class RouteProvider{
 
@@ -14,6 +15,7 @@ class RouteProvider{
 			<Router history={history}>
 				<Route path="/" component={Structure}>
 					<IndexRoute getComponent={loader( "index" )} />
+					<Route path="home" component={Home}></Route>
 				</Route>
 			</Router>
 		);

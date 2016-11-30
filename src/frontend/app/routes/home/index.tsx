@@ -2,8 +2,6 @@
 
 import * as React from 'react';
 import {Component} from 'react';
-import {IndexContainer} from '../../containers';
-import {goto} from '../../';
 
 interface Props{
 	children?: any;
@@ -11,13 +9,12 @@ interface Props{
 
 interface State{}
 
-export default class Index extends Component<Props, State>{
-
-	particles: any;
-
+export default class Home extends Component<Props, State>{
 	render(){
 		return (
-			<IndexContainer />
+			<div>
+				Home route
+			</div>
 		);
 	}
 }
