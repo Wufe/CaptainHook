@@ -22,6 +22,8 @@ type LogColors = {
 	[level: string]: string;
 };
 
+type LogLevelsType = "debug" | "info" | "notice" | "warning" | "error" | "crit" | "alert" | "emerg";
+
 export class Log{
 
 	logger: LoggerInstance;
@@ -133,7 +135,7 @@ export class Log{
 		return `[${ Chalk.grey( this.getTime() ) }]`;
 	}
 
-	log( level: string, message: string, ...meta: any[] ): void{
+	log( level: LogLevelsType, message: string, ...meta: any[] ): void{
 		this.logger.log( level, message, meta );
 	}
 
@@ -141,7 +143,7 @@ export class Log{
 
 const logInstance: Log = new Log();
 logInstance.setup();
-const log: ( level: string, message: string, ...meta: any[] ) => void = logInstance.log;
+const log: ( level: LogLevelsType, message: string, ...meta: any[] ) => void = logInstance.log;
 export {
 	logInstance
 };

@@ -1,4 +1,4 @@
-import {EntryModel, IEntry} from '.';
+import {EntryModel, IEntry, Utils} from '.';
 import {Entry as EntryActor} from '../actors';
 import {Server} from '../net';
 
@@ -18,9 +18,8 @@ class EntryRepository{
 				.find
 				.all()
 				.then( ( entries: EntryActor[] ) => {
-					this.entries = [];
-					entries.forEach( ( entry: EntryActor ) => {
-						this.entries.push( new EntryModel( this, entry.get() ) );
+					this.entries = entries.map( ( entry: EntryActor ) => {
+						return new EntryModel( this, entry.get(), entry );
 					});
 					resolve( this.entries );
 				})
@@ -32,6 +31,12 @@ class EntryRepository{
 	
 	getEntries(): EntryModel[] {
 		return this.entries;
+	}
+
+	findById( id: number ): EntryModel{
+		return this.entries.find( ( entry: EntryModel ) => {
+			return entry.getId() == id;
+		});
 	}
 
 	findByUri( uri: string ): EntryModel{

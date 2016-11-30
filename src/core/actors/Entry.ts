@@ -12,6 +12,9 @@ class Entry extends Actor<Entry>{
 
 	constructor( name?: string, description?: string, uri?: string ){
 		super( model, { name, description, uri });
+		this.hidden = [
+			"updated_at"
+		];
 	}
 
 }

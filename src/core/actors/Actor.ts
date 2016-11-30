@@ -35,12 +35,49 @@ export default class Actor<T>{
 
 	save(): Promise<T>{
 		return new Promise( ( resolve, reject ) => {
+			if( this.data.id ){
+				this
+				.update()
+				.then( () => {
+					resolve( this );
+				})
+				.catch( ( error: any ) => {
+					this.create()
+						.then( () => {
+							resolve( this );
+						})
+						.catch( ( error: any ) => {
+							reject( error );
+						});
+				});
+			}else{
+				this.create()
+					.then( () => {
+						resolve( this );
+					})
+					.catch( ( error: any ) => {
+						reject( error );
+					});
+			}
+		});
+	}
+
+	private update(): Promise<any>{
+		return this.model.update( this.data, {
+			where: {
+				id: this.data.id
+			}
+		});
+	}
+
+	private create(): Promise<any>{
+		return new Promise<void>( ( resolve, reject ) => {
 			this.model.create( this.data )
 				.then( ( instance: any ) => {
 					if( !instance.dataValues )
 						throw new Error( `No data returned.` );
-					this.populateFromData( instance.dataValues )
-					resolve( this );
+					this.populateFromData( instance.dataValues );
+					resolve();
 				})
 				.catch( ( error: any ) => {
 					reject( error );

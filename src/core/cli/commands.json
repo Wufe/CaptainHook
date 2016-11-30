@@ -140,6 +140,11 @@
 						"aliases": [ "u" ],
 						"args": [
 							{
+								"id": "id",
+								"action": "store",
+								"type": "int"
+							},
+							{
 								"id": "--name",
 								"action": "store",
 								"defaultValue": null

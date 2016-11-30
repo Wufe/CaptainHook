@@ -14,6 +14,7 @@ export type IEntry = {
 	created_at?: Date;
 	updated_at?: Date;
 	tasks?: string[];
+	[key:string]: any;
 };
 
 const defaultData: IEntry = {
@@ -28,40 +29,68 @@ export default class EntryModel{
 
 	entryRepository: EntryRepository;
 	data: IEntry;
+	actor: Entry;
 
-	constructor( entryRepository: EntryRepository, data?: IEntry ){
+	constructor( entryRepository: EntryRepository, data?: IEntry, actor?: Entry ){
 		this.entryRepository = entryRepository;
-		if( !data )
-			data = defaultData;
-		this.data = data;
+		this.data = Object.assign( {}, defaultData, data );
+		this.actor = actor;
 		this.create();
+	}
+
+	get( key?: string ): any{
+		if( !key && this.actor ){
+			return this.actor.get();
+		}else if( !key ){
+			return this.data;
+		}
+		return this.data[key];
+	}
+
+	set( key: string, value: any ): void{
+		if( key == 'uri' )
+			value = this.filterUri( value );
+		this.data[key] = value;
+		if( this.actor )
+			this.actor.set( key, value );
+	}
+
+	filterUri( uri: string ): string{
+		if( !( uri.match( /^\/webhook\//i ) ) )
+			uri = `/webhook/${uri}`;
+		return uri;
 	}
 
 	create(): void{
 		if( !this.data.uri )
-			this.data.uri = this.createUri();
+			this.set( 'uri', this.createUri() );
 		if( !this.data.name )
-			this.data.name = this.createName();
+			this.set( 'name', this.createName() );
 	}
 
 	save(): Promise<Entry>{
 		return new Promise<Entry>( ( resolve, reject ) => {
-			let {name, description, uri} = this.data;
-			let entry: Entry = new Entry( name, description, uri );
-			entry
+			if( !this.actor ){
+				let {name, description, uri} = this.data;
+				this.actor = new Entry( name, description, uri );
+			}
+
+			this.actor
 				.save()
 				.then( ( entry: Entry ) => {
 					let {created_at, description, id, name, updated_at, uri} = entry.get();
-					this.data.id = id;
-					this.data.name = name
-					this.data.description = description;
-					this.data.uri = uri;
-					this.data.created_at = created_at;
-					this.data.updated_at = updated_at;
+					this.set( 'id', id );
+					this.set( 'name', name );
+					this.set( 'description', description );
+					this.set( 'uri', uri );
+					this.set( 'created_at', created_at );
+					this.set( 'updated_at', updated_at );
+					this.actor = entry;
 					resolve( entry );
 				}).catch( ( error: any ) => {
-					console.log( error );
+					reject( error );
 				});
+			
 		});
 		
 	}
@@ -69,7 +98,7 @@ export default class EntryModel{
 	createUri(): string{
 		let uri: string = null;
 		while( !uri ){
-			let id: string = randomBytes( 32 ).toString( 'hex' );
+			let id: string = randomBytes( 16 ).toString( 'hex' );
 			uri = `/webhook/${id}`;
 			if( this.entryRepository.findByUri( uri ) )
 				uri = null;
@@ -85,6 +114,10 @@ export default class EntryModel{
 				name = null;
 		}
 		return name;
+	}
+
+	getId(): number{
+		return this.data.id;
 	}
 
 	getUri(): string{

@@ -13,7 +13,7 @@ class ConfigAction extends Action{
 
 	constructor(){
 		super();
-		this.action = "config";
+		this.actions = [ "config", "c" ];
 	}
 
 	run(): void{
