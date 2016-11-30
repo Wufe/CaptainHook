@@ -66,6 +66,23 @@ class EntryAction extends Action{
 		}));
 	};
 
+	printFormattedEntry( entry: any ): void{
+		let {id, name, uri, description, created_at, tasks} = entry.get();
+		Utils.printTableFromArray([
+			{
+				id,
+				name,
+				uri,
+				description,
+				created_at
+			}
+		]);
+		if( tasks && tasks.length ){
+			console.log( "\n" );
+			Utils.printTableFromArray( tasks );
+		}
+	}
+
 	createEntry(): void{
 		console.log( green( `Creating new entry..` ) );
 		let entryRepository: EntryRepository = this.getRepository();
@@ -79,7 +96,7 @@ class EntryAction extends Action{
 					uri
 				});
 				entry.save().then( ( entry: Entry ) => {
-					this.printFormattedEntries([ entry ]);
+					this.printFormattedEntry( entry );
 				})
 				.catch( ( error: any ) => {
 					Log( "error", red( error.message ), error );
@@ -125,7 +142,7 @@ class EntryAction extends Action{
 				foundEntryModel
 					.save()
 					.then( ( entry: Entry ) => {
-						this.printFormattedEntries([ entry ]);
+						this.printFormattedEntry( entry );
 					}).catch( ( error: any ) => {
 						Log( "error", red( error.message ), error );
 					})
@@ -151,8 +168,7 @@ class EntryAction extends Action{
 						console.log( `Entry #${id} deleted.` );
 					}).catch( ( error: any ) => {
 						Log( "error", red( error.message ), error );
-					})
-					
+					});
 			})
 			.catch( ( error: any ) => {
 				Log( "error", red( error.message ) );
