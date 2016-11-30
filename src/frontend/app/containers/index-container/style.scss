@@ -1,0 +1,19 @@
+.indexContainer{
+	z-index: 1;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+
+.loginBox{
+	margin-top: 150px;
+	background-color: rgba( 255, 255, 255, 0.4 );
+	border-radius: 5px;
+	width: 500px;
+	height: 250px;
+	margin: 150px auto 0px auto;
+	box-sizing: border-box;
+	font-size: 22px;
+	padding: 10px;
+	text-shadow: 0 1px 0 rgba( 255, 255, 255, .3 ), -1px 0 0 rgba( 255, 255, 255, .3 );
+}
