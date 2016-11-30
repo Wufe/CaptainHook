@@ -9,8 +9,8 @@ module.exports = {
         extensions: [ "", ".webpack.js", ".web.js", ".ts", ".tsx", ".js" ]
     },
     entry: {
-        main: [ "./index.tsx", hotMiddlewareScript ],
-        vendor: [ "react", "react-dom", hotMiddlewareScript ]
+        main: [ "./index.tsx" ],
+        vendor: [ "react", "react-dom" ]
     },
     output: {
         publicPath: "/",
@@ -42,7 +42,6 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()
     ]
 };
