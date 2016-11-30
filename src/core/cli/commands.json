@@ -160,6 +160,19 @@
 								"defaultValue": null
 							}
 						]
+					},
+					{
+						"id": "delete",
+						"addHelp": true,
+						"help": "Delete an entry by its id.",
+						"aliases": [ "d", "del" ],
+						"args": [
+							{
+								"id": "id",
+								"action": "store",
+								"type": "int"
+							}
+						]
 					}
 				]
 			}

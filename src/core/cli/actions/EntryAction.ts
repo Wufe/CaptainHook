@@ -30,6 +30,8 @@ class EntryAction extends Action{
 			this.createEntry();
 		}else if( [ "update", "u" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
 			this.updateEntry();
+		}else if( [ "delete", "d", "del" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
+			this.deleteEntry();
 		}
 	}
 
@@ -113,6 +115,30 @@ class EntryAction extends Action{
 			.catch( ( error: any ) => {
 				Log( "error", red( error.message ) );
 			});
+	}
+
+	deleteEntry(): void{
+		let entryRepository: EntryRepository = this.getRepository();
+		let {id} = this.args;
+		console.log( green( `Deleting entry #${id}..` ) );
+		entryRepository
+			.loadEntries()
+			.then( () => {
+				let foundEntryModel: EntryModel = entryRepository.findById( id );
+				if( !foundEntryModel )
+					throw new Error( `Cannot find entry with id ${id}.` );
+				foundEntryModel
+					.delete()
+					.then( () => {
+						console.log( `Entry #${id} deleted.` );
+					}).catch( ( error: any ) => {
+						Log( "error", red( error.message ), error );
+					})
+					
+			})
+			.catch( ( error: any ) => {
+				Log( "error", red( error.message ) );
+			})
 	}
 
 }

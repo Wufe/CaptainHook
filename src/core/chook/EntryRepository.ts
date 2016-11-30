@@ -12,7 +12,6 @@ class EntryRepository{
 	}
 
 	loadEntries(): Promise<EntryModel[]>{
-
 		return new Promise<EntryModel[]>( ( resolve, reject ) => {
 			EntryActor
 				.find

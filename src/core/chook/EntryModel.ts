@@ -68,6 +68,23 @@ export default class EntryModel{
 			this.set( 'name', this.createName() );
 	}
 
+	delete(): Promise<any>{
+		return new Promise<any>( ( resolve, reject ) => {
+			if( !this.actor )
+				reject( `No actor specified.` );
+			this.actor.delete()
+				.then( ( rows: number ) => {
+					return this.entryRepository.loadEntries();
+				})
+				.then( () => {
+					resolve();
+				})
+				.catch( ( error: any ) => {
+					reject( error );
+				});
+		});
+	}
+
 	save(): Promise<Entry>{
 		return new Promise<Entry>( ( resolve, reject ) => {
 			if( !this.actor ){

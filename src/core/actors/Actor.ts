@@ -33,6 +33,25 @@ export default class Actor<T>{
 		this.data[ key ] = value;
 	}
 
+	delete(): Promise<any>{
+		return new Promise( ( resolve, reject ) => {
+			if( !this.data.id )
+				throw new Error( `No id specified.` );
+			let {id} = this.data;
+			this.model.destroy({
+				where: {
+					id
+				}
+			})
+			.then( ( rows: number ) => {
+				resolve( rows );
+			})
+			.catch( ( error: any ) => {
+				reject( error );
+			})
+		});
+	}
+
 	save(): Promise<T>{
 		return new Promise( ( resolve, reject ) => {
 			if( this.data.id ){
