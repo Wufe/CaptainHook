@@ -1,7 +1,20 @@
 html, body{
 	margin: 0;
-	padding: 10px;
+	padding: 0;
 	font-weight: 300;
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
 	min-height: 100vh;
+	background: #2e3250;
+}
+
+.structureContainer{
+	position: relative;
+}
+
+.particlesContainer{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }

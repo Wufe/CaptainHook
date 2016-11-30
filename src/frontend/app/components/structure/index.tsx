@@ -1,4 +1,5 @@
 /// <reference path="../../../../../typings/index.d.ts" />
+/// <reference path="../../../../typings/react-particles-js/index.d.ts" />
 
 import * as React from 'react';
 import './style.scss';
@@ -10,7 +11,9 @@ import {Dispatch} from 'redux';
 import {NotificationContainer} from '../../containers';
 import {PageLoadingBar} from '..';
 import {ping, setPageLoading, setPageLoaded} from '../../actions/app';
-import {store} from '../../';
+import {store, goto} from '../../';
+
+import {Particles} from 'react-particles-js';
 
 export interface AppProps{
 	children ?: any;
@@ -38,8 +41,38 @@ class Structure extends Component<AppProps, any>{
 			<div>
 				<PageLoadingBar />
 				<NotificationContainer />
-				<h1>Captain Hook</h1>
-				{this.props.children}
+				<div className="structureContainer">
+					<div className="particlesContainer">
+						<Particles params={{
+							particles: {
+								number:{
+									value: 20
+								},
+								line_linked: {
+									color: "#1e95e9",
+									shadow: {
+										enable: true,
+										blur: 15,
+										color: 'white'
+									}
+								},
+								move: {
+									speed: 1
+								}
+							}
+						}}
+						style={{
+							position: 'absolute',
+							left: 0,
+							top: 0,
+							zIndex: 0
+						}}
+						width="100%"
+						height="100%" />
+					</div>
+					{this.props.children}
+				</div>
+				
 			</div>
 			
 		);
