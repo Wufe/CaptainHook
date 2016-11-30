@@ -141,8 +141,7 @@
 						"args": [
 							{
 								"id": "id",
-								"action": "store",
-								"type": "int"
+								"action": "store"
 							}
 						]
 					},
@@ -154,8 +153,7 @@
 						"args": [
 							{
 								"id": "id",
-								"action": "store",
-								"type": "int"
+								"action": "store"
 							},
 							{
 								"id": "--name",
@@ -182,10 +180,32 @@
 						"args": [
 							{
 								"id": "id",
-								"action": "store",
-								"type": "int"
+								"action": "store"
 							}
 						]
+					},
+					{
+						"id": "task",
+						"addHelp": true,
+						"help": "Add, update or delete task of a given entry.",
+						"aliases": [ "t" ],
+						"args": [
+							{
+								"id": "entry_id",
+								"action": "store",
+								"help": "The id of the entry. It can be the numeric id or the name.",
+								"addHelp": true
+							}
+						],
+						"sub": {
+							"title": "Task",
+							"dest": "taskAction",
+							"commands": [
+								{
+									"id": "add"
+								}
+							]
+						}
 					}
 				]
 			}

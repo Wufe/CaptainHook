@@ -115,6 +115,8 @@ class EntryAction extends Action{
 			.then( () => {
 				let foundEntryModel: EntryModel = entryRepository.findById( id );
 				if( !foundEntryModel )
+					foundEntryModel = entryRepository.findByName( `${id}` );
+				if( !foundEntryModel )
 					throw new Error( `Cannot find entry with id ${id}.` );
 				this.printFormattedEntries([ foundEntryModel ]);
 			})
@@ -131,6 +133,8 @@ class EntryAction extends Action{
 			.loadEntries()
 			.then( () => {
 				let foundEntryModel: EntryModel = entryRepository.findById( id );
+				if( !foundEntryModel )
+					foundEntryModel = entryRepository.findByName( `${id}` );
 				if( !foundEntryModel )
 					throw new Error( `Cannot find entry with id ${id}.` );
 				if( name )
@@ -160,6 +164,8 @@ class EntryAction extends Action{
 			.loadEntries()
 			.then( () => {
 				let foundEntryModel: EntryModel = entryRepository.findById( id );
+				if( !foundEntryModel )
+					foundEntryModel = entryRepository.findByName( `${id}` );
 				if( !foundEntryModel )
 					throw new Error( `Cannot find entry with id ${id}.` );
 				foundEntryModel
