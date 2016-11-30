@@ -6,12 +6,19 @@ import * as Sequelize from 'sequelize';
 
 const model = Database.models.task;
 
+interface TaskData{
+	command?: string;
+	working_dir?: string;
+	description?: string;
+	entry_id?: number;
+}
+
 class Task extends Actor<Task>{
 
 	static find: AccessInterface<Task>;
 
-	constructor( command?: string, working_dir?: string, description?: string, entry_id?: number ){
-		super( model, { command, working_dir, description, entry_id });
+	constructor( data: TaskData ){
+		super( model, data );
 		this.hidden = [
 			"updated_at"
 		];

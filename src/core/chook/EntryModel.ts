@@ -89,7 +89,7 @@ export default class EntryModel{
 		return new Promise<Entry>( ( resolve, reject ) => {
 			if( !this.actor ){
 				let {name, description, uri} = this.data;
-				this.actor = new Entry( name, description, uri );
+				this.actor = new Entry({ name, description, uri });
 			}
 
 			this.actor

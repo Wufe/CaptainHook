@@ -6,12 +6,16 @@ import * as Sequelize from 'sequelize';
 
 const model = Database.models.hook;
 
+interface HookData{
+	hook?: string;
+}
+
 class Hook extends Actor<Hook>{
 
 	static find: AccessInterface<Hook>;
 
-	constructor( hook?: string ){
-		super( model, { hook });
+	constructor( data: HookData ){
+		super( model, data );
 	}
 
 }

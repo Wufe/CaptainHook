@@ -8,7 +8,10 @@ export default class Actor<T>{
 	private data: any;
 	protected hidden: string[] = [];
 
-	constructor( model: Sequelize.Model<any, any>, data: any ){
+	constructor( model: Sequelize.Model<any, any>, data?: any ){
+		if( !data ){
+			data = {};
+		}
 		this.model = model;
 		this.data = data;
 	}

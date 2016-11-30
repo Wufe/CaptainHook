@@ -6,12 +6,16 @@ import * as Sequelize from 'sequelize';
 
 const model = Database.models.test;
 
+interface TestData{
+	test?: string;
+}
+
 class Test extends Actor<Test>{
 
 	static find: AccessInterface<Test>;
 
-	constructor( test?: string ){
-		super( model, { test });
+	constructor( data: TestData ){
+		super( model, data );
 	}
 
 }
