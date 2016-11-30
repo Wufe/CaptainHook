@@ -134,6 +134,19 @@
 						]
 					},
 					{
+						"id": "read",
+						"addHelp": true,
+						"aliases": [ "read", "r", "show", "s" ],
+						"help": "Get a single entry by id.",
+						"args": [
+							{
+								"id": "id",
+								"action": "store",
+								"type": "int"
+							}
+						]
+					},
+					{
 						"id": "update",
 						"addHelp": true,
 						"help": "Update an entry specifying which field to change.",

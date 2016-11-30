@@ -32,6 +32,8 @@ class EntryAction extends Action{
 			this.updateEntry();
 		}else if( [ "delete", "d", "del" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
 			this.deleteEntry();
+		}else if( [ "read", "r", "show", "s" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
+			this.readEntry();
 		}
 	}
 
@@ -82,6 +84,22 @@ class EntryAction extends Action{
 				.catch( ( error: any ) => {
 					Log( "error", red( error.message ), error );
 				});
+			})
+			.catch( ( error: any ) => {
+				Log( "error", red( error.message ) );
+			});
+	}
+
+	readEntry(): void{
+		let entryRepository: EntryRepository = this.getRepository();
+		let {id} = this.args;
+		entryRepository
+			.loadEntries()
+			.then( () => {
+				let foundEntryModel: EntryModel = entryRepository.findById( id );
+				if( !foundEntryModel )
+					throw new Error( `Cannot find entry with id ${id}.` );
+				this.printFormattedEntries([ foundEntryModel ]);
 			})
 			.catch( ( error: any ) => {
 				Log( "error", red( error.message ) );
