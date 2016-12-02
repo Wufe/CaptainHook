@@ -183,12 +183,21 @@
 								"action": "store"
 							}
 						]
-					},
+					}
+				]
+			}
+		},
+		{
+			"id": "task",
+			"addHelp": true,
+			"help": "Add, update or delete task of a given entry.",
+			"aliases": [ "t" ],
+			"sub": {
+				"title": "Task",
+				"dest": "taskAction",
+				"commands": [
 					{
-						"id": "task",
-						"addHelp": true,
-						"help": "Add, update or delete task of a given entry.",
-						"aliases": [ "t" ],
+						"id": "add",
 						"args": [
 							{
 								"id": "entry_id",
@@ -196,16 +205,7 @@
 								"help": "The id of the entry. It can be the numeric id or the name.",
 								"addHelp": true
 							}
-						],
-						"sub": {
-							"title": "Task",
-							"dest": "taskAction",
-							"commands": [
-								{
-									"id": "add"
-								}
-							]
-						}
+						]
 					}
 				]
 			}
