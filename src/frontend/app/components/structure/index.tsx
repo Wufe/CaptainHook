@@ -51,7 +51,7 @@ class Structure extends Component<AppProps, any>{
 								line_linked: {
 									color: "#1e95e9",
 									shadow: {
-										enable: true,
+										enable: false,
 										blur: 15,
 										color: 'white'
 									}
