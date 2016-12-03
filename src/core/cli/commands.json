@@ -198,9 +198,22 @@
 				"commands": [
 					{
 						"id": "add",
+						"aliases": [ "create", "c", "a" ],
 						"args": [
 							{
 								"id": "entry_id",
+								"action": "store",
+								"help": "The id of the entry. It can be the numeric id or the name.",
+								"addHelp": true
+							}
+						]
+					},
+					{
+						"id": "delete",
+						"aliases": [ "del", "d" ],
+						"args": [
+							{
+								"id": "task_id",
 								"action": "store",
 								"help": "The id of the entry. It can be the numeric id or the name.",
 								"addHelp": true

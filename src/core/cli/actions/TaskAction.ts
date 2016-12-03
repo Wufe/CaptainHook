@@ -11,6 +11,7 @@ interface TaskArgs{
 	action: string;
 	taskAction: string;
 	entry_id?: string | number;
+	task_id?: number;
 }
 
 class TaskAction extends Action{
@@ -25,8 +26,10 @@ class TaskAction extends Action{
 	run(){
 		super.run();
 		this.args = Environment.get( 'args' );
-		if( [ "add", "a" ].indexOf( this.args[ 'taskAction' ] ) > -1 ){
+		if( [ "add", "a", "create", "c" ].indexOf( this.args[ 'taskAction' ] ) > -1 ){
 			this.addTask();
+		}else if( [ "delete", "del", "d" ].indexOf( this.args[ 'taskAction' ] ) > -1 ){
+			this.deleteTask();
 		}
 	}
 
@@ -74,11 +77,6 @@ class TaskAction extends Action{
 				});
 			});
 		});
-
-
-		// ( new Task({
-		// 	command
-		// }) ).save();
 	}
 
 	getReadlineInterface() : ReadLine{
@@ -87,6 +85,21 @@ class TaskAction extends Action{
 			output: process.stdout
 		});
 		return readline;
+	}
+
+	deleteTask(): void{
+		let entryRepository: EntryRepository = new EntryRepository();
+		let {task_id} = this.args;
+		Task
+			.find
+			.byId( task_id )
+			.then( ( task: Task ) => {
+				task.delete();
+				console.log( green( `Command deleted.` ) );
+			})
+			.catch( ( error: any ) => {
+				Log( "error", red( error.message ), error );
+			});
 	}
 }
 
