@@ -4,7 +4,7 @@ import {randomBytes} from 'crypto';
 import {fake} from 'faker';
 
 import {EntryRepository} from '.';
-import {Entry} from '../actors';
+import {Entry, Task} from '../actors';
 
 export type IEntry = {
 	id?: number,
@@ -13,7 +13,7 @@ export type IEntry = {
 	uri: string;
 	created_at?: Date;
 	updated_at?: Date;
-	tasks?: string[];
+	tasks?: Task[];
 	[key:string]: any;
 };
 
@@ -53,6 +53,30 @@ export default class EntryModel{
 		this.data[key] = value;
 		if( this.actor )
 			this.actor.set( key, value );
+	}
+
+	getTasks(): Task[]{
+		return this.data.tasks;
+	}
+
+	loadTasks(): Promise<EntryModel>{
+		return new Promise( ( resolve, reject ) => {
+			if( !this.data.id ){
+				reject( new Error( `No entry model id specified.` ) );
+			}
+			Task.find.all({
+				where: {
+					entry_id: this.data.id
+				}
+			})
+			.then( ( tasks: Task[] ) => {
+				this.data.tasks = tasks;
+				resolve( this );
+			})
+			.catch( ( error: any ) => {
+				reject( error );
+			})
+		});
 	}
 
 	filterUri( uri: string ): string{

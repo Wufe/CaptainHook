@@ -17,14 +17,32 @@ class EntryRepository{
 				.find
 				.all()
 				.then( ( entries: EntryActor[] ) => {
-					this.entries = entries.map( ( entry: EntryActor ) => {
+					return this.loadTasks( entries.map( ( entry: EntryActor ) => {
 						return new EntryModel( this, entry.get(), entry );
-					});
+					}));
+				})
+				.then( ( entryModels: EntryModel[] ) => {
+					this.entries = entryModels;
 					resolve( this.entries );
 				})
 				.catch( ( error: any ) => {
 					reject( error );
 				});
+		});
+	}
+
+	loadTasks( entryModels: EntryModel[] ): Promise<any>{
+		return new Promise( ( resolve, reject ) => {
+			Promise.all( entryModels.map( ( entryModel: EntryModel ) => {
+				return entryModel.loadTasks();
+			}))
+			.then( ( entryModels: EntryModel[] ) => {
+				//console.log( entryModels );
+				resolve( entryModels );
+			})
+			.catch( ( error: any ) => {
+				reject( error );
+			})
 		});
 	}
 	

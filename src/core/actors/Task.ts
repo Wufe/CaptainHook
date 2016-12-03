@@ -10,7 +10,7 @@ interface TaskData{
 	command?: string;
 	working_dir?: string;
 	description?: string;
-	entry_id?: number;
+	entry_id: number;
 }
 
 class Task extends Actor<Task>{
@@ -20,6 +20,7 @@ class Task extends Actor<Task>{
 	constructor( data: TaskData ){
 		super( model, data );
 		this.hidden = [
+			"entry_id",
 			"updated_at"
 		];
 	}

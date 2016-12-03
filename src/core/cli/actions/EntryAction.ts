@@ -1,6 +1,6 @@
 import Action from './Action';
 
-import {Entry} from '../../actors';
+import {Entry, Task} from '../../actors';
 import {EntryModel, EntryRepository, Environment, Log, Utils} from '../../chook';
 
 import {green, red} from 'chalk';
@@ -67,7 +67,7 @@ class EntryAction extends Action{
 	};
 
 	printFormattedEntry( entry: any ): void{
-		let {id, name, uri, description, created_at, tasks} = entry.get();
+		let {id, name, uri, description, created_at} = entry.get();
 		Utils.printTableFromArray([
 			{
 				id,
@@ -77,9 +77,12 @@ class EntryAction extends Action{
 				created_at
 			}
 		]);
+		let tasks = entry.getTasks();
 		if( tasks && tasks.length ){
 			console.log( "\n" );
-			Utils.printTableFromArray( tasks );
+			Utils.printTableFromArray( tasks.map( ( task: Task ) => {
+				return task.get();
+			}));
 		}
 	}
 
@@ -118,7 +121,7 @@ class EntryAction extends Action{
 					foundEntryModel = entryRepository.findByName( `${id}` );
 				if( !foundEntryModel )
 					throw new Error( `Cannot find entry with id ${id}.` );
-				this.printFormattedEntries([ foundEntryModel ]);
+				this.printFormattedEntry( foundEntryModel );
 			})
 			.catch( ( error: any ) => {
 				Log( "error", red( error.message ) );

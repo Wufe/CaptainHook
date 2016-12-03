@@ -1,7 +1,11 @@
 import Action from './Action';
 
 import {Task} from '../../actors';
-import {Environment, Log, Utils} from '../../chook';
+import {EntryRepository, EntryModel, Environment, Log, Utils} from '../../chook';
+
+import {createInterface, ReadLine} from 'readline';
+
+import {green, red} from 'chalk';
 
 interface TaskArgs{
 	action: string;
@@ -22,10 +26,68 @@ class TaskAction extends Action{
 		super.run();
 		this.args = Environment.get( 'args' );
 		if( [ "add", "a" ].indexOf( this.args[ 'taskAction' ] ) > -1 ){
-			
+			this.addTask();
 		}
 	}
 
+	addTask(): void{
+		let entryRepository: EntryRepository = new EntryRepository();
+		let {entry_id} = this.args;
+		entryRepository
+			.loadEntries()
+			.then( () => {
+				let foundEntryModel: EntryModel = entryRepository.findById( <number>entry_id );
+				if( !foundEntryModel )
+					foundEntryModel = entryRepository.findByName( `${entry_id}` );
+				if( !foundEntryModel )
+					throw new Error( `Cannot find entry with id ${entry_id}.` );
+				this.addTaskToEntryModel( foundEntryModel );
+			})
+			.catch( ( error: any ) => {
+				Log( "error", red( error.message ) );
+			})
+	}
+
+	addTaskToEntryModel( entryModel: EntryModel ){
+		let readline: ReadLine = this.getReadlineInterface();
+		readline.question( `$ `, ( command: string ) => {
+			readline.question( `Working directory (leave blank for inherit): `, ( working_dir: string ) => {
+				readline.question( `Description: `, ( description: string ) => {
+					if( command ){
+						( new Task({
+							command,
+							working_dir,
+							description,
+							entry_id: entryModel.getId()
+						}) ).save()
+							.then( () => {
+								readline.close();
+								console.log( green( `Command saved.` ) );
+							})
+							.catch( ( error: any ) => {
+								Log( "error", red( error.message ), error );
+							});
+					}else{
+						console.error( red( `Please input a valid command.` ) );
+						readline.close();
+					}
+				});
+			});
+		});
+
+
+		// ( new Task({
+		// 	command
+		// }) ).save();
+	}
+
+	getReadlineInterface() : ReadLine{
+		let readline: ReadLine = createInterface({
+			input: process.stdin,
+			output: process.stdout
+		});
+		return readline;
+	}
 }
 
 const taskAction: TaskAction = new TaskAction();
