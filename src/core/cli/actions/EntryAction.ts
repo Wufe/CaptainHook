@@ -67,6 +67,7 @@ class EntryAction extends Action{
 	};
 
 	printFormattedEntry( entry: any ): void{
+		console.log( 'Entry:' );
 		let {id, name, uri, description, created_at} = entry.get();
 		Utils.printTableFromArray([
 			{
@@ -79,7 +80,7 @@ class EntryAction extends Action{
 		]);
 		let tasks = entry.getTasks();
 		if( tasks && tasks.length ){
-			console.log( "\n" );
+			console.log( '\nCommands:' );
 			Utils.printTableFromArray( tasks.map( ( task: Task ) => {
 				return task.get();
 			}));
