@@ -53,3 +53,13 @@ Run `yarn` or `npm install`, then `npm test`.
 `src/core` contains the application logic source code. Entrypoint `index.tsx`.  
 `src/frontend` contains the source for the frontend javascript. Source starting from `index.tsx`.  
 `test` contains unity and integration tests.  
+
+
+### Ideas
+
+**Options**
+
++ `pipe` - Would allow the task to print the output and send it back to the request.  
++ `content-type` - Would allow to set the content-type.  
++ `x-hub-signature` - Would allow to check x-hub-signature header ( requires `secret` to be set ).  
++ `secret` - Would allow a signature check.  

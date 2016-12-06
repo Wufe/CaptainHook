@@ -15,6 +15,19 @@ const entry = ( Sequelize: any ) => {
 			unique: false,
 			allowNull: true
 		},
+		method: {
+			type: Sequelize.ENUM( 'get', 'post', 'put', 'patch', 'delete' ),
+			unique: false,
+			allowNull: false,
+			defaultValue: 'post',
+			set: function( value: string ){
+				value = value.toLowerCase();
+				if( [ 'get', 'post', 'put', 'patch', 'delete' ].indexOf( value ) < 0 ){
+					throw new Error( `Method ${value} not valid.` );
+				}
+				this.setDataValue( 'method', value );
+			}
+		},
 		uri: {
 			type: Sequelize.STRING,
 			unique: true,

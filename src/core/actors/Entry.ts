@@ -9,6 +9,7 @@ const model = Database.models.entry;
 interface EntryData{
 	name?: string;
 	description?: string;
+	method?: string;
 	uri?: string;
 }
 

@@ -5,8 +5,8 @@ import * as Request from 'request';
 
 import * as Authentication from '../auth';
 import GUIManager from '../gui/GUIManager';
-import {Configuration, Environment, Log, Process, ProcessManager} from '../chook';
-import {Controller, Hmr, Server} from '.';
+import {Configuration, EntryRepository, Environment, Log, Process, ProcessManager} from '../chook';
+import {EntryRouter, Controller, Hmr, Server} from '.';
 
 export default class ServerManager{
 
@@ -21,6 +21,7 @@ export default class ServerManager{
 	initialize(): void{
 		this.initializeHmr();
 		this.initializeControlRoutes();
+		this.initializeEntryRoutes();
 		this.initializeAuthentication();
 		this.initializeGui();
 	}
@@ -33,6 +34,11 @@ export default class ServerManager{
 	initializeControlRoutes(): void{
 		let controller: Controller = new Controller( this.serverInstance );
 		controller.setup();
+	}
+
+	initializeEntryRoutes(): void{
+		let entryRouter: EntryRouter = new EntryRouter( this.serverInstance, new EntryRepository( this.serverInstance ) );
+		entryRouter.setup();
 	}
 
 	initializeAuthentication(): void{

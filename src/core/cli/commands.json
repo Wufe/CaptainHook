@@ -96,6 +96,98 @@
 			}
 		},
 		{
+			"id": "list",
+			"aliases": [ "ls", "l" ],
+			"addHelp": true,
+			"help": "List all entries."
+		},
+		{
+			"id": "create",
+			"aliases": [ "c" ],
+			"addHelp": true,
+			"help": "Create an entry.",
+			"args": [
+				{
+					"id": "--name",
+					"action": "store",
+					"defaultValue": null
+				},
+				{
+					"id": "--uri",
+					"action": "store",
+					"defaultValue": null
+				},
+				{
+					"id": "--description",
+					"action": "store",
+					"defaultValue": null
+				},
+				{
+					"id": "--method",
+					"action": "store",
+					"defaultValue": "post",
+					"help": "The HTTP method."
+				}
+			]
+		},
+		{
+			"id": "read",
+			"aliases": [ "r", "show", "s" ],
+			"addHelp": true,
+			"help": "Get a single entry by id.",
+			"args": [
+				{
+					"id": "id",
+					"action": "store"
+				}
+			]
+		},
+		{
+			"id": "update",
+			"aliases": [ "u" ],
+			"addHelp": true,
+			"help": "Update an entry specifying which field to change.",
+			"args": [
+				{
+					"id": "id",
+					"action": "store"
+				},
+				{
+					"id": "--name",
+					"action": "store",
+					"defaultValue": null
+				},
+				{
+					"id": "--uri",
+					"action": "store",
+					"defaultValue": null
+				},
+				{
+					"id": "--description",
+					"action": "store",
+					"defaultValue": null
+				},
+				{
+					"id": "--method",
+					"action": "store",
+					"defaultValue": "post",
+					"help": "The HTTP method."
+				}
+			]
+		},
+		{
+			"id": "delete",
+			"aliases": [ "del", "d" ],
+			"addHelp": true,
+			"help": "Delete an entry by its id.",
+			"args": [
+				{
+					"id": "id",
+					"action": "store"
+				}
+			]
+		},
+		{
 			"id": "entry",
 			"addHelp": true,
 			"aliases": [ "e", "entries" ],
@@ -130,6 +222,12 @@
 								"id": "--description",
 								"action": "store",
 								"defaultValue": null
+							},
+							{
+								"id": "--method",
+								"action": "store",
+								"defaultValue": "post",
+								"help": "The HTTP method."
 							}
 						]
 					},
@@ -169,6 +267,12 @@
 								"id": "--description",
 								"action": "store",
 								"defaultValue": null
+							},
+							{
+								"id": "--method",
+								"action": "store",
+								"defaultValue": "post",
+								"help": "The HTTP method."
 							}
 						]
 					},

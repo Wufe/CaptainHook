@@ -35,6 +35,7 @@
     "should": "registry:dt/should#8.1.1+20160608082854",
     "source-map": "registry:dt/source-map#0.0.0+20161003134342",
     "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526",
+    "uuid": "registry:dt/uuid#3.3.0+20160728152600",
     "validator": "registry:dt/validator#5.7.0+20161105193831",
     "webpack": "registry:dt/webpack#1.12.9+20161025142220",
     "winston": "registry:dt/winston#0.0.0+20161108133445"

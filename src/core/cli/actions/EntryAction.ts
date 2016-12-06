@@ -4,6 +4,13 @@ import {Entry, Task} from '../../actors';
 import {EntryModel, EntryRepository, Environment, Log, Utils} from '../../chook';
 
 import {green, red} from 'chalk';
+import * as Moment from 'moment';
+
+const COMMAND_LIST = [ "list", "ls", "l" ];
+const COMMAND_CREATE = [ "create", "c" ];
+const COMMAND_READ = [ "read", "r", "show", "s" ];
+const COMMAND_UPDATE = [ "update", "u" ];
+const COMMAND_DELETE = [ "delete", "d", "del" ];
 
 class EntryAction extends Action{
 
@@ -14,26 +21,39 @@ class EntryAction extends Action{
 		name?: string;
 		uri?: string;
 		description?: string;
+		method?: string;
 	};
 
 	constructor(){
 		super();
-		this.actions = [ "entry", "entries", "e" ];
+		this.actions = [ 
+			"entry", "entries", "e",
+			...COMMAND_LIST,
+			...COMMAND_CREATE,
+			...COMMAND_READ,
+			...COMMAND_UPDATE,
+			...COMMAND_DELETE
+		];
 	}
 
 	run(): void{
 		super.run();
 		this.args = Environment.get( 'args' );
-		if( [ "list", "ls", "l" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
+		if( COMMAND_LIST.indexOf( this.args[ 'entryAction' ] ) > -1 ||
+			COMMAND_LIST.indexOf( this.args[ 'action' ] ) > -1 ){
 			this.listEntries();
-		}else if( [ "create", "c" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
+		}else if( COMMAND_CREATE.indexOf( this.args[ 'entryAction' ] ) > -1 ||
+			COMMAND_CREATE.indexOf( this.args[ 'action' ] ) > -1 ){
 			this.createEntry();
-		}else if( [ "update", "u" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
-			this.updateEntry();
-		}else if( [ "delete", "d", "del" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
-			this.deleteEntry();
-		}else if( [ "read", "r", "show", "s" ].indexOf( this.args[ 'entryAction' ] ) > -1 ){
+		}else if( COMMAND_READ.indexOf( this.args[ 'entryAction' ] ) > -1 ||
+			COMMAND_READ.indexOf( this.args[ 'action' ] ) > -1 ){
 			this.readEntry();
+		}else if( COMMAND_UPDATE.indexOf( this.args[ 'entryAction' ] ) > -1 ||
+			COMMAND_UPDATE.indexOf( this.args[ 'action' ] ) > -1 ){
+			this.updateEntry();
+		}else if( COMMAND_DELETE.indexOf( this.args[ 'entryAction' ] ) > -1 ||
+			COMMAND_DELETE.indexOf( this.args[ 'action' ] ) > -1 ){
+			this.deleteEntry();
 		}
 	}
 
@@ -55,12 +75,16 @@ class EntryAction extends Action{
 
 	printFormattedEntries( entries: any[] ): void{
 		Utils.printTableFromArray( entries.map( ( entry: any ) => {
-			let {id, name, uri, description, created_at} = entry.get();
+			let {id, name, uri, description, method, created_at} = entry.get();
+			if( created_at ){
+				created_at = Moment( created_at ).fromNow();
+			}
 			return {
 				id,
 				name,
 				uri,
 				description,
+				method,
 				created_at
 			};
 		}));
@@ -68,17 +92,28 @@ class EntryAction extends Action{
 
 	printFormattedEntry( entry: any ): void{
 		console.log( 'Entry:' );
-		let {id, name, uri, description, created_at} = entry.get();
+		let {id, name, uri, description, method, created_at} = entry.get();
+		if( created_at ){
+			created_at = Moment( created_at ).fromNow();
+		}
 		Utils.printTableFromArray([
 			{
 				id,
 				name,
 				uri,
 				description,
+				method,
 				created_at
 			}
 		]);
-		let tasks = entry.getTasks();
+		let tasks: any[] = [];
+		if( entry.getTasks ){
+			tasks = entry.getTasks();
+		}else if( entry.tasks ){
+			tasks = entry.tasks;
+		}else if( entry.data.tasks ){
+			tasks = entry.data.tasks;
+		}
 		if( tasks && tasks.length ){
 			console.log( '\nCommands:' );
 			Utils.printTableFromArray( tasks.map( ( task: Task ) => {
@@ -93,11 +128,12 @@ class EntryAction extends Action{
 		entryRepository
 			.loadEntries()
 			.then( () => {
-				let {name, uri, description} = this.args;
+				let {name, uri, description, method} = this.args;
 				let entry: EntryModel = new EntryModel( entryRepository, {
 					name,
 					description,
-					uri
+					uri,
+					method
 				});
 				entry.save().then( ( entry: Entry ) => {
 					this.printFormattedEntry( entry );
@@ -105,6 +141,7 @@ class EntryAction extends Action{
 				.catch( ( error: any ) => {
 					Log( "error", red( error.message ), error );
 				});
+				
 			})
 			.catch( ( error: any ) => {
 				Log( "error", red( error.message ) );
@@ -131,7 +168,7 @@ class EntryAction extends Action{
 
 	updateEntry(): void{
 		let entryRepository: EntryRepository = this.getRepository();
-		let {id, name, uri, description} = this.args;
+		let {id, name, uri, description, method} = this.args;
 		console.log( green( `Updating entry #${id}..` ) );
 		entryRepository
 			.loadEntries()
@@ -147,6 +184,8 @@ class EntryAction extends Action{
 					foundEntryModel.set( 'uri', uri );
 				if( description )
 					foundEntryModel.set( 'description', description );
+				if( method )
+					foundEntryModel.set( 'method', method );
 				foundEntryModel
 					.save()
 					.then( ( entry: Entry ) => {

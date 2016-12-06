@@ -6,11 +6,20 @@ import {fake} from 'faker';
 import {EntryRepository} from '.';
 import {Entry, Task} from '../actors';
 
+export type METHOD_GET = 'get';
+export type METHOD_POST = 'post';
+export type METHOD_PUT = 'put';
+export type METHOD_PATCH = 'patch';
+export type METHOD_DELETE = 'delete';
+
+export type RequestMethod = METHOD_GET | METHOD_POST | METHOD_PUT | METHOD_PATCH | METHOD_DELETE;
+
 export type IEntry = {
 	id?: number,
 	name?: string;
 	description?: string;
 	uri: string;
+	method?: string;
 	created_at?: Date;
 	updated_at?: Date;
 	tasks?: Task[];
@@ -22,6 +31,7 @@ const defaultData: IEntry = {
 	name: null,
 	description: null,
 	uri: null,
+	method: 'post',
 	tasks: []
 };
 
@@ -33,7 +43,11 @@ export default class EntryModel{
 
 	constructor( entryRepository: EntryRepository, data?: IEntry, actor?: Entry ){
 		this.entryRepository = entryRepository;
-		this.data = Object.assign( {}, defaultData, data );
+		this.data = Object.assign( {}, defaultData );
+		for( let key in data ){
+			if( data[ key ] )
+				this.set( key, data[ key ] );
+		}
 		this.actor = actor;
 		this.create();
 	}
@@ -112,17 +126,18 @@ export default class EntryModel{
 	save(): Promise<Entry>{
 		return new Promise<Entry>( ( resolve, reject ) => {
 			if( !this.actor ){
-				let {name, description, uri} = this.data;
-				this.actor = new Entry({ name, description, uri });
+				let {name, description, method, uri} = this.data;
+				this.actor = new Entry({ name, description, method, uri });
 			}
 
 			this.actor
 				.save()
 				.then( ( entry: Entry ) => {
-					let {created_at, description, id, name, updated_at, uri} = entry.get();
+					let {created_at, description, id, name, method, updated_at, uri} = entry.get();
 					this.set( 'id', id );
 					this.set( 'name', name );
 					this.set( 'description', description );
+					this.set( 'method', method );
 					this.set( 'uri', uri );
 					this.set( 'created_at', created_at );
 					this.set( 'updated_at', updated_at );
