@@ -49,15 +49,13 @@ class Structure extends Component<AppProps, any>{
 									value: 20
 								},
 								line_linked: {
-									color: "#1e95e9",
-									shadow: {
-										enable: false,
-										blur: 15,
-										color: 'white'
-									}
+									color: "#3CA9D1"
 								},
 								move: {
 									speed: 1
+								},
+								size: {
+									value: 0
 								}
 							}
 						}}

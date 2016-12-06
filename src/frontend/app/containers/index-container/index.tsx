@@ -12,7 +12,15 @@ export default class IndexContainer extends Component<IndexContainerProps, any>{
 		return (
 			<div className="indexContainer">
 				<div className="loginBox">
-					Captain Hook
+					<div className="header">
+						Captain Hook
+					</div>
+					<div className="subheader">
+						Login
+					</div>
+					<input type="text" placeholder="Username" />
+						<br />
+					<input type="password" placeholder="Password" />
 				</div>
 			</div>
 		);
