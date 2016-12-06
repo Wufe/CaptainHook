@@ -63,3 +63,7 @@ Run `yarn` or `npm install`, then `npm test`.
 + `content-type` - Would allow to set the content-type.  
 + `x-hub-signature` - Would allow to check x-hub-signature header ( requires `secret` to be set ).  
 + `secret` - Would allow a signature check.  
+
+**Task Creation/Update**
+
++ `--before <id>` `--after <id>` - Create a task and put it after the task with <id>.
