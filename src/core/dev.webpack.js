@@ -27,10 +27,6 @@ module.exports = {
             {
                 test: /\.json$/,
                 loader: 'json-loader'
-            },
-            {
-                test: /\.yml$/,
-                loader: 'json-loader!yaml-loader'
             }
         ]
     },
