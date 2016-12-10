@@ -27,7 +27,7 @@ class Structure extends Component<AppProps, any>{
 	componentDidMount(){
 		setInterval( () => {
 			this.props.ping();
-		}, 60000 );
+		}, 6000 );
 		setTimeout( () => {
 			this.props.setPageLoading();
 		}, 1000 );
