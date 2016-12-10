@@ -11,6 +11,7 @@ interface EntryData{
 	description?: string;
 	method?: string;
 	uri?: string;
+	options?: any;
 }
 
 class Entry extends Actor<Entry>{

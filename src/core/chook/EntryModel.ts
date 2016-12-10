@@ -20,6 +20,7 @@ export type IEntry = {
 	description?: string;
 	uri: string;
 	method?: string;
+	options?: any;
 	created_at?: Date;
 	updated_at?: Date;
 	tasks?: Task[];
@@ -32,6 +33,12 @@ const defaultData: IEntry = {
 	description: null,
 	uri: null,
 	method: 'post',
+	options: {
+		pipe: false,
+		"content-type": "text/plain",
+		"x-hub-signature": false,
+		secret: null
+	},
 	tasks: []
 };
 
@@ -47,6 +54,10 @@ export default class EntryModel{
 		for( let key in data ){
 			if( data[ key ] )
 				this.set( key, data[ key ] );
+		}
+		if( data.options ){
+			let options = Object.assign( {}, defaultData.options, data.options );
+			this.set( 'options', options );
 		}
 		this.actor = actor;
 		this.create();
@@ -126,19 +137,20 @@ export default class EntryModel{
 	save(): Promise<Entry>{
 		return new Promise<Entry>( ( resolve, reject ) => {
 			if( !this.actor ){
-				let {name, description, method, uri} = this.data;
-				this.actor = new Entry({ name, description, method, uri });
+				let {name, description, method, uri, options} = this.data;
+				this.actor = new Entry({ name, description, method, uri, options });
 			}
 
 			this.actor
 				.save()
 				.then( ( entry: Entry ) => {
-					let {created_at, description, id, name, method, updated_at, uri} = entry.get();
+					let {created_at, description, id, name, method, updated_at, uri, options} = entry.get();
 					this.set( 'id', id );
 					this.set( 'name', name );
 					this.set( 'description', description );
 					this.set( 'method', method );
 					this.set( 'uri', uri );
+					this.set( 'options', options );
 					this.set( 'created_at', created_at );
 					this.set( 'updated_at', updated_at );
 					this.actor = entry;
