@@ -32,8 +32,11 @@ export default class RequestResolver{
 	logHandlers: ( ( message: string ) => void )[] = [];
 	errorHandlers: ( ( message: string ) => void )[] = [];
 
+	pipe: boolean;
+
 	constructor( entry: EntryModel, expressCall: ExpressCall ){
 		this.entry = entry;
+		this.pipe = entry.get( 'options' )[ 'pipe' ];
 		this.expressCall = expressCall;
 		this.issued_at = ( Moment() ).format();
 		this.uuid = UUIDv1();
@@ -47,13 +50,19 @@ export default class RequestResolver{
 	}
 
 	run(): Promise<any>{
+		if( !this.pipe )
+			this.expressCall.response.sendStatus( 200 );
 		return new Promise( ( resolve, reject ) => {
 			let tasks = this.entry.getTasks();
 			this.status = 'running';
 			this.runTasks( tasks )
 				.then( () => {
 					this.status = 'done';
-					this.expressCall.response.end();
+					if( this.pipe ){
+						try{
+							this.expressCall.response.end();
+						}catch( e ){}
+					}
 				})
 				.catch( ( error: any ) => {
 					//
@@ -91,7 +100,6 @@ export default class RequestResolver{
 				env
 			});
 			command.stdout.on( 'data', ( data: any ) => {
-				this.expressCall.response.write( data.toString() );
 				this.log( data.toString() );
 			})
 			command.stderr.on( 'data', ( data: any ) => {
@@ -107,7 +115,6 @@ export default class RequestResolver{
 		let body: any = this.expressCall.request.body;
 		if( typeof body == 'object' )
 			body = JSON.stringify( body );
-
 		return {
 			CHOOK_ID: this.entry.getId(),
 			CHOOK_NAME: this.entry.getName(),
@@ -128,6 +135,8 @@ export default class RequestResolver{
 	}
 
 	log( message: string ): void{
+		if( this.pipe )
+			this.expressCall.response.write( message );
 		this.logHandlers.forEach( ( handler: ( message: string ) => void ) => {
 			handler.call( this, message );
 		});
