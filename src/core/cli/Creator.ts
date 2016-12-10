@@ -41,7 +41,8 @@ export default class Creator{
 		}
 	}
 
-	addCommand( subparser: SubParser, command: any ): void{
+	addCommand( subparser: SubParser, cmd: any ): void{
+		let command = Object.assign( {}, cmd );
 		let {id, args, sub}: {
 				id?: any;
 				args?: any[];
@@ -60,11 +61,13 @@ export default class Creator{
 				this.addSubparser( parser, sub );
 	}
 
-	addArgument( parser: ArgumentParser, argument: any ){
+	addArgument( parser: ArgumentParser, arg: any ){
+		let argument = Object.assign( {}, arg );
 		let {id}: {
 			id?: any;
 		} = argument;
 		delete argument.id;
+
 		parser.addArgument( id, argument );
 	}
 
