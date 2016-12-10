@@ -97,6 +97,56 @@ const configCommands: any[] = [
 	}
 ];
 
+const entryModelArgs: any[] = [
+	{
+		id: "--name",
+		action: "store",
+		defaultValue: null
+	},
+	{
+		id: "--uri",
+		action: "store",
+		defaultValue: null
+	},
+	{
+		id: "--description",
+		action: "store",
+		defaultValue: null
+	},
+	{
+		id: "--method",
+		action: "store",
+		defaultValue: "post",
+		help: 'The HTTP method.'
+	},
+	{
+		id: "--pipe",
+		action: "storeTrue",
+		nargs: 0,
+		defaultValue: false,
+		help: "Pipe the tasks' responses to the http response."
+	},
+	{
+		id: "--content-type",
+		action: "store",
+		defaultValue: null,
+		help: "Set the content-type of the http response."
+	},
+	{
+		id: "--x-hub-signature",
+		action: "storeTrue",
+		nargs: 0,
+		defaultValue: false,
+		help: "Verify the x-hub-signature. Requires --secret parameter to be set."
+	},
+	{
+		id: "--secret",
+		action: "store",
+		defaultValue: null,
+		help: "The secret required for the verification process."
+	}
+];
+
 const entryCommands: any[] = [
 	{
 		id: "list",
@@ -109,29 +159,7 @@ const entryCommands: any[] = [
 		aliases: [ "c" ],
 		addHelp: true,
 		help: "Create an entry.",
-		args: [
-			{
-				id: "--name",
-				action: "store",
-				defaultValue: null
-			},
-			{
-				id: "--uri",
-				action: "store",
-				defaultValue: null
-			},
-			{
-				id: "--description",
-				action: "store",
-				defaultValue: null
-			},
-			{
-				id: "--method",
-				action: "store",
-				defaultValue: "post",
-				help: 'The HTTP method.'
-			}
-		]
+		args: entryModelArgs
 	},
 	{
 		id: "read",
@@ -155,27 +183,7 @@ const entryCommands: any[] = [
 				id: "id",
 				action: "store"
 			},
-			{
-				id: "--name",
-				action: "store",
-				defaultValue: null
-			},
-			{
-				id: "--uri",
-				action: "store",
-				defaultValue: null
-			},
-			{
-				id: "--description",
-				action: "store",
-				defaultValue: null
-			},
-			{
-				id: "--method",
-				action: "store",
-				defaultValue: "post",
-				help: 'The HTTP method.'
-			}
+			...entryModelArgs
 		]
 	},
 	{
@@ -211,6 +219,20 @@ const taskCommands: any[] = [
 							action: "store",
 							help: "The id of the entry. It can be the numeric id or the name.",
 							addHelp: true
+						},
+						{
+							id: "--before",
+							action: "store",
+							defaultValue: null,
+							type: "int",
+							help: "Place and execute the task before the specified task id."
+						},
+						{
+							id: "--after",
+							action: "store",
+							defaultValue: null,
+							type: "int",
+							help: "Place and execute the task after the specified task id."
 						}
 					]
 				},
