@@ -15,16 +15,16 @@ export default class Creator{
 	makeFromDataInstance( sequelizeInstance: any ): Actor<any>{
 		if( !sequelizeInstance )
 			throw new Error( `No results found.` );
-		let dataValues: any = sequelizeInstance.dataValues;
-		if( !dataValues )
+		if( !sequelizeInstance.dataValues )
 			throw new Error( `No data returned.` );
-		return this.create( dataValues );
+		return this.create( sequelizeInstance );
 	}
 
-	create( data: any ): any{
+	create( instance: any ): any{
+		let dataValues: any = instance.dataValues;
 		let actorInstance: any = new this.actor();
-		for( let dataKey in data ){
-			let dataValue: any = data[ dataKey ];
+		for( let dataKey in instance.dataValues ){
+			let dataValue: any = instance.get( dataKey );
 			actorInstance.set( dataKey, dataValue );
 		}
 		return actorInstance;
