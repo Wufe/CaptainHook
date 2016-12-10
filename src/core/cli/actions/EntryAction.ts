@@ -108,6 +108,7 @@ class EntryAction extends Action{
 		]);
 
 		console.log( '\nOptions:' );
+		options.secret = '*******';
 		Utils.printTableFromArray([
 			options
 		]);
