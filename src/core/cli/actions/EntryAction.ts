@@ -92,7 +92,7 @@ class EntryAction extends Action{
 
 	printFormattedEntry( entry: any ): void{
 		console.log( 'Entry:' );
-		let {id, name, uri, description, method, created_at} = entry.get();
+		let {id, name, uri, description, method, created_at, options} = entry.get();
 		if( created_at ){
 			created_at = Moment( created_at ).fromNow();
 		}
@@ -106,6 +106,12 @@ class EntryAction extends Action{
 				created_at
 			}
 		]);
+
+		console.log( '\nOptions:' );
+		Utils.printTableFromArray([
+			options
+		]);
+
 		let tasks: any[] = [];
 		if( entry.getTasks ){
 			tasks = entry.getTasks();
