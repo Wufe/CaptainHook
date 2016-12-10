@@ -86,7 +86,10 @@ export default class RequestResolver{
 
 	runTask( task: Task ): Promise<any>{
 		return new Promise( ( resolve, reject ) => {
-			let command = exec( task.get( 'command' ) );
+			let env: any = this.getEnvironmentVariables();
+			let command = exec( task.get( 'command' ), {
+				env
+			});
 			command.stdout.on( 'data', ( data: any ) => {
 				this.expressCall.response.write( data.toString() );
 				this.log( data.toString() );
@@ -98,6 +101,22 @@ export default class RequestResolver{
 				resolve();
 			});
 		});
+	}
+
+	getEnvironmentVariables(){
+		let body: any = this.expressCall.request.body;
+		if( typeof body == 'object' )
+			body = JSON.stringify( body );
+
+		return {
+			CHOOK_ID: this.entry.getId(),
+			CHOOK_NAME: this.entry.getName(),
+			CHOOK_URI: this.entry.getUri(),
+			CHOOK_DESCRIPTION: this.entry.get( 'description' ),
+			CHOOK_METHOD: this.entry.get( 'method' ),
+			CHOOK_BODY: body,
+			CHOOK_OPTIONS: JSON.stringify( this.entry.get( 'options' ) )
+		}
 	}
 
 	registerLogHandler( handler: ( message: string ) => void ): void{
