@@ -98,13 +98,21 @@ export default class Actor<T>{
 				.then( ( instance: any ) => {
 					if( !instance.dataValues )
 						throw new Error( `No data returned.` );
-					this.populateFromData( instance.dataValues );
+					this.populateFromInstance( instance );
 					resolve();
 				})
 				.catch( ( error: any ) => {
 					reject( error );
 				});
 		});
+	}
+
+	private populateFromInstance( instance: any ){
+		let {dataValues} = instance;
+		for( let dataKey in dataValues ){
+			let dataValue: any = instance.get( dataKey );
+			this.set( dataKey, dataValue );
+		}
 	}
 
 	private populateFromData( data: any ): void{
