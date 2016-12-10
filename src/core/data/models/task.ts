@@ -10,6 +10,19 @@ const task = ( Sequelize: any ) => {
 			unique: false,
 			allowNull: true
 		},
+		environment: {
+			type: Sequelize.STRING,
+			unique: false,
+			allowNull: true,
+			defaultValue: '{}',
+			get: function(){
+				return JSON.parse( this.getDataValue( 'environment' ) );
+			},
+			set: function( value: string ){
+				value = JSON.stringify(value);
+				this.setDataValue( 'environment', value );
+			}
+		},
 		working_dir: {
 			type: Sequelize.STRING,
 			unique: false,
@@ -18,6 +31,14 @@ const task = ( Sequelize: any ) => {
 		description: {
 			type: Sequelize.STRING,
 			unique: false,
+			allowNull: true
+		},
+		before: {
+			type: Sequelize.INTEGER,
+			allowNull: true
+		},
+		after: {
+			type: Sequelize.INTEGER,
 			allowNull: true
 		},
 		entry_id: {
