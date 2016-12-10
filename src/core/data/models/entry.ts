@@ -33,6 +33,19 @@ const entry = ( Sequelize: any ) => {
 			unique: true,
 			allowNull: false
 		},
+		options: {
+			type: Sequelize.STRING,
+			unique: false,
+			allowNull: true,
+			defaultValue: '{}',
+			get: function(){
+				return JSON.parse( this.getDataValue( 'options' ) );
+			},
+			set: function( value: string ){
+				value = JSON.stringify(value);
+				this.setDataValue( 'options', value );
+			}
+		},
 		created_at: {
 			type: Sequelize.DATE
 		},
