@@ -95,12 +95,68 @@ export default class EntryModel{
 				}
 			})
 			.then( ( tasks: Task[] ) => {
+				tasks = this.sortTasks( tasks );
 				this.data.tasks = tasks;
 				resolve( this );
 			})
 			.catch( ( error: any ) => {
 				reject( error );
 			})
+		});
+	}
+
+	sortTasks( tasks: Task[] ): Task[]{
+		let changed: boolean = true;
+		while( changed ){
+			changed = false;
+			for( let i = 0; i < tasks.length; i++ ){
+				let task = tasks[ i ];
+				let after = task.get( 'after' );
+				if( after ){
+					let findIndex: number;
+					if( after )
+						findIndex = after;
+					if( after && tasks[ i-1 ] && tasks[ i-1 ].get( 'id' ) == after ){
+					}else if( findIndex == task.get( 'id' ) ){
+					}else{
+						let taskToMoveNear: number = this.findTaskById( findIndex, tasks );
+						if( taskToMoveNear > -1 ){
+							tasks = this.moveTask( i, taskToMoveNear, tasks );
+							changed = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return tasks;
+	}
+
+	moveTask( from: number, to: number, tasks: Task[] ): Task[]{
+		let removedTask: Task = tasks[ from ];
+		let part1: Task[];
+		if( from-1 < 0 )
+			part1 = [];
+		else
+			part1 = tasks.slice( 0, from );
+
+		let part2: Task[];
+		if( from+1 > tasks.length-1 )
+			part2 = [];
+		else
+			part2 = tasks.slice( from+1 );
+
+		let tempTasks: Task[] = [...part1, ...part2];
+		return [
+			...tempTasks.slice( 0, to ),
+			removedTask,
+			...tempTasks.slice( to )
+		];
+	}
+
+	findTaskById( id: number, tasks: Task[] ): number{
+		return tasks.findIndex( ( task: Task ) => {
+			return id == task.get( 'id' );
 		});
 	}
 
