@@ -85,7 +85,7 @@ class EntryAction extends Action{
 				uri,
 				description,
 				method,
-				created_at
+				created: created_at
 			};
 		}));
 	};
@@ -103,7 +103,7 @@ class EntryAction extends Action{
 				uri,
 				description,
 				method,
-				created_at
+				created: created_at
 			}
 		]);
 
@@ -124,7 +124,23 @@ class EntryAction extends Action{
 		if( tasks && tasks.length ){
 			console.log( '\nCommands:' );
 			Utils.printTableFromArray( tasks.map( ( task: Task ) => {
-				return task.get();
+				let {
+					id,
+					command,
+					working_dir,
+					description,
+					created_at
+				} = task.get();
+				if( created_at ){
+					created_at = Moment( created_at ).fromNow();
+				}
+				return {
+					id,
+					command,
+					working_dir,
+					description,
+					created: created_at
+				};
 			}));
 		}
 	}
