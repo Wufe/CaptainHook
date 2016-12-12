@@ -107,57 +107,79 @@ export default class EntryModel{
 
 	sortTasks( tasks: Task[] ): Task[]{
 		let changed: boolean = true;
+		let lastSetPosition: number = -1;
+		tasks.map( ( task: Task ) => {
+			task.$position = ++lastSetPosition;
+		});
 		while( changed ){
 			changed = false;
 			for( let i = 0; i < tasks.length; i++ ){
 				let task = tasks[ i ];
-				let after = task.get( 'after' );
-				if( after ){
-					let findIndex: number;
-					if( after )
-						findIndex = after;
-					if( after && tasks[ i-1 ] && tasks[ i-1 ].get( 'id' ) == after ){
-					}else if( findIndex == task.get( 'id' ) ){
-					}else{
-						let taskToMoveNear: number = this.findTaskById( findIndex, tasks );
-						if( taskToMoveNear > -1 ){
-							tasks = this.moveTask( i, taskToMoveNear, tasks );
+				let taskPosition = task.$position;
+				let reference: number = task.get( 'after' );
+				if( reference ){
+					let referencedID = this.findTaskById( reference, tasks );
+					let referencedTask = referencedID > -1 ? tasks[ referencedID ] : null;
+					if( referencedTask ){
+						let referencedPosition = referencedTask.$position;
+						let previousPositionID = this.findTaskByPos( taskPosition -1, tasks );
+						let previousPositionTask = previousPositionID > -1 ? tasks[ previousPositionID ] : null;
+						let isSibling: boolean = previousPositionTask && previousPositionTask.get( 'after' ) == reference;
+						if( !( referencedPosition == taskPosition -1 || isSibling ) ){
+							task.$position = -1;
+							tasks = this.shiftTasksPosByOne( referencedPosition +1, tasks );
+							task.$position = referencedPosition +1;
 							changed = true;
 							break;
 						}
 					}
 				}
+				tasks[ i ] = task;
 			}
 		}
-		return tasks;
-	}
 
-	moveTask( from: number, to: number, tasks: Task[] ): Task[]{
-		let removedTask: Task = tasks[ from ];
-		let part1: Task[];
-		if( from-1 < 0 )
-			part1 = [];
-		else
-			part1 = tasks.slice( 0, from );
-
-		let part2: Task[];
-		if( from+1 > tasks.length-1 )
-			part2 = [];
-		else
-			part2 = tasks.slice( from+1 );
-
-		let tempTasks: Task[] = [...part1, ...part2];
-		return [
-			...tempTasks.slice( 0, to ),
-			removedTask,
-			...tempTasks.slice( to )
-		];
+		let sortedTasks: Task[] = [];
+		let tasksLength = tasks.length;
+		for( let i = 0; i < tasksLength; i++ ){
+			let lowestPosTaskID: number = this.getLowestPosTaskID( tasks );
+			let lowestPosTask: Task = tasks[ lowestPosTaskID ];
+			tasks.splice( lowestPosTaskID, 1 );
+			sortedTasks.push( lowestPosTask );
+		}
+		return sortedTasks;
 	}
 
 	findTaskById( id: number, tasks: Task[] ): number{
 		return tasks.findIndex( ( task: Task ) => {
 			return id == task.get( 'id' );
 		});
+	}
+
+	findTaskByPos( position: number, tasks: Task[] ): number{
+		return tasks.findIndex( ( task ) => {
+			return task.$position == position;
+		});
+	}
+
+	shiftTasksPosByOne( threshold: number, tasks: Task[] ): Task[]{
+		tasks.map( ( task ) => {
+			if( task.$position && task.$position >= threshold )
+				task.$position++;
+			return task;
+		})
+		return tasks;
+	}
+
+	getLowestPosTaskID( tasks: Task[] ): number{
+		let lowestPos: number = Infinity;
+		let lowestPosTaskID: number = null;
+		tasks.forEach( ( task, index ) => {
+			if( task.$position < lowestPos ){
+				lowestPos = task.$position;
+				lowestPosTaskID = index;
+			}
+		});
+		return lowestPos == Infinity ? 0 : lowestPosTaskID;
 	}
 
 	filterUri( uri: string ): string{

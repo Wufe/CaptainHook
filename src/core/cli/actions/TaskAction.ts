@@ -12,6 +12,7 @@ interface TaskArgs{
 	taskAction: string;
 	entry_id?: string | number;
 	task_id?: number;
+	after?: number;
 }
 
 class TaskAction extends Action{
@@ -56,24 +57,28 @@ class TaskAction extends Action{
 		readline.question( `$ `, ( command: string ) => {
 			readline.question( `Working directory (leave blank for inherit): `, ( working_dir: string ) => {
 				readline.question( `Description: `, ( description: string ) => {
-					if( command ){
-						( new Task({
-							command,
-							working_dir,
-							description,
-							entry_id: entryModel.getId()
-						}) ).save()
-							.then( () => {
-								readline.close();
-								console.log( green( `Command saved.` ) );
-							})
-							.catch( ( error: any ) => {
-								Log( "error", red( error.message ), error );
-							});
-					}else{
-						console.error( red( `Please input a valid command.` ) );
-						readline.close();
-					}
+					readline.question( `Place it after task id (leave blank for default):`, ( afterString: string ) => {
+						let after = parseInt(afterString);
+						if( command ){
+							( new Task({
+								command,
+								working_dir,
+								description,
+								after,
+								entry_id: entryModel.getId()
+							}) ).save()
+								.then( () => {
+									readline.close();
+									console.log( green( `Command saved.` ) );
+								})
+								.catch( ( error: any ) => {
+									Log( "error", red( error.message ), error );
+								});
+						}else{
+							console.error( red( `Please input a valid command.` ) );
+							readline.close();
+						}
+					});
 				});
 			});
 		});

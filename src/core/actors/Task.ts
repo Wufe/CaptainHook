@@ -16,6 +16,8 @@ interface TaskData{
 
 class Task extends Actor<Task>{
 
+	$position?: number;
+
 	static find: AccessInterface<Task>;
 
 	constructor( data: TaskData ){
