@@ -20,7 +20,7 @@
     "frontend:compile:prod": "webpack --config src/frontend/prod.webpack.js",
     "frontend:compile:watch": "npm run -s frontend:compile -- --watch",
     "typings-install": "typings install",
-    "prepublish": "npm-run-all typings-install development production",
+    "install": "npm-run-all typings-install development production",
     "pretest": "npm-run-all sequelize:test:migrate:refresh sequelize:test:seed:all",
     "production": "npm-run-all compile:prod sequelize:prod:migrate:refresh",
     "sequelize:migrate": "sequelize db:migrate",

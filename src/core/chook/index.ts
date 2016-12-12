@@ -7,6 +7,7 @@ import Environment from './Environment';
 import {default as EntryModel, IEntry} from './EntryModel';
 import {default as RequestResolver, ExpressCall} from './RequestResolver';
 import RequestResolverRepository from './RequestResolverRepository';
+import TaskManager from './TaskManager';
 
 export {
 	IEntry,
@@ -16,5 +17,6 @@ export {
 	ExpressCall,
 	RequestResolver,
 	RequestResolverRepository,
+	TaskManager,
 	Utils
 };

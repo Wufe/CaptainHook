@@ -6,11 +6,14 @@ import * as Sequelize from 'sequelize';
 
 const model = Database.models.task;
 
-interface TaskData{
+export interface TaskData{
 	command?: string;
 	working_dir?: string;
 	description?: string;
 	entry_id: number;
+	environment?: {
+		[key:string]: string;
+	};
 }
 
 class Task extends Actor<Task>{

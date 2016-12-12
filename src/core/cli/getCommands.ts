@@ -221,18 +221,10 @@ const taskCommands: any[] = [
 							addHelp: true
 						},
 						{
-							id: "--before",
-							action: "store",
-							defaultValue: null,
-							type: "int",
-							help: "Place and execute the task before the specified task id."
-						},
-						{
-							id: "--after",
-							action: "store",
-							defaultValue: null,
-							type: "int",
-							help: "Place and execute the task after the specified task id."
+							id: "--environment",
+							action: "append",
+							defaultValue: [],
+							help: "Environment variable for the task."
 						}
 					]
 				},

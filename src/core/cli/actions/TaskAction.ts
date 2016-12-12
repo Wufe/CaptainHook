@@ -1,7 +1,7 @@
 import Action from './Action';
 
 import {Task} from '../../actors';
-import {EntryRepository, EntryModel, Environment, Log, Utils} from '../../chook';
+import {EntryRepository, EntryModel, Environment, Log, TaskManager, Utils} from '../../chook';
 
 import {createInterface, ReadLine} from 'readline';
 
@@ -13,6 +13,7 @@ interface TaskArgs{
 	entry_id?: string | number;
 	task_id?: number;
 	after?: number;
+	environment?: string[];
 }
 
 class TaskAction extends Action{
@@ -49,7 +50,7 @@ class TaskAction extends Action{
 			})
 			.catch( ( error: any ) => {
 				Log( "error", red( error.message ) );
-			})
+			});
 	}
 
 	addTaskToEntryModel( entryModel: EntryModel ): void{
@@ -58,41 +59,25 @@ class TaskAction extends Action{
 			readline.question( `Working directory (leave blank for inherit): `, ( working_dir: string ) => {
 				readline.question( `Description: `, ( description: string ) => {
 					readline.question( `Place it after task id (leave blank for default): `, ( afterString: string ) => {
-						let task: Task;
-						try{
-							if( !command )
-								throw new Error( `Not a valid command.` );
-							task = new Task({
-								command,
-								working_dir,
-								description,
-								entry_id: entryModel.getId()
-							});
-							if( afterString ){
-								let after = parseInt(afterString);
-								let reference = entryModel.getTasks().findIndex( ( task: Task ) => {
-									return task.get( 'id' ) == after;
-								});
-								if( reference == -1 ){
-									throw new Error( `There is no task with ID ${after}.` );
-								}
-							}
-							let savePromise = task.save();
-							if( afterString ){
-								savePromise
-									.then( ( task: Task ) => {
-										return entryModel.updateSchema( task, parseInt( afterString ) );
-									});
-							}
-							savePromise.then( () => {
-								console.log( green( `Command saved.` ) );
-							})
-							.catch( ( error: any ) => {
-								Log( "error", red( error.message ) );
-							});
-						}catch( error ){
+						let after: number = null;
+						if( afterString )
+							after = parseInt( afterString );
+						let taskManager: TaskManager = new TaskManager( entryModel );
+						let {environment: env} = this.args;
+						taskManager.createTask({
+							command,
+							working_dir,
+							description,
+							entry_id: entryModel.getId(),
+							after,
+							env
+						})
+						.then( () => {
+							console.log( green( `Command saved.` ) );
+						})
+						.catch( ( error: any ) => {
 							Log( "error", red( error.message ) );
-						}
+						});
 						readline.close();
 					});
 				});

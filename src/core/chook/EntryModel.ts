@@ -175,27 +175,6 @@ export default class EntryModel{
 		});
 	}
 
-	shiftTasksPosByOne( threshold: number, tasks: Task[] ): Task[]{
-		tasks.map( ( task ) => {
-			if( task.$position && task.$position >= threshold )
-				task.$position++;
-			return task;
-		})
-		return tasks;
-	}
-
-	getLowestPosTaskID( tasks: Task[] ): number{
-		let lowestPos: number = Infinity;
-		let lowestPosTaskID: number = null;
-		tasks.forEach( ( task, index ) => {
-			if( task.$position < lowestPos ){
-				lowestPos = task.$position;
-				lowestPosTaskID = index;
-			}
-		});
-		return lowestPos == Infinity ? 0 : lowestPosTaskID;
-	}
-
 	filterUri( uri: string ): string{
 		if( !( uri.match( /^\/webhook\//i ) ) )
 			uri = `/webhook/${uri}`;
