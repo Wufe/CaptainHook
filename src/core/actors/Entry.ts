@@ -12,6 +12,9 @@ interface EntryData{
 	method?: string;
 	uri?: string;
 	options?: any;
+	schema: {
+		[id: number]: number;
+	}
 }
 
 class Entry extends Actor<Entry>{
@@ -21,6 +24,7 @@ class Entry extends Actor<Entry>{
 	constructor( data: EntryData ){
 		super( model, data );
 		this.hidden = [
+			"task_schema",
 			"updated_at"
 		];
 	}

@@ -33,10 +33,6 @@ const task = ( Sequelize: any ) => {
 			unique: false,
 			allowNull: true
 		},
-		after: {
-			type: Sequelize.INTEGER,
-			allowNull: true
-		},
 		entry_id: {
 			type: Sequelize.INTEGER,
 			allowNull: false

@@ -52,32 +52,48 @@ class TaskAction extends Action{
 			})
 	}
 
-	addTaskToEntryModel( entryModel: EntryModel ){
+	addTaskToEntryModel( entryModel: EntryModel ): void{
 		let readline: ReadLine = this.getReadlineInterface();
 		readline.question( `$ `, ( command: string ) => {
 			readline.question( `Working directory (leave blank for inherit): `, ( working_dir: string ) => {
 				readline.question( `Description: `, ( description: string ) => {
-					readline.question( `Place it after task id (leave blank for default):`, ( afterString: string ) => {
-						let after = parseInt(afterString);
-						if( command ){
-							( new Task({
+					readline.question( `Place it after task id (leave blank for default): `, ( afterString: string ) => {
+						let task: Task;
+						try{
+							if( !command )
+								throw new Error( `Not a valid command.` );
+							task = new Task({
 								command,
 								working_dir,
 								description,
-								after,
 								entry_id: entryModel.getId()
-							}) ).save()
-								.then( () => {
-									readline.close();
-									console.log( green( `Command saved.` ) );
-								})
-								.catch( ( error: any ) => {
-									Log( "error", red( error.message ), error );
+							});
+							if( afterString ){
+								let after = parseInt(afterString);
+								let reference = entryModel.getTasks().findIndex( ( task: Task ) => {
+									return task.get( 'id' ) == after;
 								});
-						}else{
-							console.error( red( `Please input a valid command.` ) );
-							readline.close();
+								if( reference == -1 ){
+									throw new Error( `There is no task with ID ${after}.` );
+								}
+							}
+							let savePromise = task.save();
+							if( afterString ){
+								savePromise
+									.then( ( task: Task ) => {
+										return entryModel.updateSchema( task, parseInt( afterString ) );
+									});
+							}
+							savePromise.then( () => {
+								console.log( green( `Command saved.` ) );
+							})
+							.catch( ( error: any ) => {
+								Log( "error", red( error.message ) );
+							});
+						}catch( error ){
+							Log( "error", red( error.message ) );
 						}
+						readline.close();
 					});
 				});
 			});

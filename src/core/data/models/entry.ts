@@ -46,6 +46,19 @@ const entry = ( Sequelize: any ) => {
 				this.setDataValue( 'options', value );
 			}
 		},
+		schema: {
+			type: Sequelize.STRING,
+			unique: false,
+			allowNull: true,
+			defaultValue: '{}',
+			get: function(){
+				return JSON.parse( this.getDataValue( 'schema' ) );
+			},
+			set: function( value: string ){
+				value = JSON.stringify(value);
+				this.setDataValue( 'schema', value );
+			}
+		},
 		created_at: {
 			type: Sequelize.DATE
 		},

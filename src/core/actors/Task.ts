@@ -10,20 +10,16 @@ interface TaskData{
 	command?: string;
 	working_dir?: string;
 	description?: string;
-	after?: number;
 	entry_id: number;
 }
 
 class Task extends Actor<Task>{
-
-	$position?: number;
 
 	static find: AccessInterface<Task>;
 
 	constructor( data: TaskData ){
 		super( model, data );
 		this.hidden = [
-			"after",
 			"entry_id",
 			"updated_at"
 		];

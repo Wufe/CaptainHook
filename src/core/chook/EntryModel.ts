@@ -14,6 +14,10 @@ export type METHOD_DELETE = 'delete';
 
 export type RequestMethod = METHOD_GET | METHOD_POST | METHOD_PUT | METHOD_PATCH | METHOD_DELETE;
 
+export type Schema = {
+	[id: number]: number;
+}
+
 export type IEntry = {
 	id?: number,
 	name?: string;
@@ -24,6 +28,7 @@ export type IEntry = {
 	created_at?: Date;
 	updated_at?: Date;
 	tasks?: Task[];
+	schema?: Schema;
 	[key:string]: any;
 };
 
@@ -39,6 +44,7 @@ const defaultData: IEntry = {
 		"x-hub-signature": false,
 		secret: null
 	},
+	schema: {},
 	tasks: []
 };
 
@@ -105,59 +111,67 @@ export default class EntryModel{
 		});
 	}
 
-	sortTasks( tasks: Task[] ): Task[]{
-		let changed: boolean = true;
-		let lastSetPosition: number = -1;
-		tasks.map( ( task: Task ) => {
-			task.$position = ++lastSetPosition;
-		});
-		while( changed ){
-			changed = false;
-			for( let i = 0; i < tasks.length; i++ ){
-				let task = tasks[ i ];
-				let taskPosition = task.$position;
-				let reference: number = task.get( 'after' );
-				if( reference ){
-					let referencedID = this.findTaskById( reference, tasks );
-					let referencedTask = referencedID > -1 ? tasks[ referencedID ] : null;
-					if( referencedTask ){
-						let referencedPosition = referencedTask.$position;
-						let previousPositionID = this.findTaskByPos( taskPosition -1, tasks );
-						let previousPositionTask = previousPositionID > -1 ? tasks[ previousPositionID ] : null;
-						let isSibling: boolean = previousPositionTask && previousPositionTask.get( 'after' ) == reference;
-						if( !( referencedPosition == taskPosition -1 || isSibling ) ){
-							task.$position = -1;
-							tasks = this.shiftTasksPosByOne( referencedPosition +1, tasks );
-							task.$position = referencedPosition +1;
-							changed = true;
-							break;
-						}
-					}
+	updateSchema( task: Task, after: number ): Promise<void>{
+		return new Promise<void>( ( resolve, reject ) => {
+			let schema: Schema = this.get( 'schema' );
+			let assignedPos: number = null;
+			if( ( after === null || after === undefined ) || schema[ after ] === undefined ){
+				let highestPosition = this.getHighestPos( schema );
+				assignedPos = highestPosition +1;
+			}else{
+				let referencedPos: number = schema[ after ];
+				for( let id in schema ){
+					if( schema[ id ] > referencedPos )
+						schema[ id ]++;
 				}
-				tasks[ i ] = task;
+				assignedPos = referencedPos +1;
+			}
+			schema[ task.get( 'id' ) ] = assignedPos;
+			this.set( 'schema', schema );
+			this.save()
+				.then( () => {
+					resolve();
+				})
+				.catch( ( error: any ) => {
+					reject( error );
+				})
+		})
+	}
+
+	getHighestPos( schema: Schema ): number{
+		let highestPos = -1;
+		for( let id in schema ){
+			if( schema[ id ] > highestPos )
+				highestPos = schema[ id ];
+		}
+		return highestPos;
+	}
+
+	sortTasks( tasks: Task[] ): Task[]{
+		let schema: Schema = this.get( 'schema' );
+		let taskList: Task[] = [];
+		while( Object.keys( schema ).length > 0 ){
+			let lowestPos: number = Infinity;
+			let lowestPosTaskID: number = -1;
+			for( let id in schema ){
+				if( schema[ id ] < lowestPos ){
+					lowestPos = schema[ id ];
+					lowestPosTaskID = parseInt(id);
+				}
+			}
+			delete schema[ lowestPosTaskID ];
+			let lowestPosTaskIndex = this.findTaskById( lowestPosTaskID, tasks );
+			let lowestPosTask = lowestPosTaskIndex > -1 ? tasks[ lowestPosTaskIndex ] : null;
+			if( lowestPosTask ){
+				taskList.push( lowestPosTask );
 			}
 		}
-
-		let sortedTasks: Task[] = [];
-		let tasksLength = tasks.length;
-		for( let i = 0; i < tasksLength; i++ ){
-			let lowestPosTaskID: number = this.getLowestPosTaskID( tasks );
-			let lowestPosTask: Task = tasks[ lowestPosTaskID ];
-			tasks.splice( lowestPosTaskID, 1 );
-			sortedTasks.push( lowestPosTask );
-		}
-		return sortedTasks;
+		return taskList;
 	}
 
 	findTaskById( id: number, tasks: Task[] ): number{
 		return tasks.findIndex( ( task: Task ) => {
 			return id == task.get( 'id' );
-		});
-	}
-
-	findTaskByPos( position: number, tasks: Task[] ): number{
-		return tasks.findIndex( ( task ) => {
-			return task.$position == position;
 		});
 	}
 
@@ -215,20 +229,21 @@ export default class EntryModel{
 	save(): Promise<Entry>{
 		return new Promise<Entry>( ( resolve, reject ) => {
 			if( !this.actor ){
-				let {name, description, method, uri, options} = this.data;
-				this.actor = new Entry({ name, description, method, uri, options });
+				let {name, description, method, uri, options, schema} = this.data;
+				this.actor = new Entry({ name, description, method, uri, options, schema});
 			}
 
 			this.actor
 				.save()
 				.then( ( entry: Entry ) => {
-					let {created_at, description, id, name, method, updated_at, uri, options} = entry.get();
+					let {created_at, description, id, name, method, updated_at, uri, options, schema} = entry.get();
 					this.set( 'id', id );
 					this.set( 'name', name );
 					this.set( 'description', description );
 					this.set( 'method', method );
 					this.set( 'uri', uri );
 					this.set( 'options', options );
+					this.set( 'schema', schema );
 					this.set( 'created_at', created_at );
 					this.set( 'updated_at', updated_at );
 					this.actor = entry;
