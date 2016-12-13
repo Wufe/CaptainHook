@@ -83,11 +83,18 @@ let printTableFromArray = ( data: any[], padding: number = 2 ): void => {
     });
 };
 
+let truncateText = ( string: string, offset: number ): string =>{
+    if( offset >= string.length )
+        return string;
+    return string.substr( 0, offset ) + `..`;
+};
+
 export {
 	fileExists,
     getNestedValue,
 	isFile,
 	isDirectory,
     printTableFromArray,
-    setNestedValue
+    setNestedValue,
+    truncateText
 };

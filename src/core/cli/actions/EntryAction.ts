@@ -2,6 +2,7 @@ import Action from './Action';
 
 import {Entry, Task} from '../../actors';
 import {EntryModel, EntryRepository, Environment, Log, Utils} from '../../chook';
+import {truncateText} from '../../chook/Utils';
 
 import {green, red} from 'chalk';
 import * as Moment from 'moment';
@@ -136,16 +137,28 @@ class EntryAction extends Action{
 					command,
 					working_dir,
 					description,
+					environment: env,
 					created_at
 				} = task.get();
+				let environment: string[] = [];
+				if( env ){
+					for( let key in env )
+						environment.push( `${key}=${env[key]}` );
+					env = environment.join( ', ' );
+				}
 				if( created_at ){
 					created_at = Moment( created_at ).fromNow();
 				}
+				if( description )
+					description = truncateText( description, 35 );
+				if( env )
+					env = truncateText( env, 35 );
 				return {
 					id,
 					command,
 					working_dir,
 					description,
+					environment: env,
 					created: created_at
 				};
 			}));
