@@ -134,8 +134,8 @@ export default class RequestResolver{
 			CHOOK_METHOD: this.entry.get( 'method' ),
 			CHOOK_BODY: body,
 			CHOOK_OPTIONS_PIPE: options[ 'pipe' ],
-			CHOOK_OPTIONS_CONTENT_TYPE: options[ 'content-type' ],
-			CHOOK_OPTIONS_X_HUB_SIGNATURE: options[ 'x-hub-signature' ]
+			CHOOK_OPTIONS_CONTENT_TYPE: options[ 'content_type' ],
+			CHOOK_OPTIONS_X_HUB_SIGNATURE: options[ 'x_hub_signature' ]
 		};
 		let taskEnvironment: {
 			[key: string]: string;

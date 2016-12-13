@@ -40,8 +40,8 @@ const defaultData: IEntry = {
 	method: 'post',
 	options: {
 		pipe: false,
-		"content-type": "text/plain",
-		"x-hub-signature": false,
+		content_type: "text/plain",
+		x_hub_signature: false,
 		secret: null
 	},
 	schema: {},

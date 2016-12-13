@@ -22,6 +22,13 @@ class EntryAction extends Action{
 		uri?: string;
 		description?: string;
 		method?: string;
+		pipe?: boolean;
+		content_type?: string;
+		x_hub_signature?: boolean;
+		secret?: string;
+		no_pipe?: boolean;
+		no_x_hub_signature?: boolean;
+		no_secret?: boolean;
 	};
 
 	constructor(){
@@ -152,11 +159,18 @@ class EntryAction extends Action{
 			.loadEntries()
 			.then( () => {
 				let {name, uri, description, method} = this.args;
+				let {pipe, content_type, x_hub_signature, secret} = this.args;
 				let entry: EntryModel = new EntryModel( entryRepository, {
 					name,
 					description,
 					uri,
-					method
+					method,
+					options: {
+						pipe,
+						content_type,
+						x_hub_signature,
+						secret
+					}
 				});
 				entry.save().then( ( entry: Entry ) => {
 					this.printFormattedEntry( entry );

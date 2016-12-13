@@ -129,7 +129,7 @@ const entryModelArgs: any[] = [
 	{
 		id: "--content-type",
 		action: "store",
-		defaultValue: null,
+		defaultValue: "text/plain",
 		help: "Set the content-type of the http response."
 	},
 	{
@@ -183,7 +183,28 @@ const entryCommands: any[] = [
 				id: "id",
 				action: "store"
 			},
-			...entryModelArgs
+			...entryModelArgs,
+			{
+				id: "--no-pipe",
+				action: "storeTrue",
+				nargs: 0,
+				defaultValue: false,
+				help: "Disable the 'pipe' option."
+			},
+			{
+				id: "--no-x-hub-signature",
+				action: "storeTrue",
+				nargs: 0,
+				defaultValue: false,
+				help: "Disable the 'x-hub-signature' option."
+			},
+			{
+				id: "--no-secret",
+				action: "storeTrue",
+				nargs: 0,
+				defaultValue: false,
+				help: "Remove the 'secret' option."
+			}
 		]
 	},
 	{
