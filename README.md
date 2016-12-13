@@ -67,3 +67,7 @@ Run `yarn` or `npm install`, then `npm test`.
 **Task Creation/Update**
 
 + `--before <id>` `--after <id>` - Create a task and put it after the task with <id>.
+
+### Known issues
+
++ `...`

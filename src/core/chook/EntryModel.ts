@@ -101,6 +101,7 @@ export default class EntryModel{
 				}
 			})
 			.then( ( tasks: Task[] ) => {
+
 				tasks = this.sortTasks( tasks );
 				this.data.tasks = tasks;
 				resolve( this );
@@ -148,7 +149,7 @@ export default class EntryModel{
 	}
 
 	sortTasks( tasks: Task[] ): Task[]{
-		let schema: Schema = this.get( 'schema' );
+		let schema: Schema = Object.assign({}, this.get( 'schema' ));
 		let taskList: Task[] = [];
 		while( Object.keys( schema ).length > 0 ){
 			let lowestPos: number = Infinity;

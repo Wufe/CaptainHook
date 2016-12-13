@@ -26,14 +26,16 @@ export default class TaskManager{
 			let environment: {
 				[key: string]: string;
 			} = {};
-			env.forEach( ( envKeyValue: string ) => {
-				if( envKeyValue.indexOf( '=' ) > -1 ){
-					let [key, value] = envKeyValue.split( '=' );
-					if( key && value ){
-						environment[ key ] = value;
+			if( env ){
+				env.forEach( ( envKeyValue: string ) => {
+					if( envKeyValue.indexOf( '=' ) > -1 ){
+						let [key, value] = envKeyValue.split( '=' );
+						if( key && value ){
+							environment[ key ] = value;
+						}
 					}
-				}
-			});
+				});
+			}
 			let task: Task = new Task({
 				command,
 				working_dir,

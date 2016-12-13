@@ -33,6 +33,7 @@ export default class RequestResolver{
 	errorHandlers: ( ( message: string ) => void )[] = [];
 
 	pipe: boolean;
+	workingDirectory: string;
 
 	constructor( entry: EntryModel, expressCall: ExpressCall ){
 		this.entry = entry;
@@ -50,6 +51,7 @@ export default class RequestResolver{
 	}
 
 	run(): Promise<any>{
+		console.log( `Called ${this.entry.getUri()}` );
 		if( !this.pipe )
 			this.expressCall.response.sendStatus( 200 );
 		return new Promise( ( resolve, reject ) => {
@@ -95,14 +97,20 @@ export default class RequestResolver{
 
 	runTask( task: Task ): Promise<any>{
 		return new Promise( ( resolve, reject ) => {
-			let env: any = this.getEnvironmentVariables();
+			let env: any = this.getEnvironmentVariables( task );
+			this.workingDirectory = task.get( 'working_dir' );
+			let {workingDirectory: cwd} = this;
 			let command = exec( task.get( 'command' ), {
-				env
+				env,
+				cwd
 			});
 			command.stdout.on( 'data', ( data: any ) => {
 				this.log( data.toString() );
 			})
 			command.stderr.on( 'data', ( data: any ) => {
+				this.error( data.toString() );
+			});
+			command.on( 'error', ( data: any ) => {
 				this.error( data.toString() );
 			});
 			command.on( 'exit', ( code: number ) => {
@@ -111,19 +119,33 @@ export default class RequestResolver{
 		});
 	}
 
-	getEnvironmentVariables(){
+	getEnvironmentVariables( task: Task ){
 		let body: any = this.expressCall.request.body;
 		if( typeof body == 'object' )
 			body = JSON.stringify( body );
-		return {
+		let options = this.entry.get( 'options' );
+		let environment: {
+			[key: string]: string | number;
+		} = {
 			CHOOK_ID: this.entry.getId(),
 			CHOOK_NAME: this.entry.getName(),
 			CHOOK_URI: this.entry.getUri(),
 			CHOOK_DESCRIPTION: this.entry.get( 'description' ),
 			CHOOK_METHOD: this.entry.get( 'method' ),
 			CHOOK_BODY: body,
-			CHOOK_OPTIONS: JSON.stringify( this.entry.get( 'options' ) )
+			CHOOK_OPTIONS_PIPE: options[ 'pipe' ],
+			CHOOK_OPTIONS_CONTENT_TYPE: options[ 'content-type' ],
+			CHOOK_OPTIONS_X_HUB_SIGNATURE: options[ 'x-hub-signature' ]
+		};
+		let taskEnvironment: {
+			[key: string]: string;
+		} = task.get( 'environment' );
+		if( taskEnvironment ){
+			for( let key in taskEnvironment ){
+				environment[ key ] = taskEnvironment[ key ];
+			}
 		}
+		return environment;
 	}
 
 	registerLogHandler( handler: ( message: string ) => void ): void{
