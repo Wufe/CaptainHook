@@ -25,7 +25,7 @@ export default class FrontendRouter{
 		this.server.express.all( '*', ( request, response, next ) => {
 			this.serveAssets( request, response, next );
 		});	
-		this.server.express.get( '/', ( request, response, next ) => {
+		this.server.express.get( /\/(login)?/, ( request, response, next ) => {
 			this.serveIndex( request, response, next );
 		});
 	}
