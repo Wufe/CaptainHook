@@ -7,6 +7,10 @@ export default class Actor<T>{
 	model: Sequelize.Model<any, any>;
 	private data: any;
 	protected hidden: string[] = [];
+	protected fields: string[] = [];
+	protected mutators: {
+		[key: string]: ( value: any ) => any;
+	}
 
 	constructor( model: Sequelize.Model<any, any>, data?: any ){
 		if( !data ){
@@ -24,10 +28,25 @@ export default class Actor<T>{
 
 	getVisibleData(): any{
 		let visibleData: any = {};
-		for( let dataKey in this.data ){
-			if( this.hidden.indexOf( dataKey ) == -1 ){
-				visibleData[ dataKey ] = this.data[ dataKey ];
+		if( !this.fields || this.fields.length == 0 ){
+			for( let dataKey in this.data ){
+				if( this.hidden.indexOf( dataKey ) == -1 ){
+					visibleData[ dataKey ] = this.data[ dataKey ];
+				}
 			}
+		}else{
+			this.fields.forEach( ( field: string ) => {
+				if( this.data[ field ] !== undefined ){
+					let value: any = this.data[ field ];
+					if( this.hidden.indexOf( field ) == -1 ){
+						if( this.mutators && this.mutators[ field ] ){
+							visibleData[ field ] = this.mutators[ field ]( value );
+						}else{
+							visibleData[ field ] = value;	
+						}
+					}
+				}
+			});
 		}
 		return visibleData;
 	}

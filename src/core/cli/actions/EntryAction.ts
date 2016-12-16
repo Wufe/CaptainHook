@@ -82,20 +82,7 @@ class EntryAction extends Action{
 	}
 
 	printFormattedEntries( entries: any[] ): void{
-		Utils.printTableFromArray( entries.map( ( entry: any ) => {
-			let {id, name, uri, description, method, created_at} = entry.get();
-			if( created_at ){
-				created_at = Moment( created_at ).fromNow();
-			}
-			return {
-				id,
-				name,
-				uri,
-				description,
-				method,
-				created: created_at
-			};
-		}));
+		Utils.printTableFromArray( entries.map( entry => entry.get() ) );
 	};
 
 	printFormattedEntry( entry: any ): void{

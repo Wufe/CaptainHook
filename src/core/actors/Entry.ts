@@ -3,6 +3,7 @@
 import Actor from './Actor';
 import {Access, AccessInterface, Database} from '../data';
 import * as Sequelize from 'sequelize';
+import * as Moment from 'moment';
 
 const model = Database.models.entry;
 
@@ -23,8 +24,23 @@ class Entry extends Actor<Entry>{
 
 	constructor( data: EntryData ){
 		super( model, data );
+		this.fields = [
+			"id",
+			"name",
+			"uri",
+			"description",
+			"method",
+			"schema",
+			"options",
+			"created_at",
+			"updated_at"
+		];
+		this.mutators = {
+			created_at: ( value: any ) => Moment( value ).fromNow()
+		};
 		this.hidden = [
-			"task_schema",
+			"schema",
+			"options",
 			"updated_at"
 		];
 	}
