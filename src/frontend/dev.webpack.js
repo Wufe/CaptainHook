@@ -1,6 +1,5 @@
 var webpack = require( 'webpack' );
 var path = require( 'path' );
-const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
     context: __dirname,
