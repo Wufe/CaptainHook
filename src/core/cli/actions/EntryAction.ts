@@ -87,21 +87,12 @@ class EntryAction extends Action{
 
 	printFormattedEntry( entry: any ): void{
 		console.log( 'Entry:' );
-		let {id, name, uri, description, method, created_at, options} = entry.get();
-		if( created_at ){
-			created_at = Moment( created_at ).fromNow();
-		}
+		let params: any = entry.get();
 		Utils.printTableFromArray([
-			{
-				id,
-				name,
-				uri,
-				description,
-				method,
-				created: created_at
-			}
+			params
 		]);
-
+		
+		let options: any = entry.get( 'options' );
 		console.log( '\nOptions:' );
 		options.secret = '*******';
 		Utils.printTableFromArray([
@@ -118,37 +109,7 @@ class EntryAction extends Action{
 		}
 		if( tasks && tasks.length ){
 			console.log( '\nCommands:' );
-			Utils.printTableFromArray( tasks.map( ( task: Task ) => {
-				let {
-					id,
-					command,
-					working_dir,
-					description,
-					environment: env,
-					created_at
-				} = task.get();
-				let environment: string[] = [];
-				if( env ){
-					for( let key in env )
-						environment.push( `${key}=${env[key]}` );
-					env = environment.join( ', ' );
-				}
-				if( created_at ){
-					created_at = Moment( created_at ).fromNow();
-				}
-				if( description )
-					description = truncateText( description, 35 );
-				if( env )
-					env = truncateText( env, 35 );
-				return {
-					id,
-					command,
-					working_dir,
-					description,
-					environment: env,
-					created: created_at
-				};
-			}));
+			Utils.printTableFromArray( tasks.map( ( task: Task ) => task.get()));
 		}
 	}
 

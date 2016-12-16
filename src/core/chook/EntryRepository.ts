@@ -18,7 +18,7 @@ class EntryRepository{
 				.all()
 				.then( ( entries: EntryActor[] ) => {
 					return this.loadTasks( entries.map( ( entry: EntryActor ) => {
-						return new EntryModel( this, entry.get(), entry );
+						return new EntryModel( this, entry.getAll(), entry );
 					}));
 				})
 				.then( ( entryModels: EntryModel[] ) => {

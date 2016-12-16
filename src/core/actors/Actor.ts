@@ -51,6 +51,14 @@ export default class Actor<T>{
 		return visibleData;
 	}
 
+	getAll(): any{
+		let actorData: any = {};
+		for( let dataKey in this.data ){
+			actorData[ dataKey ] = this.data[ dataKey ];
+		}
+		return actorData;
+	}
+
 	set( key: string, value: any ): void{
 		this.data[ key ] = value;
 	}

@@ -212,11 +212,10 @@ export default class EntryModel{
 				let {name, description, method, uri, options, schema} = this.data;
 				this.actor = new Entry({ name, description, method, uri, options, schema});
 			}
-
 			this.actor
 				.save()
 				.then( ( entry: Entry ) => {
-					let {created_at, description, id, name, method, updated_at, uri, options, schema} = entry.get();
+					let {description, id, name, method, uri, options, schema, created_at, updated_at} = entry.getAll();
 					this.set( 'id', id );
 					this.set( 'name', name );
 					this.set( 'description', description );
