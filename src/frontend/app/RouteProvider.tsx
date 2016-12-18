@@ -16,6 +16,9 @@ class RouteProvider{
 				<Route path="/" component={Structure}>
 					<IndexRoute getComponent={loader( "index" )} />
 					<Route path="home" component={Home}></Route>
+					<Route path="login" getComponent={loader( "login" )}></Route>
+					<Route path="entry/:id" getComponent={loader( "index" )} />
+					<Route path="task/:id" getComponent={loader( "index" )} />
 				</Route>
 			</Router>
 		);

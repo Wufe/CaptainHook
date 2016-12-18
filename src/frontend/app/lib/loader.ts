@@ -16,6 +16,9 @@ const loader: ( route: string ) =>
 				case "index":
 					moduleRequest = require( 'bundle?name=index.route!../routes/index' );
 					break;
+				case "login":
+					moduleRequest = require( 'bundle?name=login.route!../routes/login' );
+					break;
 			}
 			moduleRequest( ( module: any ) => {
 				store.dispatch( setPageLoaded() );

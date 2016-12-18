@@ -1,0 +1,38 @@
+.dashboardHeader{
+	display: block;
+	width: 100%;
+	height: 110px;
+	box-sizing: border-box;
+	line-height: 110px;
+	background: #FCFCFC;
+	text-align: center;
+
+	.centeredHeader{
+		display: inline-block;
+		width: 1150px;
+		max-width: 100%;
+		text-align: left;
+
+		div{
+			
+			&.inline{
+				display: inline-block;
+				overflow: hidden;
+				vertical-align: middle;
+
+				&.verticalBar{
+					width: 1px;
+					height: 2.5rem;
+					background: rgba( 0, 0, 0, 0.3 );
+					margin-right: 15px;
+					margin-left: 30px;
+				}
+
+				&.brand{
+					font-size: 2.5em;
+					font-weight: 300;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,67 @@
+.particlesContainer{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,393b3f+100 */
+	background: rgb(0,0,0); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(57,59,63,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(57,59,63,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(57,59,63,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#393b3f',GradientType=0 ); /* IE6-9 */
+
+}
+
+.loginContainer{
+	height: 100vh;
+	width: 100vw;
+	line-height: 100vh;
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	position: relative;
+	box-shadow: inset 0px -1px 0px rgba( 0, 0, 0, 0.8 ),
+				0px 1px 0px rgba( 255, 255, 255, 0.3 );
+}
+
+.loginBox{
+	color: white;
+	margin-top: 150px;
+	width: 100%;
+	height: 270px;
+	margin: 0 auto;
+	box-sizing: border-box;
+	font: 100 30px 'Helvetica Neue', 'Helvetica', 'Open Sans', 'Roboto', sans-serif;
+	padding-top: 100px;
+	text-shadow: 0px 1px 0px #333, -1px 0px 0px #333, 0px 0px 10px rgba( 0, 0, 0, 0.80 );
+	display: inline-block;
+	margin-bottom: 100px;
+	position: relative;
+	text-align: center;
+
+	.header{
+		font-size: 3.5rem;
+	}
+
+	.subheader{
+		margin: 10px 0px;
+		font-size: 1.5rem;
+		text-transform: uppercase;
+	}
+
+	input{
+		width: 350px;
+		height: 40px;
+		line-height: 40px;
+		padding: 0px 15px;
+		border: none;
+		border-radius: 2px;
+		box-shadow: 0px 0px 5px rgba( 0, 0, 0, 0.8 );
+		margin: 4px auto;
+		outline: none;
+		font: 100 18px 'Helvetica Neue', 'Helvetica', 'Open Sans', 'Roboto', sans-serif;
+	}
+}

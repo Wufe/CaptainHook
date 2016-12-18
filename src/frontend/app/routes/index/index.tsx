@@ -13,8 +13,6 @@ interface State{}
 
 export default class Index extends Component<Props, State>{
 
-	particles: any;
-
 	render(){
 		return (
 			<IndexContainer />

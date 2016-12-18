@@ -1,0 +1,27 @@
+.entriesContainer{
+	padding: 15px;
+
+	.entries{
+		display: inline-block;
+		margin: 10px;
+		box-sizing: border-box;
+		overflow: auto;
+		vertical-align: top;
+		width: 90%;
+		border-radius: 4px;
+		box-shadow: inset 1px 0px 0px rgba( 255, 255, 255, 0.2 ),
+					inset -1px 0px 0px rgba( 255, 255, 255, 0.1 ),
+					inset 0px 1px 0px rgba( 255, 255, 255, 0.1 ),
+					inset 0px -1px 0px rgba( 255, 255, 255, 0.2 ),
+					inset 0px 0px 10px rgba( 255, 255, 255, 0.1 ),
+					-1px 0px 0px rgba( 0, 0, 0, 0.2 ),
+					0px 1px 0px rgba( 0, 0, 0, 0.2 ),
+					1px 0px 0px rgba( 0, 0, 0, 0.2 ),
+					0px -1px 0px rgba( 0, 0, 0, 0.2 );
+		color: black;
+
+		&>div{
+			border-radius: 5px;
+		}
+	}
+}

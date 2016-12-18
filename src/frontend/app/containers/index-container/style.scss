@@ -1,48 +1,4 @@
 .indexContainer{
-	height: 100vh;
-	width: 100vw;
-	line-height: 100vh;
-	z-index: 1;
-	position: absolute;
-	top: 0;
-	left: 0;
-	text-align: center;
-}
-
-.loginBox{
-	color: white;
-	margin-top: 150px;
-	border-radius: 5px;
-	width: 500px;
-	height: 250px;
-	margin: 0 auto;
 	box-sizing: border-box;
-	font: 100 30px 'Helvetica Neue', 'Helvetica', 'Open Sans', 'Roboto', sans-serif;
-	padding: 10px;
-	text-shadow: 0px 1px 0px #333, -1px 0px 0px #333, 0px 0px 10px rgba( 0, 0, 0, 0.80 );
-	display: inline-block;
-	margin-bottom: 100px;
-
-	.header{
-		font-size: 45px;
-	}
-
-	.subheader{
-		margin: 10px 0px;
-		font-size: 18px;
-		text-transform: uppercase;
-	}
-
-	input{
-		width: 350px;
-		height: 40px;
-		line-height: 40px;
-		padding: 0px 15px;
-		border: none;
-		border-radius: 2px;
-		box-shadow: 0px 0px 5px rgba( 0, 0, 0, 0.8 );
-		margin: 4px auto;
-		outline: none;
-		font: 100 18px 'Helvetica Neue', 'Helvetica', 'Open Sans', 'Roboto', sans-serif;
-	}
+	text-align: center;
 }

@@ -1,20 +1,50 @@
+
 html, body{
 	margin: 0;
 	padding: 0;
 	font-weight: 300;
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
-	min-height: 100vh;
-	background: #2e3250;
+	font-size: 14px;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8b052+0,fcd096+100 */
+	background: rgb(248,176,82); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(248,176,82,1) 0%, rgba(252,208,150,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(248,176,82,1) 0%,rgba(252,208,150,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(248,176,82,1) 0%,rgba(252,208,150,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8b052', endColorstr='#fcd096',GradientType=0 ); /* IE6-9 */
+
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9bc6d+0,fcd7a6+100 */
+	background: rgb(249,188,109); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(249,188,109,1) 0%, rgba(252,215,166,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(249,188,109,1) 0%,rgba(252,215,166,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(249,188,109,1) 0%,rgba(252,215,166,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9bc6d', endColorstr='#fcd7a6',GradientType=0 ); /* IE6-9 */
+
 }
 
 .structureContainer{
 	position: relative;
 }
 
-.particlesContainer{
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
+// @media only screen and (min-width: 1300px){
+// 	.structureContainer{
+// 		outline: 1px solid lime;
+// 		width: 1200px;
+// 		margin: 0 auto;
+// 	}
+// }
+
+// @media only screen and (min-width: 720px) and (max-width: 1299px){
+// 	.structureContainer{
+// 		outline: 1px solid navy;
+// 		width: 90%;
+// 		margin: 0 auto;
+// 	}
+// }
+
+// @media only screen and (max-width: 719px){
+// 	.structureContainer{
+// 		min-width: 100%;
+// 		margin: 0 auto;
+// 		outline: 1px solid yellow;
+// 	}
+// }

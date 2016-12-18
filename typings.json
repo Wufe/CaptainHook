@@ -39,5 +39,8 @@
     "validator": "registry:dt/validator#5.7.0+20161105193831",
     "webpack": "registry:dt/webpack#1.12.9+20161025142220",
     "winston": "registry:dt/winston#0.0.0+20161108133445"
+  },
+  "dependencies": {
+    "fixed-data-table": "registry:dt/fixed-data-table#0.6.0+20160714050032"
   }
 }

@@ -13,8 +13,6 @@ import {PageLoadingBar} from '..';
 import {ping, setPageLoading, setPageLoaded} from '../../actions/app';
 import {store, goto} from '../../';
 
-import {Particles} from 'react-particles-js';
-
 export interface AppProps{
 	children ?: any;
 	ping?: any;
@@ -25,15 +23,15 @@ export interface AppProps{
 class Structure extends Component<AppProps, any>{
 
 	componentDidMount(){
-		setInterval( () => {
-			this.props.ping();
-		}, 6000 );
-		setTimeout( () => {
-			this.props.setPageLoading();
-		}, 1000 );
-		setTimeout( () => {
-			this.props.setPageLoaded();
-		}, 4000 );
+		// setInterval( () => {
+		// 	this.props.ping();
+		// }, 6000 );
+		// setTimeout( () => {
+		// 	this.props.setPageLoading();
+		// }, 1000 );
+		// setTimeout( () => {
+		// 	this.props.setPageLoaded();
+		// }, 4000 );
 	}
 
 	render(){
@@ -42,32 +40,6 @@ class Structure extends Component<AppProps, any>{
 				<PageLoadingBar />
 				<NotificationContainer />
 				<div className="structureContainer">
-					<div className="particlesContainer">
-						<Particles params={{
-							particles: {
-								number:{
-									value: 20
-								},
-								line_linked: {
-									color: "#3CA9D1"
-								},
-								move: {
-									speed: 1
-								},
-								size: {
-									value: 0
-								}
-							}
-						}}
-						style={{
-							position: 'absolute',
-							left: 0,
-							top: 0,
-							zIndex: 0
-						}}
-						width="100%"
-						height="100%" />
-					</div>
 					{this.props.children}
 				</div>
 				
