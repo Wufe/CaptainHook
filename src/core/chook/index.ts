@@ -8,6 +8,7 @@ import {default as EntryModel, IEntry} from './EntryModel';
 import {default as RequestResolver, ExpressCall} from './RequestResolver';
 import RequestResolverRepository from './RequestResolverRepository';
 import TaskManager from './TaskManager';
+export {default as Api} from './Api';
 
 export {
 	IEntry,
