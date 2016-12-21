@@ -7,6 +7,7 @@ import {actions} from '../../actions';
 import {App as AppState} from '../../states';
 import {Component} from 'react';
 import {connect} from 'react-redux';
+import {} from 'history';
 import {Dispatch} from 'redux';
 import {NotificationContainer} from '../../containers';
 import {PageLoadingBar} from '..';
@@ -20,9 +21,38 @@ export interface AppProps{
 	setPageLoaded?: any;
 }
 
-class Structure extends Component<AppProps, any>{
+export interface StateProps{
+	app: AppState,
+	routing: {
+		pathname?: string;
+		search?: string;
+		query?: { [key: string]: any; };
+		state?: Object;
+		action?: string;
+		key?: string;
+		hash?: string;
+		basename?: string;
+	}
+}
 
-	componentDidMount(){
+export type Props = AppProps & StateProps;
+
+class Structure extends Component<Props, any>{
+
+	constructor( props: Props ){
+		super( props );
+		this.checkAuth = this.checkAuth.bind( this );
+	}
+
+	checkAuth(): void{
+		if( this.props.routing.pathname != "/login" &&
+			!this.props.app.auth.logged ){
+			goto( "/login" );
+		}
+	}
+
+	componentWillMount(){
+		//this.checkAuth();
 		// setInterval( () => {
 		// 	this.props.ping();
 		// }, 6000 );
@@ -49,6 +79,12 @@ class Structure extends Component<AppProps, any>{
 	}
 }
 
+let mapStateToProps: ( state: any ) => any =
+	( state ) => {
+		let {app, routing} = state;
+		return {app, routing: routing.locationBeforeTransitions};
+	};
+
 let mapDispatchToProps: ( dispatch: Dispatch<AppState> ) => any =
 	( dispatch ) => {
 		return {
@@ -58,4 +94,4 @@ let mapDispatchToProps: ( dispatch: Dispatch<AppState> ) => any =
 		};
 	};
 
-export default connect( null, mapDispatchToProps )( Structure );
+export default connect( mapStateToProps, mapDispatchToProps )( Structure );

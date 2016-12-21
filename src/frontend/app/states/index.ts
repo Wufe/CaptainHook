@@ -1,6 +1,3 @@
-import {App, app} from './app';
-
-export {
-	App,
-	app
-};
+export {App, app} from './app';
+export {Entries, entries, Entry} from './entry';
+export * from './root';

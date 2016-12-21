@@ -1,6 +1,7 @@
 {
   "globalDependencies": {
     "argparse": "registry:dt/argparse#1.0.3+20160316155526",
+    "axios": "registry:dt/axios#0.9.1+20161128041239",
     "bcrypt": "registry:dt/bcrypt#0.0.0+20160316155526",
     "body-parser": "registry:dt/body-parser#0.0.0+20160619023215",
     "chalk": "registry:dt/chalk#0.4.0+20160317120654",
@@ -30,6 +31,7 @@
     "redux-logger": "registry:dt/redux-logger#2.6.0+20160619033847",
     "redux-saga": "registry:dt/redux-saga#0.9.1+20160703120921",
     "request": "registry:dt/request#0.0.0+20161116202412",
+    "reselect": "registry:dt/reselect#2.0.2+20160510002910",
     "sequelize": "registry:dt/sequelize#3.4.1+20160929080558",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
     "should": "registry:dt/should#8.1.1+20160608082854",
@@ -41,6 +43,7 @@
     "winston": "registry:dt/winston#0.0.0+20161108133445"
   },
   "dependencies": {
+    "cookie-parser": "registry:dt/cookie-parser#1.3.4+20160428043022",
     "fixed-data-table": "registry:dt/fixed-data-table#0.6.0+20160714050032"
   }
 }

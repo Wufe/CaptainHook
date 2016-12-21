@@ -4,7 +4,7 @@ declare let window: any;
 
 import * as ImmutableState from 'redux-immutable-state-invariant';
 import * as Logger from 'redux-logger';
-import {App} from './states';
+import {App, Entries, State} from './states';
 import {applyMiddleware, createStore, compose, Store} from 'redux';
 import {browserHistory} from 'react-router';
 import {default as Saga} from 'redux-saga';
@@ -13,10 +13,6 @@ import {root as rootReducer} from './reducers';
 import {root as rootSaga} from './sagas';
 
 const saga = Saga();
-
-type State = {
-	app: App
-};
 
 class StoreProvider{
 
@@ -56,8 +52,13 @@ const storeProviderInstance: StoreProvider = new StoreProvider({
 				id: 1,
 				text: "Test notification #1"
 			}
-		]
-	}
+		],
+		auth: {
+			logging: false,
+			logged: false
+		}
+	},
+	entries: {}
 });
 const store = storeProviderInstance.get();
 const history = syncHistoryWithStore( browserHistory, store );

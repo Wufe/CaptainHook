@@ -3,12 +3,25 @@ export interface Notification{
 	text: string;
 }
 
+export interface Auth{
+	logging: boolean;
+	logged: boolean;
+	token?: string;
+	error?: any;
+}
+
 export interface App{
 	loading: boolean;
-	notifications: Notification[]
+	notifications: Notification[],
+	auth: Auth
 }
 
 export const app: App = {
 	loading: false,
-	notifications: []
+	notifications: [],
+	auth: {
+		logging: false,
+		logged: false,
+		error: null
+	}
 };
