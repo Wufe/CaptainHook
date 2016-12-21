@@ -56,4 +56,8 @@ export default class Token{
 		return this.user.get( 'id' );
 	}
 
+	static validate( jwt: string ): any{
+		return Jwt.verify( jwt, jwtSettings.secret );
+	}
+
 }
