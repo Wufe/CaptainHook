@@ -12,8 +12,8 @@ let watchLogin: () => any
 	yield* takeLatest( LOGIN_SEND, function* ( action: any ){
 		try{
 			yield call( login, action.credentials.username, action.credentials.password );
-			yield put( loginSucceeded() );
 			goto( '/' );
+			yield put( loginSucceeded() );
 		}catch( error ){
 			yield put( loginFailed( error ) );
 		}

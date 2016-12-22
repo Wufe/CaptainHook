@@ -4,13 +4,16 @@ const Url = require( 'url' );
 
 import {Server} from '../net';
 import FrontendRouter from './FrontendRouter';
+import {CommandManager} from '../chook';
 
 export default class Frontend{
 
 	server: Server;
+	commandManager: CommandManager
 
-	constructor( server: Server ){
+	constructor( server: Server, commandManager: CommandManager ){
 		this.server = server;
+		this.commandManager = commandManager;
 	}
 
 	setup(): void{
@@ -18,7 +21,7 @@ export default class Frontend{
 	}
 
 	setupFrontendRoutes(): void{
-		let frontendRouter: FrontendRouter = new FrontendRouter( this.server );
+		let frontendRouter: FrontendRouter = new FrontendRouter( this.server, this.commandManager );
 	}
 
 }

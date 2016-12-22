@@ -58,6 +58,7 @@ class Login extends Component<Props, State>{
 		super( props );
 		this.onUsernameKeyDown = this.onUsernameKeyDown.bind( this );
 		this.onPasswordKeyDown = this.onPasswordKeyDown.bind( this );
+		this.onLoginClick = this.onLoginClick.bind( this );
 		this.onUsernameChange = this.onUsernameChange.bind( this );
 		this.onPasswordChange = this.onPasswordChange.bind( this );
 		this.state = {
@@ -66,6 +67,11 @@ class Login extends Component<Props, State>{
 				password: ""
 			}
 		};
+	}
+
+	login(){
+		let {credentials} = this.state;
+		this.props.sendLogin( credentials.username, credentials.password );
 	}
 
 	onUsernameKeyDown( proxy: any ){
@@ -80,14 +86,13 @@ class Login extends Component<Props, State>{
 		let {keyCode: code} = proxy;
 		if( code == 13 ){
 			if( !this.props.auth.logging ){
-				let {credentials} = this.state;
-				this.setState({
-					credentials
-				}, () => {
-					this.props.sendLogin( credentials.username, credentials.password );
-				});
+				this.login();
 			}
 		}
+	}
+
+	onLoginClick( event?: any ){
+		this.login();
 	}
 
 	onUsernameChange( event: any ){
@@ -147,7 +152,9 @@ class Login extends Component<Props, State>{
 							onChange={this.onPasswordChange}
 							value={this.state.credentials.password}/>
 							<br />
-						<button>
+						<button onClick={this.onLoginClick} style={{
+							display: this.props.auth.logging ? 'none' : 'inline-block'
+						}}>
 							Login
 						</button>
 					</div>

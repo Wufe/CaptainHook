@@ -1,4 +1,4 @@
-import {EntryModel, EntryRepository, ExpressCall, Log, RequestResolver, RequestResolverRepository} from '../chook';
+import {CommandManager, EntryModel, EntryRepository, ExpressCall, Log, RequestResolver, RequestResolverRepository} from '../chook';
 import {Server} from '.';
 
 import {Request, Response, NextFunction, RequestHandler} from 'express';
@@ -9,14 +9,16 @@ export default class EntryRouter{
 	server: Server;
 	entryRepository: EntryRepository;
 	requestResolverRepository: RequestResolverRepository;
+	commandManager: CommandManager;
 
-	constructor( server: Server, entryRepository: EntryRepository ){
+	constructor( server: Server, entryRepository: EntryRepository, commandManager: CommandManager ){
 		this.handler = this.handler.bind( this );
 		this.server = server;
 		this.entryRepository = entryRepository;
 		this.requestResolverRepository = new RequestResolverRepository();
+		this.commandManager = commandManager;
 	}
-
+	
 	setup(): void{
 		this.entryRepository
 			.loadEntries()
@@ -62,7 +64,7 @@ export default class EntryRouter{
 	answerCall( entry: EntryModel, expressCall: ExpressCall ): void{
 		entry.loadTasks()
 			.then( ( entry: EntryModel ) => {
-				this.requestResolverRepository.create( entry, expressCall );
+				this.requestResolverRepository.create( entry, expressCall, this.commandManager.getLogHandler() );
 			})
 			.catch( ( error: any ) => {
 				Log( 'error', red( error.message ), error );

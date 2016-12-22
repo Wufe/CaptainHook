@@ -9,6 +9,7 @@ import {default as RequestResolver, ExpressCall} from './RequestResolver';
 import RequestResolverRepository from './RequestResolverRepository';
 import TaskManager from './TaskManager';
 export {default as Api} from './Api';
+export {default as CommandManager} from './CommandManager';
 
 export {
 	IEntry,

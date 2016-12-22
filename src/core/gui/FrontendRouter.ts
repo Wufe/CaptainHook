@@ -2,13 +2,13 @@ declare let require: any;
 const Path = require( 'path' );
 const Url = require( 'url' );
 
-import {Server} from '../net';
+import {auth, Server} from '../net';
 import Environment from '../chook/Environment';
 import Token from '../auth/Token';
 import Renderer from './Renderer';
 import * as Utils from '../chook/Utils';
 import {Request, Response, NextFunction} from 'express';
-import {Api} from '../chook';
+import {Api, CommandManager} from '../chook';
 
 const assetsDir: string = "/assets/";
 const resourcesPath: string = Path.resolve( Path.join( Environment.buildDirectory, 'resources' ) );
@@ -19,14 +19,14 @@ export default class FrontendRouter{
 
 	server: Server;
 
-	constructor( server: Server ){
+	constructor( server: Server, commandManager: CommandManager ){
 		this.server = server;
 		this.addFrontendRoutes();
-		this.addApiRoutes();
+		this.addApiRoutes( commandManager );
 	}
 
-	addApiRoutes(): void{
-		new Api( this.server ).setup();
+	addApiRoutes( commandManager: CommandManager ): void{
+		new Api( this.server, commandManager ).setup();
 	}
 
 	addFrontendRoutes(): void{
@@ -36,20 +36,10 @@ export default class FrontendRouter{
 		this.server.express.get( '/login', ( request, response, next ) => {
 			this.serveIndex( request, response, next );
 		});
-		this.server.express.get( '/', ( request, response, next ) => {
-			if( !this.isAuthenticated( request ) ){
-				response.redirect( 301, '/login' );
-			}else{
-				this.serveIndex( request, response, next );	
-			}
+		this.server.express.get( '/', auth, ( request, response, next ) => {
+			this.serveIndex( request, response, next );
 		});
-		this.server.express.get( /api\/*/i, ( request, response, next ) => {
-			if( !this.isAuthenticated( request ) ){
-				response.redirect( 301, '/login' );
-			}else{
-				next();
-			}
-		});
+		this.server.express.all( /api\/*/i, auth );
 	}
 
 	isAuthenticated( request: Request ): boolean{

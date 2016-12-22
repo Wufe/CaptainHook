@@ -58,7 +58,11 @@ const storeProviderInstance: StoreProvider = new StoreProvider({
 			logged: false
 		}
 	},
-	entries: {}
+	entries: {},
+	command: {
+		snapshot: '',
+		commands: []
+	}
 });
 const store = storeProviderInstance.get();
 const history = syncHistoryWithStore( browserHistory, store );

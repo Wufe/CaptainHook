@@ -11,9 +11,9 @@ export default ( state: Entries = entries, action: Action<Entries> ): Entries =>
 			return state;
 		case ENTRIES_FETCH_SUCCEEDED:
 			let result: any = {};
-			if( !payload.data )
+			if( !payload.data || !payload.data.payload )
 				return Object.assign({}, state );
-			payload.data.forEach( ( entry: any ) => {
+			payload.data.payload.forEach( ( entry: any ) => {
 				result[ entry[ 'id' ] ] = entry;
 			});
 			return Object.assign({}, state, result );

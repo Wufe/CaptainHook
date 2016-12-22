@@ -40,8 +40,8 @@ export default class Hmr{
 		Log( 'debug', 'Starting hmr..' );
 		let compiler: any = Webpack( webpackConfiguration );
 		this.server.express.use( webpackDevMiddleware( compiler, {
-			quiet: true,
-			noInfo: true,
+			quiet: false,
+			noInfo: false,
 			hot: true,
 			filename: 'javascript/main.bundle.js',
 			publicPath: webpackConfiguration.output.publicPath,

@@ -51,7 +51,7 @@ export default class RequestResolver{
 	}
 
 	run(): Promise<any>{
-		console.log( `Called ${this.entry.getUri()}` );
+		Log( 'notice', `Called ${this.entry.getUri()}` );
 		if( !this.pipe )
 			this.expressCall.response.sendStatus( 200 );
 		return new Promise( ( resolve, reject ) => {
@@ -135,7 +135,8 @@ export default class RequestResolver{
 			CHOOK_BODY: body,
 			CHOOK_OPTIONS_PIPE: options[ 'pipe' ],
 			CHOOK_OPTIONS_CONTENT_TYPE: options[ 'content_type' ],
-			CHOOK_OPTIONS_X_HUB_SIGNATURE: options[ 'x_hub_signature' ]
+			CHOOK_OPTIONS_X_HUB_SIGNATURE: options[ 'x_hub_signature' ],
+			//NPM_CONFIG_COLOR: 'always'
 		};
 		let taskEnvironment: {
 			[key: string]: string;
@@ -157,6 +158,7 @@ export default class RequestResolver{
 	}
 
 	log( message: string ): void{
+		message = message.trim();
 		if( this.pipe )
 			this.expressCall.response.write( message );
 		this.logHandlers.forEach( ( handler: ( message: string ) => void ) => {
@@ -165,6 +167,7 @@ export default class RequestResolver{
 	}
 
 	error( message: string ): void{
+		message = message.trim();
 		this.errorHandlers.forEach( ( handler: ( message: string ) => void ) => {
 			handler.call( this, message );
 		});

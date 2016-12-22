@@ -4,13 +4,17 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {Component} from 'react';
 import './style.scss';
+import {getTouchableCell} from './touchableCell';
 import {entriesFetch} from '../../actions/entry';
+import {commandsFetch} from '../../actions/command';
 import {Entries as EntriesState, State} from '../../states';
 import {EntryItem, getEntriesArrayFromObject} from '../../selectors';
 import {Loading} from '../../hoc';
 const FixedDataTable = require( 'fixed-data-table' );
 const {Table, Column, Cell} = FixedDataTable;
 import '../../../../../node_modules/fixed-data-table/dist/fixed-data-table.css';
+
+const ROW_HEIGHT = 37;
 
 type ComponentState = {
 	tableWidth: number;
@@ -28,24 +32,24 @@ interface StateProps{
 
 interface ActionProps{
 	entriesFetch: () => void;
+	commandsFetch: ( snapshot?: string ) => void;
 }
 
 type Props = EntriesProps & ActionProps & StateProps;
 
 class Entries extends Component<Props, any>{
 
-	// getDefaultProps(){
-	// 	return {
-	// 		entries: {}
-	// 	}
-	// }
+	TouchableCell: any;
 
 	constructor( props: any ){
 		super( props );
 		this.onColumnResize = this.onColumnResize.bind( this );
 		this.onWindowResize = this.onWindowResize.bind( this );
+		this.onTouchOffset = this.onTouchOffset.bind( this );
 		this.setNode = this.setNode.bind( this );
 		this.state = {
+			scrollLeft: 0,
+			scrollTop: 0,
 			tableWidth: 0,
 			columnWidth: {
 				id: 50,
@@ -60,6 +64,31 @@ class Entries extends Component<Props, any>{
 			},
 			widthSum: 1050
 		}
+		this.TouchableCell = getTouchableCell( this.onTouchOffset );
+	}
+
+	onTouchOffset({x, y}: { x: number; y: number }){
+		let {columnWidth, scrollLeft, scrollTop} = this.state;
+		let maxWidth = 0;
+		for( let key in columnWidth )
+			maxWidth += columnWidth[ key ];
+		let maxHeight = 0;
+		if( this.props.entries )
+			maxHeight = this.props.entries.length * ROW_HEIGHT;
+		scrollLeft = scrollLeft + x*-1;
+		scrollTop = scrollTop + x*-1;
+		if( scrollLeft < 0 )
+			scrollLeft = 0;
+		if( scrollLeft > maxWidth )
+			scrollLeft = maxWidth;
+		if( scrollTop < 0 )
+			scrollTop = 0;
+		if( scrollTop > maxHeight )
+			scrollTop = maxHeight;
+		this.setState({
+			scrollLeft,
+			scrollTop
+		});
 	}
 
 	onColumnResize( newColumnWidth: number, columnKey: string ){
@@ -76,6 +105,7 @@ class Entries extends Component<Props, any>{
 	componentWillMount(){
 		window.addEventListener( 'resize', this.onWindowResize )
 		this.props.entriesFetch();
+		this.props.commandsFetch();
 	}
 
 	componentDidMount(){
@@ -104,6 +134,7 @@ class Entries extends Component<Props, any>{
 	_entries: any;
 
 	render(){
+		const {TouchableCell} = this;
 		const rows: any[] = [];
 		for( let id in this.props.entries ){
 			rows.push(Object.assign({}, {
@@ -113,23 +144,27 @@ class Entries extends Component<Props, any>{
 		return (
 			<div className="entriesContainer">
 				<div className="entries" style={{
-					maxWidth: this.state.widthSum
+					maxWidth: this.state.widthSum,
+					overflow: 'hidden'
 				}} ref={f => this.setNode( f )}>
 					<Table
-						rowHeight={37}
+						scrollLeft={this.state.scrollLeft}
+						scrollTop={this.state.scrollTop}
+						rowHeight={ROW_HEIGHT}
 						rowsCount={rows.length}
 						width={this.state.tableWidth}
 						isColumnResizing={false}
 						onColumnResizeEndCallback={this.onColumnResize}
-						maxHeight={1000}
-						headerHeight={37}>
+						maxHeight={5000}
+						headerHeight={ROW_HEIGHT}
+						>
 						<Column
 							columnKey="id"
 							header={<Cell>ID</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									{rows[rowIndex].id}
-								</Cell>
+								</TouchableCell>
 							)}
 							width={this.state.columnWidth['id']}
 							fixed={true}/>
@@ -137,11 +172,11 @@ class Entries extends Component<Props, any>{
 							columnKey="name"
 							header={<Cell>Name</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									<span title={rows[rowIndex].name}>
 										{rows[rowIndex].name}
 									</span>
-								</Cell>
+								</TouchableCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -150,11 +185,11 @@ class Entries extends Component<Props, any>{
 							columnKey="uri"
 							header={<Cell>URI</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									<span title={rows[rowIndex].uri}>
 										{rows[rowIndex].uri}
 									</span>
-								</Cell>
+								</TouchableCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -163,14 +198,14 @@ class Entries extends Component<Props, any>{
 							columnKey="description"
 							header={<Cell>Description</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									<span style={{
 										whiteSpace: "nowrap"
 									}} title={rows[rowIndex].description}>
 										{rows[rowIndex].description}
 									</span>
 									
-								</Cell>
+								</TouchableCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -179,9 +214,9 @@ class Entries extends Component<Props, any>{
 							columnKey="method"
 							header={<Cell>Method</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									{rows[rowIndex].method}
-								</Cell>
+								</TouchableCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -190,9 +225,9 @@ class Entries extends Component<Props, any>{
 							columnKey="created"
 							header={<Cell>Created</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									{rows[rowIndex].created_at}
-								</Cell>
+								</TouchableCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -201,31 +236,31 @@ class Entries extends Component<Props, any>{
 							columnKey="pipe"
 							header={<Cell>Pipe</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									{rows[rowIndex].options.pipe ? 'true' : 'false'}
-								</Cell>
+								</TouchableCell>
 							)}
 							fixed={false}
 							isResizable={true}
 							width={this.state.columnWidth['pipe']}/>
 						<Column
-							columnKey="content-type"
+							columnKey="content_type"
 							header={<Cell>Content-Type</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									{rows[rowIndex].options.content_type}
-								</Cell>
+								</TouchableCell>
 							)}
 							fixed={false}
 							isResizable={true}
 							width={this.state.columnWidth['content_type']}/>
 						<Column
-							columnKey="x-hub-signature"
+							columnKey="signature"
 							header={<Cell>X-Hub-Signature</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<Cell>
+								<TouchableCell>
 									{rows[rowIndex].options.x_hub_signature ? 'true' : 'false'}
-								</Cell>
+								</TouchableCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -245,9 +280,9 @@ const mapStateToProps = ( state: any ) => {
 
 const mapDispatchToProps = ( dispatch: any ) => {
 	return {
-		entriesFetch: () => dispatch( entriesFetch() )
+		entriesFetch: () => dispatch( entriesFetch() ),
+		commandsFetch: ( snapshot?: string ) => dispatch( commandsFetch( snapshot ) )
 	}
 }
 
-//export default connect( mapStateToProps, mapDispatchToProps )( Entries );
-export default Loading<any>( ( state: State ) => state.entries, ( dispatch: any ) => dispatch( entriesFetch() ) )( connect( mapStateToProps, mapDispatchToProps )( Entries ) );
+export default connect( mapStateToProps, mapDispatchToProps )( Entries );
