@@ -1,5 +1,6 @@
 import {State, Command, Commands} from '../states';
 import {createSelector} from 'reselect';
+import {unix} from 'moment';
 
 export type EnhancedCommandObject = {
 	id: string;
@@ -23,6 +24,7 @@ export const commandsToFormattedCommands = createSelector<State, EnhancedCommand
 		let enhancedCommand: EnhancedCommand = Object.assign({}, commandState, {
 			commands: commands.map( ( command ) => {
 				return Object.assign({}, command, {
+					timestamp: unix( parseInt( command.timestamp ) ).format( 'ddd, DD/MMM/YYYY - HH:mm:ss' ),
 					messages: command.message.split( '\n' )
 				});
 			})

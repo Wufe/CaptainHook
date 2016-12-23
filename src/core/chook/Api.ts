@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import {Server} from '../net';
-import {CommandManager, EntryRepository, EntryModel} from '.';
+import {CommandManager, EntryManager, EntryModel} from '.';
 import {Request, Response, NextFunction} from 'express';
 
 const API_URI = `/api`;
@@ -25,11 +25,11 @@ export default class Api{
 			this.sendLogs( request, response );
 		});
 		this.server.express.get( `${API_URI}/entry`, ( request, response ) => {
-			let entryRepository: EntryRepository = new EntryRepository();
-			entryRepository
+			let entryManager: EntryManager = new EntryManager();
+			entryManager
 				.loadEntries()
 				.then( ( entries: EntryModel[] ) => {
-					return entryRepository.loadTasks( entries );
+					return entryManager.loadTasks( entries );
 				})
 				.then( ( entries: any[] ) => {
 					response.json(

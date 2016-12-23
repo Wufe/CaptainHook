@@ -1,10 +1,11 @@
 const uuid = require( 'uuid/v4' );
 import * as Moment from 'moment';
+import {MessageType} from '.';
 
 export interface Command{
 	id: string;
 	message: string;
-	type: 'log' | 'error' | 'head';
+	type: MessageType;
 	timestamp: string;
 }
 
@@ -20,9 +21,9 @@ export default class CommandManager{
 	}
 
 	getLogHandler(){
-		return ( message: string, type: 'log' | 'error' | 'head' ) => {
+		return ( message: string, type: MessageType ) => {
 			let id = uuid();
-			let timestamp = ( Moment() ).format( 'ddd, DD MMM YYYY - HH:mm:ss' );
+			let timestamp = Moment().unix().toString();//( Moment() ).format( 'ddd, DD MMM YYYY - HH:mm:ss' );
 			let command: Command = {
 				id,
 				message,

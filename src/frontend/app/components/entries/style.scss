@@ -1,4 +1,10 @@
 .entriesContainer{
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9bc6d+0,fcd7a6+100 */
+	background: rgb(249,188,109); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(249,188,109,1) 0%, rgba(252,215,166,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(249,188,109,1) 0%,rgba(252,215,166,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(249,188,109,1) 0%,rgba(252,215,166,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9bc6d', endColorstr='#fcd7a6',GradientType=0 ); /* IE6-9 */
 	padding: 15px;
 
 	.entries{

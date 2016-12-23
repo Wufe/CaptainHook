@@ -1,4 +1,4 @@
-import {CommandManager, EntryModel, EntryRepository, ExpressCall, Log, RequestResolver, RequestResolverRepository} from '../chook';
+import {CommandManager, EntryModel, EntryManager, ExpressCall, Log, MessageType, RequestResolver, RequestManager} from '../chook';
 import {Server} from '.';
 
 import {Request, Response, NextFunction, RequestHandler} from 'express';
@@ -7,20 +7,20 @@ import {red} from 'chalk';
 export default class EntryRouter{
 
 	server: Server;
-	entryRepository: EntryRepository;
-	requestResolverRepository: RequestResolverRepository;
+	entryManager: EntryManager;
+	requestManager: RequestManager;
 	commandManager: CommandManager;
 
-	constructor( server: Server, entryRepository: EntryRepository, commandManager: CommandManager ){
+	constructor( server: Server, entryManager: EntryManager, commandManager: CommandManager ){
 		this.handler = this.handler.bind( this );
 		this.server = server;
-		this.entryRepository = entryRepository;
-		this.requestResolverRepository = new RequestResolverRepository();
+		this.entryManager = entryManager;
+		this.requestManager = new RequestManager();
 		this.commandManager = commandManager;
 	}
 	
 	setup(): void{
-		this.entryRepository
+		this.entryManager
 			.loadEntries()
 			.then( ( entries: EntryModel[] ) => {
 				this.setupRoutes( entries );
@@ -61,10 +61,26 @@ export default class EntryRouter{
 		};
 	}
 
+	getConsoleLogHandler(){
+		return ( message: string, type?: MessageType ) => {
+			switch( type ){
+				case 'log':
+					Log( 'info', message );
+					break;
+				case 'error':
+					Log( 'error', message );
+					break;
+				case 'command':
+					Log( 'notice', message );
+					break;
+			}
+		};
+	}
+
 	answerCall( entry: EntryModel, expressCall: ExpressCall ): void{
 		entry.loadTasks()
 			.then( ( entry: EntryModel ) => {
-				this.requestResolverRepository.create( entry, expressCall, this.commandManager.getLogHandler() );
+				this.requestManager.create( entry, expressCall, this.commandManager.getLogHandler(), this.getConsoleLogHandler() );
 			})
 			.catch( ( error: any ) => {
 				Log( 'error', red( error.message ), error );

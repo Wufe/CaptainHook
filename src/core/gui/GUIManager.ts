@@ -3,7 +3,7 @@ const Url = require( 'url' );
 const Path = require( 'path' );
 
 import {CommandManager, Configuration, Environment} from '../chook';
-import Frontend from './Frontend';
+import {Router} from '.';
 import {Server} from '../net';
 
 export default class GUIManager{
@@ -23,8 +23,7 @@ export default class GUIManager{
 	setup(): void{
 		if( !this.isGuiEnabled() )
 			return;
-		let frontend: Frontend = new Frontend( this.server, this.commandManager );
-		frontend.setup();
+		new Router( this.server, this.commandManager ).setup();
 	}
 
 }

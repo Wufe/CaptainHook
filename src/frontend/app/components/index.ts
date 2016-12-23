@@ -7,6 +7,8 @@ import Notification from './notification';
 import PageLoadingBar from './page-loading-bar';
 import Structure from './structure';
 
+export {default as Modal} from './modal';
+
 export {
 	CommandLine,
 	DashboardHeader,

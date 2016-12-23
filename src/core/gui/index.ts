@@ -1,11 +1,3 @@
-import Frontend from './Frontend';
-import FrontendRouter from './FrontendRouter';
-import GUIManager from './GUIManager';
-import Renderer from './Renderer';
-
-export {
-	Frontend,
-	FrontendRouter,
-	GUIManager,
-	Renderer
-};
+export {default as GUIManager} from './GUIManager';
+export {default as Renderer} from './Renderer';
+export {default as Router} from './Router';

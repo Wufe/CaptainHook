@@ -1,7 +1,7 @@
 import Action from './Action';
 
 import {Entry, Task} from '../../actors';
-import {EntryModel, EntryRepository, Environment, Log, Utils} from '../../chook';
+import {EntryModel, EntryManager, Environment, Log, Utils} from '../../chook';
 import {truncateText} from '../../chook/Utils';
 
 import {green, red} from 'chalk';
@@ -65,13 +65,13 @@ class EntryAction extends Action{
 		}
 	}
 
-	getRepository(): EntryRepository{
-		return new EntryRepository();
+	getRepository(): EntryManager{
+		return new EntryManager();
 	}
 
 	listEntries(): void{
-		let entryRepository: EntryRepository = this.getRepository();
-		entryRepository
+		let entryManager: EntryManager = this.getRepository();
+		entryManager
 			.loadEntries()
 			.then( ( entries: EntryModel[] ) => {
 				this.printFormattedEntries( entries );
@@ -115,13 +115,13 @@ class EntryAction extends Action{
 
 	createEntry(): void{
 		console.log( green( `Creating new entry..` ) );
-		let entryRepository: EntryRepository = this.getRepository();
-		entryRepository
+		let entryManager: EntryManager = this.getRepository();
+		entryManager
 			.loadEntries()
 			.then( () => {
 				let {name, uri, description, method} = this.args;
 				let {pipe, content_type, x_hub_signature, secret} = this.args;
-				let entry: EntryModel = new EntryModel( entryRepository, {
+				let entry: EntryModel = new EntryModel( entryManager, {
 					name,
 					description,
 					uri,
@@ -147,14 +147,14 @@ class EntryAction extends Action{
 	}
 
 	readEntry(): void{
-		let entryRepository: EntryRepository = this.getRepository();
+		let entryManager: EntryManager = this.getRepository();
 		let {id} = this.args;
-		entryRepository
+		entryManager
 			.loadEntries()
 			.then( () => {
-				let foundEntryModel: EntryModel = entryRepository.findById( id );
+				let foundEntryModel: EntryModel = entryManager.findById( id );
 				if( !foundEntryModel )
-					foundEntryModel = entryRepository.findByName( `${id}` );
+					foundEntryModel = entryManager.findByName( `${id}` );
 				if( !foundEntryModel )
 					throw new Error( `Cannot find entry with id ${id}.` );
 				this.printFormattedEntry( foundEntryModel );
@@ -165,15 +165,15 @@ class EntryAction extends Action{
 	}
 
 	updateEntry(): void{
-		let entryRepository: EntryRepository = this.getRepository();
+		let entryManager: EntryManager = this.getRepository();
 		let {id, name, uri, description, method} = this.args;
 		console.log( green( `Updating entry #${id}..` ) );
-		entryRepository
+		entryManager
 			.loadEntries()
 			.then( () => {
-				let foundEntryModel: EntryModel = entryRepository.findById( id );
+				let foundEntryModel: EntryModel = entryManager.findById( id );
 				if( !foundEntryModel )
-					foundEntryModel = entryRepository.findByName( `${id}` );
+					foundEntryModel = entryManager.findByName( `${id}` );
 				if( !foundEntryModel )
 					throw new Error( `Cannot find entry with id ${id}.` );
 				let options: {
@@ -225,15 +225,15 @@ class EntryAction extends Action{
 	}
 
 	deleteEntry(): void{
-		let entryRepository: EntryRepository = this.getRepository();
+		let entryManager: EntryManager = this.getRepository();
 		let {id} = this.args;
 		console.log( green( `Deleting entry #${id}..` ) );
-		entryRepository
+		entryManager
 			.loadEntries()
 			.then( () => {
-				let foundEntryModel: EntryModel = entryRepository.findById( id );
+				let foundEntryModel: EntryModel = entryManager.findById( id );
 				if( !foundEntryModel )
-					foundEntryModel = entryRepository.findByName( `${id}` );
+					foundEntryModel = entryManager.findByName( `${id}` );
 				if( !foundEntryModel )
 					throw new Error( `Cannot find entry with id ${id}.` );
 				foundEntryModel

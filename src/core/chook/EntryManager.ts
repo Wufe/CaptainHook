@@ -2,7 +2,7 @@ import {EntryModel, IEntry, Utils} from '.';
 import {Entry as EntryActor} from '../actors';
 import {Server} from '../net';
 
-class EntryRepository{
+class EntryManager{
 
 	entries: EntryModel[] = [];
 	server: Server;
@@ -69,4 +69,4 @@ class EntryRepository{
 	}
 }
 
-export default EntryRepository;
+export default EntryManager;

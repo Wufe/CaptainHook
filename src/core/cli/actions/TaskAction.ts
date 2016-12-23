@@ -1,7 +1,7 @@
 import Action from './Action';
 
 import {Task} from '../../actors';
-import {EntryRepository, EntryModel, Environment, Log, TaskManager, Utils} from '../../chook';
+import {EntryManager, EntryModel, Environment, Log, TaskManager, Utils} from '../../chook';
 
 import {createInterface, ReadLine} from 'readline';
 
@@ -36,14 +36,14 @@ class TaskAction extends Action{
 	}
 
 	addTask(): void{
-		let entryRepository: EntryRepository = new EntryRepository();
+		let entryManager: EntryManager = new EntryManager();
 		let {entry_id} = this.args;
-		entryRepository
+		entryManager
 			.loadEntries()
 			.then( () => {
-				let foundEntryModel: EntryModel = entryRepository.findById( <number>entry_id );
+				let foundEntryModel: EntryModel = entryManager.findById( <number>entry_id );
 				if( !foundEntryModel )
-					foundEntryModel = entryRepository.findByName( `${entry_id}` );
+					foundEntryModel = entryManager.findByName( `${entry_id}` );
 				if( !foundEntryModel )
 					throw new Error( `Cannot find entry with id ${entry_id}.` );
 				this.addTaskToEntryModel( foundEntryModel );
@@ -94,7 +94,7 @@ class TaskAction extends Action{
 	}
 
 	deleteTask(): void{
-		let entryRepository: EntryRepository = new EntryRepository();
+		let entryManager: EntryManager = new EntryManager();
 		let {task_id} = this.args;
 		Task
 			.find

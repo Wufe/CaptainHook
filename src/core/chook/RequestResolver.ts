@@ -21,6 +21,8 @@ export interface ExpressCall{
 	next: NextFunction;
 }
 
+export type MessageType = 'log' | 'error' | 'command';
+
 export default class RequestResolver{
 
 	issued_at: string;
@@ -29,8 +31,7 @@ export default class RequestResolver{
 	entry: EntryModel;
 	expressCall: ExpressCall;
 
-	logHandlers: ( ( message: string ) => void )[] = [];
-	errorHandlers: ( ( message: string ) => void )[] = [];
+	logHandlers: ( ( message: string, type: MessageType ) => void )[] = [];
 
 	pipe: boolean;
 	workingDirectory: string;
@@ -42,12 +43,6 @@ export default class RequestResolver{
 		this.issued_at = ( Moment() ).format();
 		this.uuid = UUIDv1();
 		this.status = 'idle';
-		this.registerLogHandler( ( message: string ) => {
-			Log( 'debug', "\n" + message );
-		});
-		this.registerErrorHandler( ( message: string ) => {
-			Log( 'error', red( message ) );
-		});
 	}
 
 	run(): Promise<any>{
@@ -76,6 +71,11 @@ export default class RequestResolver{
 		if( !resolve ){
 			this.expressCall.response.status( 200 );
 			return new Promise( ( resolve, reject ) => {
+				let {request} = this.expressCall;
+				let {entry} = this;
+				this.execution( `${entry.getId()} - ${entry.getName()} - ${entry.get( 'description' )}` );
+				this.execution( `${request.method} - ${request.url}` );
+				this.execution( request.ip );
 				this.runTasks( tasks, resolve );
 			});
 		}else{
@@ -100,20 +100,22 @@ export default class RequestResolver{
 			let env: any = this.getEnvironmentVariables( task );
 			this.workingDirectory = task.get( 'working_dir' );
 			let {workingDirectory: cwd} = this;
-			let command = exec( task.get( 'command' ), {
+			let command: string = task.get( 'command' );
+			this.execution( command );
+			let execution = exec( command, {
 				env,
 				cwd
 			});
-			command.stdout.on( 'data', ( data: any ) => {
+			execution.stdout.on( 'data', ( data: any ) => {
 				this.log( data.toString() );
 			})
-			command.stderr.on( 'data', ( data: any ) => {
+			execution.stderr.on( 'data', ( data: any ) => {
 				this.error( data.toString() );
 			});
-			command.on( 'error', ( data: any ) => {
+			execution.on( 'error', ( data: any ) => {
 				this.error( data.toString() );
 			});
-			command.on( 'exit', ( code: number ) => {
+			execution.on( 'exit', ( code: number ) => {
 				resolve();
 			});
 		});
@@ -149,12 +151,14 @@ export default class RequestResolver{
 		return environment;
 	}
 
-	registerLogHandler( handler: ( message: string ) => void ): void{
+	registerLogHandler( handler: ( message: string, type: MessageType ) => void ){
 		this.logHandlers.push( handler );
 	}
 
-	registerErrorHandler( handler: ( message: string ) => void ): void{
-		this.errorHandlers.push( handler );
+	execution( command: string ): void{
+		this.logHandlers.forEach( ( handler ) => {
+			handler.call( this, command, 'command' );
+		});
 	}
 
 	log( message: string ): void{
@@ -168,8 +172,8 @@ export default class RequestResolver{
 
 	error( message: string ): void{
 		message = message.trim();
-		this.errorHandlers.forEach( ( handler: ( message: string ) => void ) => {
-			handler.call( this, message );
+		this.logHandlers.forEach( ( handler ) => {
+			handler.call( this, message, 'error' );
 		});
 	}
 

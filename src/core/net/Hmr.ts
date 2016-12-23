@@ -41,7 +41,7 @@ export default class Hmr{
 		let compiler: any = Webpack( webpackConfiguration );
 		this.server.express.use( webpackDevMiddleware( compiler, {
 			quiet: false,
-			noInfo: false,
+			noInfo: true,
 			hot: true,
 			filename: 'javascript/main.bundle.js',
 			publicPath: webpackConfiguration.output.publicPath,

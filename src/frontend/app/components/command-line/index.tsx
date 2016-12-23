@@ -44,7 +44,7 @@ class CommandLine extends Component<Props, {}>{
 						{this.props.command.commands.map( ( command ) => {
 							let {messages} = command;
 							return messages.map( ( message, i ) => {
-								return <div key={`${command.id}_${i}`}>{`[${command.timestamp}] - ${message}`}</div>
+								return <div key={`${command.id}_${i}`} className={command.type}>{`[${command.timestamp}] - ${message}`}</div>
 							})
 						})}
 					</div>

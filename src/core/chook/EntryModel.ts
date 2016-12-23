@@ -3,7 +3,7 @@
 import {randomBytes} from 'crypto';
 import {fake} from 'faker';
 
-import {EntryRepository} from '.';
+import {EntryManager} from '.';
 import {Entry, Task} from '../actors';
 
 export type METHOD_GET = 'get';
@@ -50,12 +50,12 @@ const defaultData: IEntry = {
 
 export default class EntryModel{
 
-	entryRepository: EntryRepository;
+	entryManager: EntryManager;
 	data: IEntry;
 	actor: Entry;
 
-	constructor( entryRepository: EntryRepository, data?: IEntry, actor?: Entry ){
-		this.entryRepository = entryRepository;
+	constructor( entryManager: EntryManager, data?: IEntry, actor?: Entry ){
+		this.entryManager = entryManager;
 		this.data = Object.assign( {}, defaultData );
 		for( let key in data ){
 			if( data[ key ] )
@@ -195,7 +195,7 @@ export default class EntryModel{
 				reject( `No actor specified.` );
 			this.actor.delete()
 				.then( ( rows: number ) => {
-					return this.entryRepository.loadEntries();
+					return this.entryManager.loadEntries();
 				})
 				.then( () => {
 					resolve();
@@ -240,7 +240,7 @@ export default class EntryModel{
 		while( !uri ){
 			let id: string = randomBytes( 16 ).toString( 'hex' );
 			uri = `/webhook/${id}`;
-			if( this.entryRepository.findByUri( uri ) )
+			if( this.entryManager.findByUri( uri ) )
 				uri = null;
 		}
 		return uri;
@@ -250,7 +250,7 @@ export default class EntryModel{
 		let name: string = null;
 		while( !name ){
 			name = fake( "{{hacker.ingverb}} {{name.lastName}}" ).toLowerCase().replace( /\W+/g, '_' );
-			if( this.entryRepository.findByName( name ) )
+			if( this.entryManager.findByName( name ) )
 				name = null;
 		}
 		return name;

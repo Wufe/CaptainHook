@@ -65,9 +65,11 @@ const storeProviderInstance: StoreProvider = new StoreProvider({
 	}
 });
 const store = storeProviderInstance.get();
+const dispatch = store.dispatch;
 const history = syncHistoryWithStore( browserHistory, store );
 
 export {
+	dispatch,
 	history,
 	StoreProvider,
 	storeProviderInstance,
