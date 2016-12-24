@@ -2,7 +2,7 @@
 
 import {ConfigurationContentType, ConfigurationType} from './ConfigurationType';
 import configurationDefault from './configurationDefault';
-import Environment from '../Environment';
+import {getBuildDirectory} from '../Environment';
 import Log from '../Log';
 
 import * as Fs from 'fs';
@@ -38,7 +38,7 @@ export class ConfigurationClass{
 			process.env.NODE_ENV == 'test';
 
 		this.configuration.filename = isTestEnvironment ? `test.${configurationFilename}` : configurationFilename;
-		this.configuration.directory = Path.join( Environment.buildDirectory, 'resources' );
+		this.configuration.directory = Path.join( getBuildDirectory(), 'resources' );
 		this.configuration.filepath = Path.join( this.configuration.directory, this.configuration.filename );
 		this.configuration.content = configurationDefault;
 	}

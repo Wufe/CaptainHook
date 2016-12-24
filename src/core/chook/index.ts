@@ -1,8 +1,8 @@
+export {Environment, getEnvironment, getBuildDirectory, getProjectRoot} from './Environment';
 export * from './configuration';
 export * from './ProcessManager';
 export {default as Log, logInstance} from './Log';
 export {default as EntryManager} from './EntryManager';
-export {default as Environment} from './Environment';
 export {default as EntryModel, IEntry} from './EntryModel';
 export {default as RequestResolver, ExpressCall, MessageType} from './RequestResolver';
 export {default as RequestManager} from './RequestManager';

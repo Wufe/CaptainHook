@@ -12,7 +12,7 @@ import {EntryItem, getEntriesArrayFromObject} from '../../selectors';
 import {Loading} from '../../hoc';
 const FixedDataTable = require( 'fixed-data-table' );
 const {Table, Column, Cell} = FixedDataTable;
-import '../../../../../node_modules/fixed-data-table/dist/fixed-data-table.css';
+import '../../style/fixed-data-table.css';
 
 const ROW_HEIGHT = 37;
 
@@ -226,7 +226,9 @@ class Entries extends Component<Props, any>{
 							header={<Cell>Created</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
 								<TouchableCell>
-									{rows[rowIndex].created_at}
+									<span style={{
+										whiteSpace: "nowrap"
+									}}>{rows[rowIndex].created_at}</span>
 								</TouchableCell>
 							)}
 							fixed={false}
@@ -237,7 +239,9 @@ class Entries extends Component<Props, any>{
 							header={<Cell>Pipe</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
 								<TouchableCell>
-									{rows[rowIndex].options.pipe ? 'true' : 'false'}
+									<span style={{
+										whiteSpace: "nowrap"
+									}}>{rows[rowIndex].options.pipe ? 'true' : 'false'}</span>
 								</TouchableCell>
 							)}
 							fixed={false}

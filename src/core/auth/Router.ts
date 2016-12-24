@@ -2,7 +2,7 @@
 /// <reference path="../../../typings/globals/express-serve-static-core/index.d.ts" />
 
 import {Authentication, Encryption, Token} from '.';
-import {Configuration, Environment, Log} from '../chook';
+import {Configuration, getEnvironment, Environment, Log} from '../chook';
 import {NextFunction, Request, RequestHandler, Response} from 'express';
 import {Server} from '../net';
 import {User} from '../actors';
@@ -15,13 +15,15 @@ export interface Credentials{
 export default class Router{
 
 	server: Server;
+	environment: Environment;
 
 	constructor( server: Server ){
 		this.server = server;
+		this.environment = getEnvironment();
 	}
 
 	isGuiEnabled(): boolean{
-		return Environment.get( 'args', 'gui' ) || Configuration.get( 'gui' );
+		return this.environment.get( 'args', 'gui' ) || Configuration.get( 'gui' );
 	}
 
 	setup(): void{

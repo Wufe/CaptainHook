@@ -1,7 +1,7 @@
 import Action from './Action';
 
 import {Entry, Task} from '../../actors';
-import {EntryModel, EntryManager, Environment, Log, Utils} from '../../chook';
+import {EntryModel, EntryManager, Environment, getEnvironment, Log, Utils} from '../../chook';
 import {truncateText} from '../../chook/Utils';
 
 import {green, red} from 'chalk';
@@ -32,8 +32,11 @@ class EntryAction extends Action{
 		no_secret?: boolean;
 	};
 
+	environment: Environment;
+
 	constructor(){
 		super();
+		this.environment = getEnvironment();
 		this.actions = [ 
 			"entry", "entries", "e",
 			...COMMAND_LIST,
@@ -46,7 +49,7 @@ class EntryAction extends Action{
 
 	run(): void{
 		super.run();
-		this.args = Environment.get( 'args' );
+		this.args = this.environment.get( 'args' );
 		if( COMMAND_LIST.indexOf( this.args[ 'entryAction' ] ) > -1 ||
 			COMMAND_LIST.indexOf( this.args[ 'action' ] ) > -1 ){
 			this.listEntries();

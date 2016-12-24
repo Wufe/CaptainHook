@@ -3,7 +3,7 @@
 import * as Chalk from 'chalk';
 
 import Action from './Action';
-import {Environment} from '../../chook';
+import {Environment, getEnvironment} from '../../chook';
 import {ServerManager} from '../../net';
 
 class ServerAction extends Action{
@@ -15,14 +15,17 @@ class ServerAction extends Action{
 		gui: boolean;
 	};
 
+	environment: Environment;
+
 	constructor(){
 		super();
+		this.environment = getEnvironment();
 		this.actions = [ "start", "stop", "status" ];
 	}
 
 	run(): void{
 		super.run();
-		this.args = Environment.get( 'args' );
+		this.args = this.environment.get( 'args' );
 		if( this.args[ 'action' ] == 'start' ){
 			this.startServer();
 		}else if( this.args[ 'action' ] == 'stop' ){

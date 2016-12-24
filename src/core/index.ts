@@ -1,4 +1,4 @@
-import {Entrypoint} from './cli';
+import {default as Entrypoint} from './Entrypoint';
 import {ServerManager} from './net';
 
 export {

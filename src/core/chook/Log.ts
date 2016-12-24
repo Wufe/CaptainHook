@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import Environment from './Environment';
+import {Environment, getEnvironment, getBuildDirectory} from './Environment';
 import * as Utils from './Utils';
 
 import * as Chalk from 'chalk';
@@ -12,7 +12,6 @@ import * as Path from 'path';
 import {Logger, LoggerInstance, transports, TransportInstance} from 'winston';
 
 const {Console, File} = transports;
-const logDirectory = Path.join( Environment.buildDirectory, 'resources', 'log' );
 
 type LogLevels = {
 	[level: string]: number;
@@ -28,8 +27,13 @@ export class Log{
 
 	logger: LoggerInstance;
 	directoryFound: boolean = false;
+	environment: Environment;
+	logDirectory: string;
 
-	constructor(){}
+	constructor(){
+		this.environment = getEnvironment();
+		this.logDirectory = Path.join( this.environment.buildDirectory, 'resources', 'log' );
+	}
 
 	setup(): void{
 		this.log = this.log.bind( this );
@@ -40,9 +44,9 @@ export class Log{
 
 	checkDirectory(): void{
 		try{
-			let directoryExists: boolean = Utils.isDirectory( logDirectory );
+			let directoryExists: boolean = Utils.isDirectory( this.logDirectory );
 			if( !directoryExists ){
-				Fs.mkdirSync( logDirectory );
+				Fs.mkdirSync( this.logDirectory );
 			}
 			this.directoryFound = true;
 		}catch( error ){
@@ -89,7 +93,7 @@ export class Log{
 		if( this.directoryFound ){
 			transports.push(
 				new File({
-					filename: Path.join( logDirectory, 'generic.log' )
+					filename: Path.join( this.logDirectory, 'generic.log' )
 				})
 			);
 		}
@@ -109,14 +113,14 @@ export class Log{
 	}
 
 	isTest(): boolean{
-		return Environment.test;
+		return this.environment.test;
 	}
 
 	isQuiet(): boolean{
 		let quiet: boolean = false;
-		let argsQuiet: any = Environment.get( 'args', 'quiet' );
+		let argsQuiet: any = this.environment.get( 'args', 'quiet' );
 		if( argsQuiet === undefined ){
-			quiet = Environment.quiet;
+			quiet = this.environment.quiet;
 		}else{
 			quiet = argsQuiet;
 		}
@@ -124,7 +128,7 @@ export class Log{
 	}
 
 	isDebug(): boolean{
-		return Environment.get( 'args', 'debug' ) ? true : false;
+		return this.environment.get( 'args', 'debug' ) ? true : false;
 	}
 
 	getTime(): string{

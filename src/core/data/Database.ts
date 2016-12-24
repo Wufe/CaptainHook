@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/globals/node/index.d.ts" />
 /// <reference path="../../../typings/globals/sequelize/index.d.ts" />
 
-import Environment from '../chook/Environment';
+import {getBuildDirectory} from '../chook/';
 
 import * as Models from './models';
 import * as Path from 'path';
@@ -24,7 +24,7 @@ export class Database{
 			process.env.NODE_ENV == 'test' ){
 			databaseFileName = 'database.test.sqlite';
 		}
-		let databaseFilePath = Path.join( Environment.buildDirectory, 'resources', databaseFileName );
+		let databaseFilePath = Path.join( getBuildDirectory(), 'resources', databaseFileName );
 		this.sequelize = new Sequelize( null, null, null, {
 			dialect: 'sqlite',
 			storage: databaseFilePath,

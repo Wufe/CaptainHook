@@ -1,7 +1,7 @@
 import Action from './Action';
 
 import {Task} from '../../actors';
-import {EntryManager, EntryModel, Environment, Log, TaskManager, Utils} from '../../chook';
+import {EntryManager, EntryModel, Environment, getEnvironment, Log, TaskManager, Utils} from '../../chook';
 
 import {createInterface, ReadLine} from 'readline';
 
@@ -19,15 +19,17 @@ interface TaskArgs{
 class TaskAction extends Action{
 
 	args: TaskArgs;
+	environment: Environment;
 
 	constructor(){
 		super();
+		this.environment = getEnvironment();
 		this.actions = [ "task", "t" ];
 	}
 
 	run(){
 		super.run();
-		this.args = Environment.get( 'args' );
+		this.args = this.environment.get( 'args' );
 		if( [ "add", "a", "create", "c" ].indexOf( this.args[ 'taskAction' ] ) > -1 ){
 			this.addTask();
 		}else if( [ "delete", "del", "d" ].indexOf( this.args[ 'taskAction' ] ) > -1 ){

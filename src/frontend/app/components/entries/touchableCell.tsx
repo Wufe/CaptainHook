@@ -52,8 +52,6 @@ export const getTouchableCell = ( onTouchOffset: any ) => {
 					this.movingPoint = { x, y };
 				}
 				let {x, y} = this.movingPoint;
-				console.log( 'starting', this.startingPoint );
-				console.log( 'moving', this.movingPoint );
 				let delta = {
 					x: x - this.startingPoint.x,
 					y: y - this.startingPoint.y

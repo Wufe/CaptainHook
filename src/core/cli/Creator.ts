@@ -3,7 +3,7 @@
 import * as ArgParse from 'argparse';
 import {ArgumentParser, SubParser, SubparserOptions} from 'argparse';
 
-import {Environment} from '../chook';
+import {Environment, getEnvironment} from '../chook';
 
 import getCommands from './getCommands';
 
@@ -11,12 +11,16 @@ const commands = getCommands();
 
 export default class Creator{
 
-	constructor(){}
+	environment: Environment;
+
+	constructor(){
+		this.environment = getEnvironment();
+	}
 
 	createArgumentParser(): ArgumentParser{
 		let argumentParser: ArgumentParser = new ArgumentParser({
-			version: Environment.package.version,
-			description: Environment.package.description,
+			version: this.environment.package.version,
+			description: this.environment.package.description,
 			addHelp: true
 		});
 		let rootProperties: any = commands;

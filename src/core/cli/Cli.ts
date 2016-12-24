@@ -4,12 +4,16 @@ import * as ArgParse from 'argparse';
 import {ArgumentParser} from 'argparse';
 
 import {Creator, dispatch} from '.';
-import {Environment, logInstance} from '../chook';
+import {Environment, getEnvironment, logInstance} from '../chook';
 
-export default class Entrypoint{
+export default class Cli{
 
 	argumentParser: ArgumentParser;
-	constructor(){}
+	environment: Environment;
+
+	constructor(){
+		this.environment = getEnvironment();
+	}
 
 	setup(): void{
 		let creator: Creator = new Creator();
@@ -17,7 +21,7 @@ export default class Entrypoint{
 	}
 
 	parseArgs(): void{
-		Environment.set( this.argumentParser.parseArgs(), 'args' );
+		this.environment.set( this.argumentParser.parseArgs(), 'args' );
 		logInstance.setup();
 	}
 

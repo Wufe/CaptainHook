@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import {Environment, Log, Utils} from '.';
+import {getBuildDirectory, Log, Utils} from '.';
 
 import * as ChildProcess from 'child_process';
 import * as Fs from 'fs';
@@ -48,7 +48,7 @@ export class ProcessManager{
 	}
 
 	saveProcess( filename: string = 'process.yml' ){
-		let filepath: string = Path.join( Environment.buildDirectory, 'resources', filename );
+		let filepath: string = Path.join( getBuildDirectory(), 'resources', filename );
 		try{
 			let yamlProcess: string = Yaml.safeDump( this.processInfo );
 			Fs.writeFileSync( filepath, yamlProcess )
@@ -58,7 +58,7 @@ export class ProcessManager{
 	}
 
 	deleteProcess( filename: string = 'process.yml' ){
-		let filepath: string = Path.join( Environment.buildDirectory, 'resources', filename );
+		let filepath: string = Path.join( getBuildDirectory(), 'resources', filename );
 		if( !Utils.isFile( filepath ) ){
 			Log( 'warning', `Process information file does not exist [${filename}].` );
 			return;
@@ -85,7 +85,7 @@ export class ProcessManager{
 	}
 
 	static loadProcess( filename: string = 'process.yml' ): ProcessManager{
-		let filepath: string = Path.join( Environment.buildDirectory, 'resources', filename );
+		let filepath: string = Path.join( getBuildDirectory(), 'resources', filename );
 		try{
 			let fileContent: string = Fs.readFileSync( filepath, 'utf8' );
 			let processInfo: Process = Yaml.safeLoad( fileContent );

@@ -12,7 +12,9 @@ const circleCIBuildPath = Path.join(
 	"build"
 );
 
-class Environment{
+export class Environment{
+
+	static instance: Environment = null;
 
 	projectRoot: string;
 	buildDirectory: string;
@@ -21,9 +23,9 @@ class Environment{
 	package: any = {};
 	test: boolean = false;
 
-	constructor(){
+	constructor( buildDir?: string ){
 		this.checkTestEnvironment();
-		this.checkBuildDirectory();
+		this.checkBuildDirectory( buildDir );
 		this.checkProjectRoot();
 		this.checkPackage();
 	}
@@ -39,19 +41,28 @@ class Environment{
 		}
 	}
 
-	private checkBuildDirectory(): void{
+	private checkBuildDirectory( buildDir?: string): void{
 		let isMocha: boolean = process.env.NODE_ENV == 'mocha';
 		let isCircleCI: boolean = process.env.CIRCLECI || process.env.NODE_ENV == 'circleci';
 		let args: string[] = process.argv;
-		let scriptPath: string = args[1];
-		let realPath = Fs.realpathSync( scriptPath );
-		if( isMocha ){
-			this.buildDirectory = Path.resolve( Path.join( Path.dirname( realPath ), '..', '..', '..', 'build' ) );
-		}else if( isCircleCI ){
-			this.buildDirectory = circleCIBuildPath;
+		if( !buildDir ){
+			let scriptPath: string = args[1];
+			let realPath = Fs.realpathSync( scriptPath );
+			if( isMocha ){
+				this.buildDirectory = Path.resolve( Path.join( Path.dirname( realPath ), '..', '..', '..', 'build' ) );
+			}else if( isCircleCI ){
+				this.buildDirectory = circleCIBuildPath;
+			}else{
+				this.buildDirectory = Path.resolve( Path.join( Path.dirname( realPath ), '..' ) );
+			}
 		}else{
-			this.buildDirectory = Path.resolve( Path.join( Path.dirname( realPath ), '..' ) );
+			this.buildDirectory = buildDir;
 		}
+	}
+
+	public setBuildDirectory( directory: string ){
+		this.buildDirectory = directory;
+		this.checkProjectRoot();
 	}
 
 	private checkProjectRoot(): void{
@@ -73,5 +84,16 @@ class Environment{
 
 }
 
-const environment: Environment = new Environment();
-export default environment;
+export const getEnvironment = ( scriptDir?: string ): Environment => {
+	if( !Environment.instance )
+		Environment.instance = new Environment( scriptDir );
+	return Environment.instance;
+}
+
+export const getBuildDirectory = (): string => {
+	return getEnvironment().buildDirectory;
+}
+
+export const getProjectRoot = (): string => {
+	return getEnvironment().projectRoot;
+}

@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as Path from 'path';
-import {Environment, Log} from '../chook';
+import {Environment, getProjectRoot, getBuildDirectory, getEnvironment, Log} from '../chook';
 
 const webpack = require( "webpack" );
 const webpackDevMiddleware = require( "webpack-dev-middleware" );
@@ -10,9 +10,9 @@ const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&t
 
 let webpackConfiguration: any = require( "../../frontend/dev.webpack.js" );
 webpackConfiguration = Object.assign( {}, webpackConfiguration, {
-	context: Environment.projectRoot,
+	context: getProjectRoot(),
 	entry: {
-        main: [ Path.join( Environment.projectRoot, "src", "frontend", "index.tsx" ), hotMiddlewareScript ],
+        main: [ Path.join( getProjectRoot(), "src", "frontend", "index.tsx" ), hotMiddlewareScript ],
         vendor: [ "react", "react-dom", hotMiddlewareScript ]
     },
     plugins: [ ...webpackConfiguration.plugins, new webpack.HotModuleReplacementPlugin() ]
@@ -25,13 +25,15 @@ import Server from './Server';
 export default class Hmr{
 
 	server: Server;
+	environment: Environment;
 
 	constructor( server: Server ){
 		this.server = server;
+		this.environment = getEnvironment();
 	}
 
 	isDebugEnvironment(): boolean{
-		return Environment.get( 'args', 'debug' ) ? true : false;
+		return this.environment.get( 'args', 'debug' ) ? true : false;
 	}
 
 	setup(): void{

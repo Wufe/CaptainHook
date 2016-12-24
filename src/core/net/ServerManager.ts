@@ -5,7 +5,7 @@ import * as Request from 'request';
 
 import * as Authentication from '../auth';
 import GUIManager from '../gui/GUIManager';
-import {CommandManager, Configuration, EntryManager, Environment, Log, Process, ProcessManager} from '../chook';
+import {CommandManager, Configuration, EntryManager, Environment, getEnvironment, Log, Process, ProcessManager} from '../chook';
 import {EntryRouter, Controller, Hmr, Server} from '.';
 
 export default class ServerManager{
@@ -14,8 +14,10 @@ export default class ServerManager{
 	guiManager: GUIManager;
 	authenticationRouter: Authentication.Router;
 	commandManager: CommandManager;
+	environment: Environment
 
 	constructor(){
+		this.environment = getEnvironment();
 		this.serverInstance = new Server();
 	}
 
@@ -59,12 +61,12 @@ export default class ServerManager{
 
 	startDetached(): void{
 		let processArguments: string[] = [ 'start', '--attached' ];
-		if( Environment.get( 'args', 'gui' ) )
+		if( this.environment.get( 'args', 'gui' ) )
 			processArguments.push( '--gui' );
-		if( Environment.get( 'args', 'quiet' ) )
+		if( this.environment.get( 'args', 'quiet' ) )
 			processArguments.push( '--quiet' );
 		let processInfo: Process = {
-			binary: Path.join( Environment.buildDirectory, 'bin', 'chook' ),
+			binary: Path.join( this.environment.buildDirectory, 'bin', 'chook' ),
 			arguments: processArguments
 		};
 		let processManager: ProcessManager = new ProcessManager( processInfo );

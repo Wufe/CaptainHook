@@ -1,6 +1,6 @@
 import Action from './Action';
 
-import {Configuration, Environment} from '../../chook';
+import {Configuration, Environment, getEnvironment} from '../../chook';
 
 class ConfigAction extends Action{
 
@@ -11,14 +11,17 @@ class ConfigAction extends Action{
 		value?: string;
 	};
 
+	environment: Environment;
+
 	constructor(){
 		super();
+		this.environment = getEnvironment();
 		this.actions = [ "config", "c" ];
 	}
 
 	run(): void{
 		super.run();
-		this.args = Environment.get( 'args' );
+		this.args = this.environment.get( 'args' );
 		if( this.args[ 'configAction' ] == 'get' ){
 			this.getConfigurationValue();
 		}else if( this.args[ 'configAction' ] == 'set' ){

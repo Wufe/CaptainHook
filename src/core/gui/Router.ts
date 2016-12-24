@@ -1,6 +1,6 @@
 import {Api, CommandManager} from '../chook';
 import {Server} from '../net';
-import {auth, serveAssets, serveIndex} from '../net/middlewares';
+import {api, auth, redirectUnauthorized, serveAssets, serveIndex} from '../net/middlewares';
 
 export const ROUTE_INDEX = '/';
 export const ROUTE_LOGIN = '/login';
@@ -19,10 +19,10 @@ export default class Router{
 
 	setup(){
 		this.server.express.get( '*', serveAssets );
-		this.server.express.get( ROUTE_INDEX, auth, serveIndex );
-		this.server.express.get( ROUTE_ENTRY_CREATE, auth, serveIndex );
+		this.server.express.get( ROUTE_INDEX, redirectUnauthorized, serveIndex );
+		this.server.express.get( ROUTE_ENTRY_CREATE, redirectUnauthorized, serveIndex );
 		this.server.express.get( ROUTE_LOGIN, serveIndex );
-		this.server.express.all( ROUTE_API, auth );
+		this.server.express.all( ROUTE_API, auth, api );
 		new Api( this.server, this.commandManager ).setup();
 	}
 

@@ -2,4 +2,4 @@
 
 const CHook = require( __dirname + '/../lib/chook.js' );
 const Entrypoint = CHook.Entrypoint;
-( new Entrypoint() ).run();
+( new Entrypoint( __dirname ).cli() );
