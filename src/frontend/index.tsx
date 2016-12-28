@@ -13,6 +13,10 @@ import {browserHistory} from 'react-router';
 
 const appRoot = document.getElementById( 'app' );
 
+export interface HotNodeModule extends NodeModule {
+	hot: { accept: Function };
+}
+
 const renderApp = ( App: any ) => {
 	DOMRender(
 		<AppContainer>
@@ -23,10 +27,6 @@ const renderApp = ( App: any ) => {
 };
 
 renderApp( Root );
-
-interface HotNodeModule extends NodeModule {
-  hot: { accept: Function };
-}
 
 declare let module: HotNodeModule;
 if( module.hot ){

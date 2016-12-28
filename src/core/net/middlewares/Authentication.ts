@@ -2,8 +2,8 @@
 
 import {Request, Response, NextFunction} from 'express';
 import {red} from 'chalk';
+import {Authentication, generateToken, getCookieMaxAge, Token} from '../../auth';
 import {Log} from '../../chook';
-import Token from '../../auth/Token';
 import {User} from '../../actors';
 
 const checkAuth = ( redirect: boolean = false ) => {
@@ -46,3 +46,39 @@ const checkAuth = ( redirect: boolean = false ) => {
 
 export const auth = checkAuth( false );
 export const redirectUnauthorized = checkAuth( true );
+
+const setResponseCookie = ( response: Response, user: User ) => {
+	let token = generateToken( user );
+	let maxAge: number = getCookieMaxAge();
+	response.cookie( 'jwt', token, { maxAge: maxAge });
+}
+
+export const authenticate = ( request: Request, response: Response, next: NextFunction ) => {
+	try{
+		let {body} = request;
+		if( !body )
+			throw new Error( `Cannot find a body.` );
+		let {username, password} = request.body;
+		if( !username || !password )
+			throw new Error( `Credentials not set.` );
+		new Authentication({ username, password })
+			.validateCredentials()
+			.then( ( user: User ) => {
+				Log( 'notice', `User ${user.get( 'username' )} authenticated.` );
+				setResponseCookie( response, user );
+				response.sendStatus( 200 );
+			})
+			.catch( ( error?: any) => {
+				Log( 'warning', `Someone logged with wrong credentials.`, {
+					username,
+					password: '******'
+				});
+				if( error )
+					Log( 'error', red( error.message ) );
+				response.sendStatus( 401 );
+			})
+	}catch( e ){
+		response.sendStatus( 400 );
+	}
+	
+};

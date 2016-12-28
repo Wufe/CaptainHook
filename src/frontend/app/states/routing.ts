@@ -1,4 +1,4 @@
-import {Routing as RoutingSubState} from '..';
+import {Routing as RoutingSubState} from '../';
 
 export interface Routing {
 	locationBeforeTransitions: RoutingSubState;

@@ -1,9 +1,8 @@
-declare let require: any;
-let fs = require( 'fs' );
+import {accessSync, lstatSync, constants as c} from 'fs';
 
 let fileExists = ( fileName: string ) => {
 	try{
-        fs.accessSync( fileName, fs.F_OK );
+        accessSync( fileName, c.F_OK );
         return true;
     }catch( e ){
         return false;
@@ -25,7 +24,7 @@ let getNestedValue = ( obj: any, ...keys: string[] ) => {
 
 let isFile = ( fileName: string ) => {
     if( fileExists( fileName ) ){
-        return fs.lstatSync( fileName ).isFile();
+        return lstatSync( fileName ).isFile();
     }
     return false;
 };

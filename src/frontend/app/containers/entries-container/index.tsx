@@ -3,9 +3,9 @@
 import * as React from 'react';
 import {Component} from 'react';
 import {connect} from 'react-redux';
+import {CommandLineContainer} from '..';
 import {Routing, PATH_INDEX, PATH_ENTRY_CREATE} from '../..';
 import {State} from '../../states';
-import {CommandLineContainer} from '..';
 import {Entries, EntriesHeader, Modal} from '../../components';
 
 type Props = {
@@ -23,7 +23,7 @@ class EntriesContainer extends Component<Props, {}>{
 				<Modal display={display}>
 					<h1>Modal</h1>
 				</Modal>
-				<Entries />	
+				<Entries />
 			</div>
 		);
 	}

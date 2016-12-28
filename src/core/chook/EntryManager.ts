@@ -5,11 +5,8 @@ import {Server} from '../net';
 class EntryManager{
 
 	entries: EntryModel[] = [];
-	server: Server;
 
-	constructor( server?: Server ){
-		this.server = server;
-	}
+	constructor(){}
 
 	loadEntries(): Promise<EntryModel[]>{
 		return new Promise<EntryModel[]>( ( resolve, reject ) => {

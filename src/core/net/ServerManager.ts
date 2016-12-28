@@ -41,7 +41,7 @@ export default class ServerManager{
 
 	initializeEntryRoutes(): void{
 		this.commandManager = new CommandManager();
-		let entryRouter: EntryRouter = new EntryRouter( this.serverInstance, new EntryManager( this.serverInstance ), this.commandManager );
+		let entryRouter: EntryRouter = new EntryRouter( this.serverInstance, new EntryManager(), this.commandManager );
 		entryRouter.setup();
 	}
 
