@@ -6,7 +6,7 @@ import * as React from 'react';
 import * as ReactRouter from 'react-router';
 import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import {dispatch, history} from './StoreProvider';
-import Home from './routes/Home';
+import Home from './routes/home';
 
 export const PATH_INDEX = '/';
 export const PATH_HOME  = 'home';
