@@ -35,7 +35,7 @@
     "reselect": "registry:dt/reselect#2.0.2+20160510002910",
     "sequelize": "registry:dt/sequelize#3.4.1+20160929080558",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
-    "should": "registry:dt/should#8.1.1+20160608082854",
+    "should": "registry:dt/should#8.1.1+20160726191732",
     "source-map": "registry:dt/source-map#0.0.0+20161003134342",
     "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526",
     "uuid": "registry:dt/uuid#3.3.0+20160728152600",
