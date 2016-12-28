@@ -1,80 +1,84 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Mocha from 'mocha';
 import * as Should from 'should';
+import {join} from 'path';
+import {getBuildDirectory, Utils} from '../../../src/core/chook';
 
-import * as Fs from 'fs';
-
-import {Utils} from '../../../src/core/chook';
-
-describe( 'Utils', function(){
-	let testFile = './utils.test';
-	let testDirectory = './utils.test.dir';
-	before( function(){
-		Fs.writeFileSync( testFile, '' );
-		Fs.mkdirSync( testDirectory );
-	});
-	describe( 'fileExists', function(){
-		it( 'should be a function', function(){
-			Utils.fileExists.should.be.a.Function;
+describe( 'Utils', () => {
+	describe( 'fileExists', () => {
+		it( 'should return true if a file exists', () => {
+			let path = join( getBuildDirectory(), 'resources', 'database.test.sqlite' );
+			Should( Utils.fileExists( path ) ).be.equal( true );
 		});
-		it( 'should return false if a file does not exist', function(){
-			Utils.fileExists( './UtilsFileExistsTestFile' ).should.be.exactly(false);
-		});
-		it( 'should return true if a file exists', function(){
-			Utils.fileExists( testFile ).should.be.exactly(true);
+		it( 'should return false if a file does not exist', () => {
+			let path = join( getBuildDirectory(), 'resources', 'database.mocha.sqlite' );
+			Should( Utils.fileExists( path ) ).be.equal( false );
 		});
 	});
-	describe( 'isFile', function(){
-		it( 'should be a function', function(){
-			Utils.isFile.should.be.a.Function;
+	describe( 'isFile', () => {
+		it( 'should return true if the argument is a file', () => {
+			let path = join( getBuildDirectory(), 'resources', 'views', 'index.html' );
+			Should( Utils.isFile( path ) ).be.equal( true );
 		});
-		it( 'should return false if a file does not exist', function(){
-			Utils.isFile( './UtilsFileExistsTestFile' ).should.be.exactly(false);
-		});
-		it( 'should return false if the path is not a file', function(){
-			Utils.isFile( testDirectory ).should.be.exactly(false);
-		});
-		it( 'should return true if the path is a file', function(){
-			Utils.isFile( testFile ).should.be.exactly(true);
+		it( 'should return false if the argument is not a file', () => {
+			let path = join( getBuildDirectory(), 'resources', 'views' );
+			Should( Utils.isFile( path ) ).be.equal( false );
 		});
 	});
-	describe( 'isDirectory', function(){
-		it( 'should be a function', function(){
-			Utils.isDirectory.should.be.a.Function;
+	describe( 'isDirectory', () => {
+		it( 'should return false if the argument is a file', () => {
+			let path = join( getBuildDirectory(), 'resources', 'views', 'index.html' );
+			Should( Utils.isDirectory( path ) ).be.equal( false );
 		});
-		it( 'should return false if a directory does not exist', function(){
-			Utils.isDirectory( './UtilsFileExistsTestFile' ).should.be.exactly(false);
-		});
-		it( 'should return false if the path is not a directory', function(){
-			Utils.isDirectory( testFile ).should.be.exactly(false);
-		});
-		it( 'should return true if the path is a directory', function(){
-			Utils.isDirectory( testDirectory ).should.be.exactly(true);
+		it( 'should return true if the argument is not a file', () => {
+			let path = join( getBuildDirectory(), 'resources', 'views' );
+			Should( Utils.isDirectory( path ) ).be.equal( true );
 		});
 	});
-	after( function(){
-		Fs.unlinkSync( testFile );
-		Fs.rmdirSync( testDirectory );
-	});
-	describe( 'setNestedValue', function(){
-		let obj = { deep1: 't' };
-		it( 'should create 3 level deep nested element in object', function(){
-			obj = Utils.setNestedValue( obj, 'nestedValue', 'deep1', 'deep2', 'deep3' );
-			obj.should.have.propertyByPath( 'deep1', 'deep2', 'deep3' ).eql( 'nestedValue' );
+	describe( 'truncateText', () => {
+		let text = "0123456789ABCDEF";
+		it( 'should truncate text when its length exceeds the offset', () => {
+			let truncatedText = Utils.truncateText( text, 2 );
+			Should( truncatedText ).be.equal( "01.." );
+		});
+		it( 'should not truncate text when its length does not exceed the offset', () => {
+			let truncatedText = Utils.truncateText( text, 17 );
+			Should( truncatedText ).be.equal( text );
+		});
+		it( 'should return the string itself if the string length is 0 and the offset is 0 too', () => {
+			let truncatedText = Utils.truncateText( ``, 0 );
+			Should( truncatedText ).be.equal( `` );
+		});
+		it( 'should return the string itself if the string length and the offset are the same', () => {
+			let truncatedText = Utils.truncateText( text, 16 );
+			Should( truncatedText ).be.equal( text );
 		});
 	});
-	describe( 'getNestedValue', function(){
-		let obj = {
-			deep1: {
-				deep2: {
-					deep3: 'nestedValue'
+	describe( 'getNestedValue', () => {
+		let object = {
+			a: 'α',
+			b: [
+				'β',
+				'γ',
+				'δ',
+				{
+					e: 'ε'
 				}
-			}
+			]
 		};
-		it( 'should get 3 level deep nested value in object', function(){
-			let nestedValue = Utils.getNestedValue( obj, 'deep1', 'deep2', 'deep3' );
-			nestedValue.should.be.exactly( 'nestedValue' );
+		it( 'should get nested value in array', () => {
+			Should( Utils.getNestedValue( object, 'b', '3', 'e' ) ).be.equal( 'ε' );
 		});
-	})
+	});
+	describe( 'setNestedValue', () => {
+		it( 'should set nested value in an empty object by reference', () => {
+			let object = {};
+			Utils.setNestedValue( object, 'β', 'a', 'b' )
+			Should( object ).have.propertyByPath( 'a', 'b' ).which.is.equal( 'β' );
+		});
+		it( 'should set nested value in an empty object and pass it by value', () => {
+			let object = {};
+			Should( Utils.setNestedValue( object, 'β', 'a', 'b' ) ).have.propertyByPath( 'a', 'b' ).which.is.equal( 'β' );
+		});
+	});
 });

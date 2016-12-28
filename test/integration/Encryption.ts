@@ -1,8 +1,7 @@
-/// <reference path="../../../typings/index.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
-import {Encryption} from '../../../src/core/auth';
+import {Encryption} from '../../src/core/auth';
 
-import * as Mocha from 'mocha';
 import * as Should from 'should';
 
 const password = 'plainText1234$_';
@@ -12,15 +11,15 @@ describe( 'Encryption', function(){
 	let hash = encryption.getHash();
 	describe( 'getHash', function(){
 		it( 'should produce an encrypted bcrypt hash', function(){
-			hash.should.be.a.String;
+			Should( hash ).be.a.String;
 		});
 		it( 'should produce a hash with 60 characters', function(){
 			let hashLength = hash.length;
-			hashLength.should.be.exactly( 60 );
+			Should( hashLength ).be.equal( 60 );
 		});
 		it( 'should produce different hashes with each iteration', function(){
 			let secondHash = encryption.getHash();
-			hash.should.be.not.equal( secondHash );
+			Should( hash ).be.not.equal( secondHash );
 		});
 		it( `should return the hash, if it is already calculated`, () => {
 			let alreadyEncrypted: Encryption = new Encryption( hash );
@@ -31,15 +30,15 @@ describe( 'Encryption', function(){
 	describe( 'compare', function(){
 		it( 'should return true if the password corresponds', function(){
 			let comparation = encryption.compare( hash );
-			comparation.should.be.exactly( true );
+			Should( comparation ).be.equal( true );
 		})
 		it( 'should return false if the password does not correspond', function(){
 			let comparation = encryption.compare( `${hash}A` );
-			comparation.should.be.exactly( false );
+			Should( comparation ).be.equal( false );
 		});
 		it( 'should return false if plain password is given', function(){
 			let comparation = encryption.compare( password );
-			comparation.should.be.exactly( false );
+			Should( comparation ).be.equal( false );
 		});
 	});
 });

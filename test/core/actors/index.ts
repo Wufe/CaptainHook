@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import {Actor, Hook, User, Test} from '../../../src/core/actors';
+import {Actor, Entry, User, Task, Test} from '../../../src/core/actors';
 import {Database} from '../../../src/core/data';
 
 import * as Sequelize from 'sequelize';
@@ -20,10 +20,16 @@ let Actors: ActorType[] = [
 		table: 'users'
 	},
 	{
-		name: 'Hook',
-		class: Hook,
-		model: Database.models.hook,
-		table: 'hooks'
+		name: 'Entry',
+		class: Entry,
+		model: Database.models.entry,
+		table: 'entries'
+	},
+	{
+		name: 'Task',
+		class: Task,
+		model: Database.models.task,
+		table: 'tasks'
 	},
 	{
 		name: 'Test',

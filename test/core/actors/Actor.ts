@@ -14,7 +14,9 @@ describe( 'Actor', () => {
 		describe( actor.name, function(){
 			it( `should have a 'find' attribute`, () => {
 				let find: AccessInterface<any> = actor.class.find;
-				Should( find ).have.a.property( 'byId' );
+				Should( find ).have.a.property( 'byId' )
+				Should( find ).have.a.property( 'all' )
+				Should( find ).have.a.property( 'one' );
 			});
 			describe( `created instanciating Actor with ${actor.name} data`, function(){
 				let actorInstance = new Actor( actor.model, { 'test': 'valu_e' });
@@ -29,21 +31,6 @@ describe( 'Actor', () => {
 						actorInstance.get( 'test' ).should.be.exactly( 'va_lue' );
 					});
 				});
-				if( actor.name == 'Test' ){
-					describe( `save`, function(){
-						it( `should have an id after successfull save`, ( done ) => {
-							actorInstance.set( 'test', 'value_' );
-							actorInstance.save()
-								.then( ( actorInstance: any ) => {
-									Should( typeof actorInstance.data.id ).be.equal( "number" );
-									done();
-								})
-								.catch( ( error: any ) => {
-									done( new Error( 'Should be able to save.' ) );
-								})
-						});
-					});
-				}
 			});
 		});
 	});

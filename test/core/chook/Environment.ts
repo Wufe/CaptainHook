@@ -1,25 +1,25 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Mocha from 'mocha';
 import * as Should from 'should';
+import {Environment, getEnvironment} from '../../../src/core/chook';
 
-import {Environment, Utils} from '../../../src/core/chook';
-
-describe( 'Environment', function(){
-	describe( 'projectRoot', function(){
-		it( 'should be a folder', function(){
-			let isDirectory = Utils.isDirectory( Environment.projectRoot );
-			isDirectory.should.be.exactly( true );
+describe( 'Environment', () => {
+	describe( 'getEnvironment', () => {
+		it( 'should return an Environment instance', () => {
+			Should( getEnvironment() instanceof Environment ).be.equal( true );
 		});
 	});
-	describe( 'buildDirectory', function(){
-		it( 'should be a folder', function(){
-			let isDirectory = Utils.isDirectory( Environment.buildDirectory );
-			isDirectory.should.be.exactly( true );
+	let environment = getEnvironment();
+	describe( 'set', () => {
+		it( 'should set a value', () => {
+			environment.set( '1', 1, 2, 3 );
+			Should( environment ).have.propertyByPath( '1', '2', '3' ).which.is.equal( '1' );
 		});
-		it( 'should contain the lib folder', function(){
-			let isDirectory = Utils.isDirectory( Environment.buildDirectory + "/lib" );
-			isDirectory.should.be.exactly( true );
-		})
 	});
+	describe( 'get', () => {
+		it( 'should get a value previously set', () => {
+			environment.set( 'z', 'a', 'b', 'c' );
+			Should( environment.get( 'a', 'b', 'c' ) ).be.equal( 'z' );
+		});
+	})
 });
