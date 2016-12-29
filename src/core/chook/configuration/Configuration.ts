@@ -11,12 +11,14 @@ import * as Utils from '../Utils';
 import * as Yaml from 'js-yaml';
 
 const configurationFilename: string = 'config.yml';
+const CONF_STORE_FILE = 'file';
+const CONF_STORE_MEMORY = 'memory';
 
 export class ConfigurationClass{
 
 	configurationPath: string;
 	configuration: ConfigurationType = {
-		store: "file",
+		store: CONF_STORE_FILE,
 		filename: null,
 		directory: null,
 		filepath: null,
@@ -46,12 +48,12 @@ export class ConfigurationClass{
 	checkStore(): void{
 		let isDirectoryReady: boolean = this.checkDirectory();
 		if( !isDirectoryReady ){
-			this.configuration.store = "memory";
+			this.configuration.store = CONF_STORE_MEMORY;
 			return;
 		}
 		let isFileReady: boolean = this.checkFile();
 		if( !isFileReady )
-			this.configuration.store = "memory";
+			this.configuration.store = CONF_STORE_MEMORY;
 	}
 
 	checkDirectory(): boolean{
@@ -96,7 +98,7 @@ export class ConfigurationClass{
 	}
 
 	getFileContent( filepath: string ): string{
-		if( this.configuration.store == "file" ){
+		if( this.configuration.store == CONF_STORE_FILE ){
 			try{
 				let content: string = Fs.readFileSync( filepath, 'utf8' );
 				return content;
@@ -109,7 +111,7 @@ export class ConfigurationClass{
 	}
 
 	dumpConfiguration( configurationObject: any ): boolean{
-		if( this.configuration.store == "file" ){
+		if( this.configuration.store == CONF_STORE_FILE ){
 			try{
 				Fs.writeFileSync( this.configuration.filepath, Yaml.safeDump( configurationObject ) );
 				Log( 'debug', `Configuration updated.` );
