@@ -35,7 +35,9 @@
     "sequelize:test:migrate:refresh": "npm-run-all sequelize:test:migrate:undo:all sequelize:test:migrate",
     "sequelize:test:migrate:undo:all": "npm run -s sequelize:migrate:undo:all -- --env test",
     "sequelize:test:seed:all": "npm run -s sequelize:seed:all -- --env test",
-    "test": "NODE_ENV=mocha mocha"
+    "test": "NODE_ENV=mocha mocha",
+    "test:only": "NODE_ENV=mocha mocha",
+    "test:watch": "NODE_ENV=mocha mocha --watch"
   },
   "bin": "build/bin/chook",
   "repository": {
