@@ -15,7 +15,7 @@ class EntryManager{
 				.all()
 				.then( ( entries: EntryActor[] ) => {
 					let entryModels: EntryModel[] = entries.map( ( entry ) => {
-						return new EntryModel( this, entry.getAll(), entry );
+						return new EntryModel( entry.getAll(), entry );
 					});
 					this.entries = entryModels;
 					resolve( entryModels );
@@ -51,7 +51,7 @@ class EntryManager{
 				.all()
 				.then( ( entries: EntryActor[] ) => {
 					return this.loadTasks( entries.map( ( entry: EntryActor ) => {
-						return new EntryModel( this, entry.getAll(), entry );
+						return new EntryModel( entry.getAll(), entry );
 					}));
 				})
 				.then( ( entryModels: EntryModel[] ) => {

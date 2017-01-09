@@ -124,7 +124,7 @@ class EntryAction extends Action{
 			.then( () => {
 				let {name, uri, description, method} = this.args;
 				let {pipe, content_type, x_hub_signature, secret} = this.args;
-				let entry: EntryModel = new EntryModel( entryManager, {
+				let entry: EntryModel = new EntryModel({
 					name,
 					description,
 					uri,

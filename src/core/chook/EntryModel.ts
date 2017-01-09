@@ -52,12 +52,10 @@ const defaultData: IEntry = {
 
 export default class EntryModel{
 
-	entryManager: EntryManager;
 	data: IEntry;
 	actor: Entry;
 
-	constructor( entryManager: EntryManager, data?: IEntry, actor?: Entry ){
-		this.entryManager = entryManager;
+	constructor( data?: IEntry, actor?: Entry ){
 		this.data = Object.assign( {}, defaultData );
 		for( let key in data ){
 			if( data[ key ] )
