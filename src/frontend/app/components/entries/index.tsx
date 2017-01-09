@@ -56,13 +56,13 @@ class Entries extends Component<Props, any>{
 				name: 170,
 				uri: 250,
 				description: 200,
-				method: 70,
+				method: 80,
 				created: 110,
 				pipe: 50,
-				content_type: 110,
+				content_type: 130,
 				signature: 140
 			},
-			widthSum: 1050
+			widthSum: 1080
 		}
 		this.TouchableCell = getTouchableCell( this.onTouchOffset );
 	}
