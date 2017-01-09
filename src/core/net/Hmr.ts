@@ -36,8 +36,12 @@ export default class Hmr{
 		return this.environment.get( 'args', 'debug' ) ? true : false;
 	}
 
+	isDevelopmentEnvironment(): boolean{
+		return this.environment.get( 'args', 'development' ) ? true : false;
+	}
+
 	setup(): void{
-		if( !this.isDebugEnvironment() )
+		if( !this.isDevelopmentEnvironment() )
 			return;
 		Log( 'debug', 'Starting hmr..' );
 		let compiler: any = Webpack( webpackConfiguration );

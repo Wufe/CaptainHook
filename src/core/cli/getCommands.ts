@@ -28,7 +28,15 @@ const serverCommands: any[] = [
 			},
 			{
 				id: [ "--debug" ],
-				help: "Start the server with debug features, like hrm.",
+				help: "Debug messages.",
+				nargs: 0,
+				action: "storeTrue",
+				defaultValue: false
+			},
+			{
+				id: "--development",
+				aliases: [ "--dev" ],
+				help: "Development mode (HMR enabled).",
 				nargs: 0,
 				action: "storeTrue",
 				defaultValue: false
