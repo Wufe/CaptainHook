@@ -6,6 +6,8 @@ import {fake} from 'faker';
 import {EntryManager} from '.';
 import {Entry, Task} from '../actors';
 
+const uuid = require( 'uuid/v4' );
+
 export type METHOD_GET = 'get';
 export type METHOD_POST = 'post';
 export type METHOD_PUT = 'put';
@@ -233,23 +235,13 @@ export default class EntryModel{
 	}
 
 	createUri(): string{
-		let uri: string = null;
-		while( !uri ){
-			let id: string = randomBytes( 16 ).toString( 'hex' );
-			uri = `/webhook/${id}`;
-			if( this.entryManager.findByUri( uri ) )
-				uri = null;
-		}
+		let id = uuid();
+		let uri = `/webhook/${id}`;
 		return uri;
 	}
 
 	createName(): string{
-		let name: string = null;
-		while( !name ){
-			name = fake( "{{hacker.ingverb}} {{name.lastName}}" ).toLowerCase().replace( /\W+/g, '_' );
-			if( this.entryManager.findByName( name ) )
-				name = null;
-		}
+		let name = fake( "{{hacker.ingverb}} {{name.lastName}}" ).toLowerCase().replace( /\W+/g, '_' );
 		return name;
 	}
 
