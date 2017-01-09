@@ -173,7 +173,9 @@ class Entries extends Component<Props, any>{
 							header={<Cell>Name</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
 								<TouchableCell>
-									<span title={rows[rowIndex].name}>
+									<span style={{
+										whiteSpace: "nowrap"
+									}} title={rows[rowIndex].name}>
 										{rows[rowIndex].name}
 									</span>
 								</TouchableCell>
@@ -186,7 +188,9 @@ class Entries extends Component<Props, any>{
 							header={<Cell>URI</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
 								<TouchableCell>
-									<span title={rows[rowIndex].uri}>
+									<span style={{
+										whiteSpace: "nowrap"
+									}} title={rows[rowIndex].uri}>
 										{rows[rowIndex].uri}
 									</span>
 								</TouchableCell>
