@@ -37,8 +37,8 @@ describe( 'EntryModel', () => {
 	let entryModels: EntryModel[] = [];
 	describe( 'constructor', () => {
 		it( 'should be able to create entries', ( done: ( error?: any ) => void ) => {
-			let firstEntryModel = new EntryModel( entryManager, entries[ 0 ] );
-			let secondEntryModel = new EntryModel( entryManager, entries[ 1 ] );
+			let firstEntryModel = new EntryModel( entries[ 0 ] );
+			let secondEntryModel = new EntryModel( entries[ 1 ] );
 			firstEntryModel
 				.save()
 				.then( () => {
