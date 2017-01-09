@@ -41,7 +41,7 @@ class TaskAction extends Action{
 		let entryManager: EntryManager = new EntryManager();
 		let {entry_id} = this.args;
 		entryManager
-			.loadEntries()
+			.getEntries()
 			.then( () => {
 				let foundEntryModel: EntryModel = entryManager.findById( <number>entry_id );
 				if( !foundEntryModel )

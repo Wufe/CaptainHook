@@ -75,7 +75,7 @@ class EntryAction extends Action{
 	listEntries(): void{
 		let entryManager: EntryManager = this.getRepository();
 		entryManager
-			.loadEntries()
+			.getEntries()
 			.then( ( entries: EntryModel[] ) => {
 				this.printFormattedEntries( entries );
 			})
@@ -120,7 +120,7 @@ class EntryAction extends Action{
 		console.log( green( `Creating new entry..` ) );
 		let entryManager: EntryManager = this.getRepository();
 		entryManager
-			.loadEntries()
+			.getEntries()
 			.then( () => {
 				let {name, uri, description, method} = this.args;
 				let {pipe, content_type, x_hub_signature, secret} = this.args;
@@ -153,7 +153,7 @@ class EntryAction extends Action{
 		let entryManager: EntryManager = this.getRepository();
 		let {id} = this.args;
 		entryManager
-			.loadEntries()
+			.getEntries()
 			.then( () => {
 				let foundEntryModel: EntryModel = entryManager.findById( id );
 				if( !foundEntryModel )
@@ -172,7 +172,7 @@ class EntryAction extends Action{
 		let {id, name, uri, description, method} = this.args;
 		console.log( green( `Updating entry #${id}..` ) );
 		entryManager
-			.loadEntries()
+			.getEntries()
 			.then( () => {
 				let foundEntryModel: EntryModel = entryManager.findById( id );
 				if( !foundEntryModel )
@@ -232,7 +232,7 @@ class EntryAction extends Action{
 		let {id} = this.args;
 		console.log( green( `Deleting entry #${id}..` ) );
 		entryManager
-			.loadEntries()
+			.getEntries()
 			.then( () => {
 				let foundEntryModel: EntryModel = entryManager.findById( id );
 				if( !foundEntryModel )

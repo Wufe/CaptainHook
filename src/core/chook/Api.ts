@@ -27,25 +27,14 @@ export default class Api{
 		this.server.express.get( `${API_URI}/entry`, ( request, response ) => {
 			let entryManager: EntryManager = new EntryManager();
 			entryManager
-				.loadEntries()
-				.then( ( entries: EntryModel[] ) => {
-					return entryManager.loadTasks( entries );
-				})
+				.getEntriesWithTasks()
 				.then( ( entries: any[] ) => {
 					response.json(
 						{
 							result: 'success',
 							snapshot: '',
 							payload: entries.map( ( entry: EntryModel ) => {
-								let tasks: any[] = entry.getTasks();
-								tasks = tasks.map( ( task ) => {
-									return task.get();
-								});
-								let result: any = entry.get();
-								let options: any = Object.assign({}, entry.get( 'options' ) );
-								delete options[ 'secret' ];
-								result.options = options;
-								return result;
+								return entry.print();
 							})
 						}
 					);

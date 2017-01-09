@@ -8,7 +8,43 @@ class EntryManager{
 
 	constructor(){}
 
-	loadEntries(): Promise<EntryModel[]>{
+	getEntries(){
+		return new Promise( ( resolve, reject ) => {
+			EntryActor
+				.find
+				.all()
+				.then( ( entries: EntryActor[] ) => {
+					let entryModels: EntryModel[] = entries.map( ( entry ) => {
+						return new EntryModel( this, entry.getAll(), entry );
+					});
+					this.entries = entryModels;
+					resolve( entryModels );
+				})
+				.catch( ( error: any ) => {
+					reject( error );
+				});
+		});
+	}
+
+	getEntriesWithTasks(){
+		return new Promise( ( resolve, reject ) => {
+			this.getEntries()
+				.then( ( entryModels: EntryModel[] ) => {
+					return Promise.all( entryModels.map( ( entryModel ) => {
+						return entryModel.loadTasks();
+					}));
+				})
+				.then( ( entryModels: EntryModel[] ) => {
+					this.entries = entryModels;
+					resolve( entryModels );
+				})
+				.catch( ( error: any ) => {
+					reject( error );
+				});
+		});
+	}
+
+	loadEntries(){
 		return new Promise<EntryModel[]>( ( resolve, reject ) => {
 			EntryActor
 				.find
@@ -28,7 +64,7 @@ class EntryManager{
 		});
 	}
 
-	loadTasks( entryModels: EntryModel[] ): Promise<any>{
+	loadTasks( entryModels: EntryModel[] ){
 		return new Promise( ( resolve, reject ) => {
 			Promise.all( entryModels.map( ( entryModel: EntryModel ) => {
 				return entryModel.loadTasks();
@@ -43,9 +79,9 @@ class EntryManager{
 		});
 	}
 	
-	getEntries(): EntryModel[] {
-		return this.entries;
-	}
+	// getEntries(): EntryModel[] {
+	// 	return this.entries;
+	// }
 
 	findById( id: number ): EntryModel{
 		return this.entries.find( ( entry: EntryModel ) => {

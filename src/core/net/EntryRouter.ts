@@ -21,7 +21,7 @@ export default class EntryRouter{
 	
 	setup(): void{
 		this.entryManager
-			.loadEntries()
+			.getEntries()
 			.then( ( entries: EntryModel[] ) => {
 				this.setupRoutes( entries );
 			})

@@ -194,9 +194,6 @@ export default class EntryModel{
 			if( !this.actor )
 				reject( `No actor specified.` );
 			this.actor.delete()
-				.then( ( rows: number ) => {
-					return this.entryManager.loadEntries();
-				})
 				.then( () => {
 					resolve();
 				})
@@ -266,6 +263,20 @@ export default class EntryModel{
 
 	getName(): string{
 		return this.data.name;
+	}
+
+	print(){
+		let result: any = this.get();
+		let options: any = Object.assign({}, this.get( 'options' ) );
+		delete options[ 'secret' ];
+		result.options = options;
+		let tasks = this.getTasks();
+		if( tasks.length > 0 ){
+			result.tasks = tasks.map( ( task ) => {
+				return task.get();
+			});
+		}
+		return result;
 	}
 
 }
