@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {Component} from 'react';
+import {ClassicComponentClass, Component} from 'react';
 import './style.scss';
 import {getTouchableCell} from './touchableCell';
 import {entriesFetch} from '../../actions/entry';
@@ -36,6 +36,20 @@ interface ActionProps{
 }
 
 type Props = EntriesProps & ActionProps & StateProps;
+
+const StyledCell: ClassicComponentClass<any> = React.createClass({
+	render(){
+		return (
+			<Cell>
+				<span style={{
+					whiteSpace: "nowrap"
+				}} title={this.props.title}>
+					{this.props.children}
+				</span>
+			</Cell>
+		);
+	}
+});
 
 class Entries extends Component<Props, any>{
 
@@ -162,9 +176,9 @@ class Entries extends Component<Props, any>{
 							columnKey="id"
 							header={<Cell>ID</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
+								<StyledCell>
 									{rows[rowIndex].id}
-								</TouchableCell>
+								</StyledCell>
 							)}
 							width={this.state.columnWidth['id']}
 							fixed={true}/>
@@ -172,13 +186,9 @@ class Entries extends Component<Props, any>{
 							columnKey="name"
 							header={<Cell>Name</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
-									<span style={{
-										whiteSpace: "nowrap"
-									}} title={rows[rowIndex].name}>
-										{rows[rowIndex].name}
-									</span>
-								</TouchableCell>
+								<StyledCell title={rows[rowIndex].name}>
+									{rows[rowIndex].name}
+								</StyledCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -187,13 +197,9 @@ class Entries extends Component<Props, any>{
 							columnKey="uri"
 							header={<Cell>URI</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
-									<span style={{
-										whiteSpace: "nowrap"
-									}} title={rows[rowIndex].uri}>
-										{rows[rowIndex].uri}
-									</span>
-								</TouchableCell>
+								<StyledCell title={rows[rowIndex].uri}>
+									{rows[rowIndex].uri}
+								</StyledCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -202,14 +208,9 @@ class Entries extends Component<Props, any>{
 							columnKey="description"
 							header={<Cell>Description</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
-									<span style={{
-										whiteSpace: "nowrap"
-									}} title={rows[rowIndex].description}>
-										{rows[rowIndex].description}
-									</span>
-									
-								</TouchableCell>
+								<StyledCell title={rows[rowIndex].description}>
+									{rows[rowIndex].description}
+								</StyledCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -218,9 +219,9 @@ class Entries extends Component<Props, any>{
 							columnKey="method"
 							header={<Cell>Method</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
+								<StyledCell>
 									{rows[rowIndex].method}
-								</TouchableCell>
+								</StyledCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -229,11 +230,9 @@ class Entries extends Component<Props, any>{
 							columnKey="created"
 							header={<Cell>Created</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
-									<span style={{
-										whiteSpace: "nowrap"
-									}}>{rows[rowIndex].created_at}</span>
-								</TouchableCell>
+								<StyledCell title={rows[rowIndex].created_at}>
+									{rows[rowIndex].created_at}
+								</StyledCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -242,11 +241,9 @@ class Entries extends Component<Props, any>{
 							columnKey="pipe"
 							header={<Cell>Pipe</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
-									<span style={{
-										whiteSpace: "nowrap"
-									}}>{rows[rowIndex].options.pipe ? 'true' : 'false'}</span>
-								</TouchableCell>
+								<StyledCell>
+									{rows[rowIndex].options.pipe ? 'true' : 'false'}
+								</StyledCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -255,9 +252,9 @@ class Entries extends Component<Props, any>{
 							columnKey="content_type"
 							header={<Cell>Content-Type</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
+								<StyledCell title={rows[rowIndex].options.content_type}>
 									{rows[rowIndex].options.content_type}
-								</TouchableCell>
+								</StyledCell>
 							)}
 							fixed={false}
 							isResizable={true}
@@ -266,9 +263,9 @@ class Entries extends Component<Props, any>{
 							columnKey="signature"
 							header={<Cell>X-Hub-Signature</Cell>}
 							cell={({rowIndex}: {rowIndex: number}) => (
-								<TouchableCell>
+								<StyledCell>
 									{rows[rowIndex].options.x_hub_signature ? 'true' : 'false'}
-								</TouchableCell>
+								</StyledCell>
 							)}
 							fixed={false}
 							isResizable={true}
