@@ -56,10 +56,10 @@ describe( 'EntryModel', () => {
 
 describe( 'EntryManager', () => {
 	const entryManager = new EntryManager();
-	describe( 'loadEntries', () => {
+	describe( 'getEntries', () => {
 		it( 'should be able to load all entries', ( done: ( error?: any ) => void ) => {
 			entryManager
-				.loadEntries()
+				.getEntries()
 				.then( () => {
 					done();
 				})
@@ -70,7 +70,7 @@ describe( 'EntryManager', () => {
 		describe( 'loaded entries', () => {
 			it( 'should be created with their parameters filled as expected', ( done: ( error?: any ) => void ) => {
 				entryManager
-					.loadEntries()
+					.getEntries()
 					.then( ( entryModels: EntryModel[] ) => {
 						Should( entryModels.length ).be.greaterThan( 0 );
 						let entryWithoutName = entryModels.find( ( entryModel ) => {

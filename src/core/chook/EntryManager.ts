@@ -44,45 +44,6 @@ class EntryManager{
 		});
 	}
 
-	loadEntries(){
-		return new Promise<EntryModel[]>( ( resolve, reject ) => {
-			EntryActor
-				.find
-				.all()
-				.then( ( entries: EntryActor[] ) => {
-					return this.loadTasks( entries.map( ( entry: EntryActor ) => {
-						return new EntryModel( entry.getAll(), entry );
-					}));
-				})
-				.then( ( entryModels: EntryModel[] ) => {
-					this.entries = entryModels;
-					resolve( this.entries );
-				})
-				.catch( ( error: any ) => {
-					reject( error );
-				});
-		});
-	}
-
-	loadTasks( entryModels: EntryModel[] ){
-		return new Promise( ( resolve, reject ) => {
-			Promise.all( entryModels.map( ( entryModel: EntryModel ) => {
-				return entryModel.loadTasks();
-			}))
-			.then( ( entryModels: EntryModel[] ) => {
-				//console.log( entryModels );
-				resolve( entryModels );
-			})
-			.catch( ( error: any ) => {
-				reject( error );
-			})
-		});
-	}
-	
-	// getEntries(): EntryModel[] {
-	// 	return this.entries;
-	// }
-
 	findById( id: number ): EntryModel{
 		return this.entries.find( ( entry: EntryModel ) => {
 			return entry.getId() == id;
