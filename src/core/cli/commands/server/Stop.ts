@@ -1,5 +1,4 @@
-import {Command} from '../../Command';
-import {ICommand} from '../../ICommand';
+import {Command, ICommand} from '../..';
 import {Args} from '../..';
 
 import {ServerManager} from '../../../net';

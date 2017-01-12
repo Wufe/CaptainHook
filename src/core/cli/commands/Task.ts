@@ -1,5 +1,4 @@
-import {ICommand} from '../ICommand';
-import {CommandParser} from '../CommandParser';
+import {CommandParser, ICommand} from '..';
 import {Args} from '..';
 
 import {Add} from './task/Add';
