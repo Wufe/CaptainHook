@@ -1,8 +1,7 @@
 import {Command, ICommand} from '../..';
 import {Args} from '../..';
-import {green, red} from 'chalk';
 
-import {EntryManager, EntryModel, Log, TaskManager} from '../../../chook';
+import {EntryManager, EntryModel, Log, LogError, LogSuccess, TaskManager} from '../../../chook';
 import {Task} from '../../../actors';
 
 export class Delete extends Command implements ICommand{
@@ -20,11 +19,9 @@ export class Delete extends Command implements ICommand{
 			.byId( task_id )
 			.then( ( task: Task ) => {
 				task.delete();
-				console.log( green( `Command deleted.` ) );
+				LogSuccess( `Command deleted.` );
 			})
-			.catch( ( error: any ) => {
-				Log( "error", red( error.message ), error );
-			});
+			.catch( LogError );
 	}
 
 }

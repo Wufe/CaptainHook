@@ -4,7 +4,7 @@ import {green, red} from 'chalk';
 
 import {printFormattedEntries, printFormattedEntry} from './EntryPrintUtils';
 import {Entry} from '../../../actors';
-import {EntryManager, EntryModel, Log} from '../../../chook';
+import {EntryManager, EntryModel, Log, LogError, LogSuccess} from '../../../chook';
 
 export class Update extends Command implements ICommand{
 
@@ -62,14 +62,11 @@ export class Update extends Command implements ICommand{
 				foundEntryModel
 					.save()
 					.then( ( entry: Entry ) => {
+						LogSuccess( "Entry updated." );
 						printFormattedEntry( entry );
-					}).catch( ( error: any ) => {
-						Log( "error", red( error.message ), error );
-					});
+					}).catch( LogError );
 			})
-			.catch( ( error: any ) => {
-				Log( "error", red( error.message ) );
-			})
+			.catch( LogError );
 	}
 
 }

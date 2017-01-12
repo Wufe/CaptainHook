@@ -1,5 +1,5 @@
 import {Task} from '../../../actors';
-import {Utils} from '../../../chook';
+import {LogSuccess, Utils} from '../../../chook';
 
 export const printFormattedEntries = ( entries: any[] ) => {
 	Utils.printTableFromArray( entries.map( entry => entry.get() ) );

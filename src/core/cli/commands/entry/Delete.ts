@@ -4,7 +4,7 @@ import {green, red} from 'chalk';
 
 import {printFormattedEntries, printFormattedEntry} from './EntryPrintUtils';
 import {Entry} from '../../../actors';
-import {EntryManager, EntryModel, Log} from '../../../chook';
+import {EntryManager, EntryModel, Log, LogError, LogSuccess} from '../../../chook';
 
 export class Delete extends Command implements ICommand{
 
@@ -16,7 +16,6 @@ export class Delete extends Command implements ICommand{
 	execute( args: Args ): void{
 		let {id} = args;
 		let entryManager = new EntryManager();
-		console.log( green( `Deleting entry #${id}..` ) );
 		entryManager
 			.getEntries()
 			.then( () => {
@@ -28,12 +27,11 @@ export class Delete extends Command implements ICommand{
 				foundEntryModel
 					.delete()
 					.then( () => {
-						console.log( `Entry #${id} deleted.` );
+						LogSuccess( `Entry #${id} deleted.` );
 					})
-					.catch( ( error: any ) => {
-						Log( "error", red( error.message ) );
-					})
+					.catch( LogError );
 			})
+			.catch( LogError );
 	}
 
 }

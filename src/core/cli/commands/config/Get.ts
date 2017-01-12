@@ -2,7 +2,7 @@ import {Command, ICommand} from '../..';
 import {Args} from '../..';
 
 import {getPathFromKey} from './ConfigurationStringUtils';
-import {Configuration} from '../../../chook';
+import {Configuration, LogSuccess} from '../../../chook';
 
 export class Get extends Command implements ICommand{
 
@@ -14,11 +14,11 @@ export class Get extends Command implements ICommand{
 	execute( args: Args ): void{
 		let key: string = args[ 'key' ];
 		if( key == "*" ){
-			console.log( Configuration.get() );
+			LogSuccess( "Configuration", Configuration.get() );
 			return;
 		}
 		let keys = getPathFromKey( key );
-		console.log( Configuration.get( ...keys ) );
+		LogSuccess( "Configuration", Configuration.get( ...keys ) );
 	}
 
 }

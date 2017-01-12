@@ -1,7 +1,7 @@
 import {Command, ICommand} from '../..';
 import {Args} from '../..';
 import {green, red} from 'chalk';
-
+import {LogSuccess} from '../../../chook';
 import {ServerManager} from '../../../net';
 
 export class Status extends Command implements ICommand{
@@ -16,9 +16,9 @@ export class Status extends Command implements ICommand{
 			.isOnline()
 			.then( ( online: boolean ) => {
 				if( !online ){
-					console.log( red( `The server is not online.` ) );
+					LogSuccess( red( `The server is not online.` ) );
 				}else{
-					console.log( green( `The server is online.` ) );
+					LogSuccess( green( `The server is online.` ) );
 				}
 			});
 	}

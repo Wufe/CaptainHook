@@ -1,9 +1,8 @@
 import {Command, ICommand} from '../..';
 import {Args} from '../..';
-import {green, red} from 'chalk';
 import {createInterface} from 'readline';
 
-import {EntryManager, EntryModel, Log, TaskManager} from '../../../chook';
+import {EntryManager, EntryModel, Log, LogError, LogSuccess, TaskManager} from '../../../chook';
 import {Task} from '../../../actors';
 
 export class Add extends Command implements ICommand{
@@ -26,9 +25,7 @@ export class Add extends Command implements ICommand{
 					throw new Error( `Cannot find entry with id ${entry_id}.` );
 				this.addTaskToEntryModel( foundEntryModel );
 			})
-			.catch( ( error: any ) => {
-				Log( "error", red( error.message ) );
-			});
+			.catch( LogError );
 	}
 
 	addTaskToEntryModel( entryModel: EntryModel ){
@@ -54,11 +51,9 @@ export class Add extends Command implements ICommand{
 							env
 						})
 						.then( () => {
-							console.log( green( `Command saved.` ) );
+							LogSuccess( `Command saved.` );
 						})
-						.catch( ( error: any ) => {
-							Log( "error", red( error.message ) );
-						});
+						.catch( LogError );
 						readline.close();
 					});
 				});

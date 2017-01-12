@@ -3,7 +3,7 @@ import {Args} from '../..';
 import {red} from 'chalk';
 
 import {printFormattedEntries} from './EntryPrintUtils';
-import {EntryManager, EntryModel, Log} from '../../../chook';
+import {EntryManager, EntryModel, Log, LogError} from '../../../chook';
 
 export class List extends Command implements ICommand{
 
@@ -18,9 +18,7 @@ export class List extends Command implements ICommand{
 			.then( ( entries: EntryModel[] ) => {
 				printFormattedEntries( entries );
 			})
-			.catch( ( error: any ) => {
-				Log( "error", red( error.message ) );
-			});
+			.catch( LogError );
 	}
 
 }

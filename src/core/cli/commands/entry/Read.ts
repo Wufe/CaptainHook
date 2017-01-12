@@ -5,7 +5,7 @@ import {red} from 'chalk';
 
 import {printFormattedEntries, printFormattedEntry} from './EntryPrintUtils';
 import {Entry} from '../../../actors';
-import {EntryManager, EntryModel, Log} from '../../../chook';
+import {EntryManager, EntryModel, Log, LogError} from '../../../chook';
 
 export class Read extends Command implements ICommand{
 
@@ -27,9 +27,7 @@ export class Read extends Command implements ICommand{
 					throw new Error( `Cannot find entry with id ${id}.` );
 				printFormattedEntry( foundEntryModel );
 			})
-			.catch( ( error: any ) => {
-				Log( "error", red( error.message ) );
-			});
+			.catch( LogError );
 	}
 
 }

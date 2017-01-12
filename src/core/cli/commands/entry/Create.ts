@@ -4,7 +4,7 @@ import {green, red} from 'chalk';
 
 import {printFormattedEntries, printFormattedEntry} from './EntryPrintUtils';
 import {Entry} from '../../../actors';
-import {EntryManager, EntryModel, Log} from '../../../chook';
+import {EntryManager, EntryModel, Log, LogError, LogSuccess} from '../../../chook';
 
 export class Create extends Command implements ICommand{
 
@@ -14,7 +14,6 @@ export class Create extends Command implements ICommand{
 	}
 
 	execute( args: Args ): void{
-		console.log( green( `Creating new entry..` ) );
 		new EntryManager()
 			.getEntries()
 			.then( () => {
@@ -34,15 +33,12 @@ export class Create extends Command implements ICommand{
 				})
 				.save()
 				.then( ( entry: Entry ) => {
+					LogSuccess( "Entry created." );
 					printFormattedEntry( entry );
 				})
-				.catch( ( error: any ) => {
-					Log( "error", red( error.message ), error );
-				});
+				.catch( LogError );
 			})
-			.catch( ( error: any ) => {
-				Log( "error", red( error.message ) );
-			});
+			.catch( LogError );
 	}
 
 }

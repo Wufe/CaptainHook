@@ -1,6 +1,5 @@
 import {Command, ICommand} from '../..';
 import {Args} from '../..';
-
 import {ServerManager} from '../../../net';
 
 export class Start extends Command implements ICommand{
