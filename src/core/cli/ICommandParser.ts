@@ -1,3 +1,3 @@
 export interface ICommandParser{
-	parseCommand();
+	parseCommand(): void;
 }
