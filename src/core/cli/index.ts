@@ -1,4 +1,3 @@
-import Action from './actions/Action';
 import Creator from './Creator';
 import Cli from './Cli';
 
@@ -9,7 +8,6 @@ export * from './ICommand';
 export * from './ICommandParser';
 
 export {
-	Action,
 	Creator,
 	Cli
 };

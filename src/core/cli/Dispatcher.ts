@@ -1,5 +1,3 @@
-import * as Actions from './actions';
-import {Action} from '.';
 import {CommandParser} from './CommandParser'
 import {Config} from './commands/Config';
 import {Server} from './commands/Server';
