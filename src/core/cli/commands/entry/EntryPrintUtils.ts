@@ -1,23 +1,24 @@
 import {Task} from '../../../actors';
-import {LogSuccess, Utils} from '../../../chook';
+import {LogSuccess, Log, Utils} from '../../../chook';
 
 export const printFormattedEntries = ( entries: any[] ) => {
-	Utils.printTableFromArray( entries.map( entry => entry.get() ) );
+	let formattedEntries = Utils.formatTableFromArray( entries.map( entry => entry.get() ) );
+	LogSuccess( "Entries\n" + formattedEntries );
 };
 
 export const printFormattedEntry = ( entry: any ) => {
-	console.log( 'Entry:' );
 	let params: any = entry.get();
-	Utils.printTableFromArray([
+	let formattedParams = Utils.formatTableFromArray([
 		params
 	]);
+	LogSuccess( "Entry\n" + formattedParams );
 	
 	let options: any = entry.get( 'options' );
-	console.log( '\nOptions:' );
 	options.secret = '*******';
-	Utils.printTableFromArray([
+	let formattedOptions = Utils.formatTableFromArray([
 		options
 	]);
+	LogSuccess( "Options\n" + formattedOptions );
 
 	let tasks: any[] = [];
 	if( entry.getTasks ){
@@ -28,7 +29,7 @@ export const printFormattedEntry = ( entry: any ) => {
 		tasks = entry.data.tasks;
 	}
 	if( tasks && tasks.length ){
-		console.log( '\nCommands:' );
-		Utils.printTableFromArray( tasks.map( ( task: Task ) => task.get()));
+		let formattedTasks = Utils.formatTableFromArray( tasks.map( ( task: Task ) => task.get()));
+		LogSuccess( "Tasks\n" + formattedTasks );
 	}
 }

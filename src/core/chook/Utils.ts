@@ -54,7 +54,8 @@ let setNestedValue = ( obj: any, value: any, ...keys: string[] ) => {
     return obj;
 };
 
-let printTableFromArray = ( data: any[], padding: number = 2 ): void => {
+let formatTableFromArray = ( data: any[], padding: number = 2 ): string => {
+    let ret: string = "";
     if( !data || data.length == 0 )
         return;
     let max: any = {};
@@ -78,8 +79,9 @@ let printTableFromArray = ( data: any[], padding: number = 2 ): void => {
             let additionalSpace: number = max[key] - length;
             values.push( `${element[key]}${" ".repeat( additionalSpace )}` );
         }
-        console.log( `${p}${values.join( `${p}|${p}` )}${p}` );
+        ret += `${p}${values.join( `${p}|${p}` )}${p}\n`;
     });
+    return ret;
 };
 
 let truncateText = ( string: string, offset: number ): string =>{
@@ -93,7 +95,7 @@ export {
     getNestedValue,
 	isFile,
 	isDirectory,
-    printTableFromArray,
+    formatTableFromArray,
     setNestedValue,
     truncateText
 };
