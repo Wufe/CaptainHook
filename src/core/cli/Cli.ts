@@ -3,7 +3,7 @@
 import * as ArgParse from 'argparse';
 import {ArgumentParser} from 'argparse';
 
-import {Creator, dispatch} from '.';
+import {Creator, Dispatcher} from '.';
 import {Environment, getEnvironment, logInstance} from '../chook';
 
 export default class Cli{
@@ -28,7 +28,7 @@ export default class Cli{
 	run(){
 		this.setup();
 		this.parseArgs();
-		dispatch();
+		new Dispatcher( this.environment.get( 'args' ) ).parseCommand();
 	}
 
 }

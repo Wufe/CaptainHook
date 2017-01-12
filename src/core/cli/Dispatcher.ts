@@ -1,36 +1,22 @@
 import * as Actions from './actions';
 import {Action} from '.';
-import {Environment, getEnvironment} from '../chook';
+import {CommandParser} from './CommandParser'
+import {Config} from './commands/Config';
+import {Server} from './commands/Server';
+import {Entry} from './commands/Entry';
+import {Task} from './commands/Task';
+import {Args} from '.';
 
-export class Dispatcher{
+export class Dispatcher extends CommandParser{
 
-	environment: Environment;
-
-	constructor(){
-		this.environment = getEnvironment();
-		this.dispatch = this.dispatch.bind( this );
-	}
-
-	dispatch(): void{
-		let args: any = this.environment.get( 'args' );
-		if( !args )
-			return;
-		if( !args[ 'action' ] )
-			return;
-		let availableActions: any = Actions;
-		for( let actionName in Actions ){
-			let action: Action = <Action>(availableActions[ actionName ]);
-			if( action.matches( args[ 'action' ] ) ){
-				action.run();
-			}
-		}
+	constructor( args: Args ){
+		super( args );
+		this.commands = [
+			new Config( args ),
+			new Entry( args ),
+			new Server( args ),
+			new Task( args )
+		];
 	}
 
 }
-
-const dispatcher: Dispatcher = new Dispatcher();
-const dispatch = dispatcher.dispatch;
-
-export{
-	dispatch
-};

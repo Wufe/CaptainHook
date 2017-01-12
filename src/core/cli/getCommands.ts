@@ -66,8 +66,8 @@ const serverCommands: any[] = [
 
 const configCommands: any[] = [
 	{
-		id: "config",
-		aliases: [ "c" ],
+		id: "configuration",
+		aliases: [ "config", "conf" ],
 		addHelp: true,
 		help: "Get and set configuration values.",
 		sub: {
