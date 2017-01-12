@@ -2,6 +2,7 @@
 
 import * as Should from 'should';
 import * as Faker from 'faker';
+const uuid = require( 'uuid/v1' );
 
 import {EntryManager, EntryModel, IEntry} from '../../src/core/chook';
 
@@ -21,7 +22,7 @@ const entries: IEntry[] = [
 	{
 		name: Faker.internet.userName(),
 		description: Faker.lorem.sentence( 5 ),
-		uri: Faker.lorem.word(),
+		uri: Faker.lorem.word() + uuid(),
 		method: 'patch',
 		options: {
 			pipe: true,
