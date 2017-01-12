@@ -148,7 +148,11 @@ export class Log{
 const logInstance: Log = new Log();
 logInstance.setup();
 const log: ( level: LogLevelsType, message: string, ...meta: any[] ) => void = logInstance.log;
+const logError = ( error: any ) => { log( "error", Chalk.red( error.message ) ); };
+const logSuccess = ( message: string, ...meta: any[] ) => { log( "notice", message, ...meta ); };
 export {
-	logInstance
+	logError,
+	logInstance,
+	logSuccess
 };
 export default log;
