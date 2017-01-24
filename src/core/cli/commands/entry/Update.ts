@@ -54,7 +54,7 @@ export class Update extends Command implements ICommand{
 					foundEntryModel.set( 'name', name );
 				if( uri )
 					foundEntryModel.set( 'uri', uri );
-				if( describe )
+				if( description )
 					foundEntryModel.set( 'description', description );
 				if( method )
 					foundEntryModel.set( 'method', method );
