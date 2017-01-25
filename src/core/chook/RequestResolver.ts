@@ -3,7 +3,7 @@ import {Log, EntryModel} from '.';
 
 import {Request, Response, NextFunction} from 'express';
 import * as Moment from 'moment';
-import {ChildProcess, exec, spawn} from 'child_process'
+import {ChildProcess, exec} from 'child_process'
 
 import {red} from 'chalk';
 
@@ -75,7 +75,7 @@ export default class RequestResolver{
 				let {entry} = this;
 				this.execution( `${entry.getId()} - ${entry.getName()} - ${entry.get( 'description' )}` );
 				this.execution( `${request.method} - ${request.url}` );
-				this.execution( request.ip );
+				this.execution( `IP: ${request.ip}` );
 				this.runTasks( tasks, resolve );
 			});
 		}else{
@@ -128,7 +128,8 @@ export default class RequestResolver{
 		let options = this.entry.get( 'options' );
 		let environment: {
 			[key: string]: string | number;
-		} = {
+		};
+		environment = Object.assign({}, process.env, {
 			CHOOK_ID: this.entry.getId(),
 			CHOOK_NAME: this.entry.getName(),
 			CHOOK_URI: this.entry.getUri(),
@@ -137,9 +138,9 @@ export default class RequestResolver{
 			CHOOK_BODY: body,
 			CHOOK_OPTIONS_PIPE: options[ 'pipe' ],
 			CHOOK_OPTIONS_CONTENT_TYPE: options[ 'content_type' ],
-			CHOOK_OPTIONS_X_HUB_SIGNATURE: options[ 'x_hub_signature' ],
-			//NPM_CONFIG_COLOR: 'always'
-		};
+			CHOOK_OPTIONS_X_HUB_SIGNATURE: options[ 'x_hub_signature' ]
+		});
+		Log( "debug", "Environment variables", environment );
 		let taskEnvironment: {
 			[key: string]: string;
 		} = task.get( 'environment' );
