@@ -1,13 +1,6 @@
 const externals = require( 'webpack-node-externals' );
 var webpack = require( 'webpack' );
 
-const env = process.env;
-env[ 'NODE_ENV' ] = "production";
-for( let k in env ){
-    env[k] = JSON.stringify( env[k] );
-}
-
-
 module.exports = {
     context: __dirname,
     devtool: "null",
@@ -51,9 +44,6 @@ module.exports = {
                 warnings: false
             },
             mangle: false
-        }),
-        new webpack.DefinePlugin({
-            'process.env': env
         })
     ],
     externals: [ externals() ],
