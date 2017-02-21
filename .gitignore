@@ -1,5 +1,6 @@
 # Project dependencies
 /node_modules
+.vscode
 
 # NPM
 npm-debug.log
