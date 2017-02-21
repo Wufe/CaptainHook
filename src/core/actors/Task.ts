@@ -3,7 +3,6 @@
 import Actor from './Actor';
 import {Access, AccessInterface, Database} from '../data';
 import {truncateText} from '../chook/Utils';
-import * as Sequelize from 'sequelize';
 import * as Moment from 'moment';
 
 const model = Database.models.task;

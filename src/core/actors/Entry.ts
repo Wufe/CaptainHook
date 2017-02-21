@@ -2,7 +2,6 @@
 
 import Actor from './Actor';
 import {Access, AccessInterface, Database} from '../data';
-import * as Sequelize from 'sequelize';
 import * as Moment from 'moment';
 
 const model = Database.models.entry;

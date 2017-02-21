@@ -1,10 +1,8 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Sequelize from 'sequelize';
-
 export default class Actor<T>{
 	
-	model: Sequelize.Model<any, any>;
+	model: any;
 	private data: any;
 	protected hidden: string[] = [];
 	protected fields: string[] = [];
@@ -12,7 +10,7 @@ export default class Actor<T>{
 		[key: string]: ( value: any ) => any;
 	}
 
-	constructor( model: Sequelize.Model<any, any>, data?: any ){
+	constructor( model: any, data?: any ){
 		if( !data ){
 			data = {};
 		}

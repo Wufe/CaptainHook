@@ -1,21 +1,19 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Sequelize from 'sequelize';
-
 import {Creator} from '../actors';
 
 export interface AccessInterface<T>{
-	byId: ( identifier?: number | string, options?: Sequelize.FindOptions ) => Promise<T>;
-	one: ( options? : Sequelize.FindOptions ) => Promise<any>;
-	all: ( options? : Sequelize.FindOptions ) => Promise<any[]>;
+	byId: ( identifier?: number | string, options?: any ) => Promise<T>;
+	one: ( options? : any ) => Promise<any>;
+	all: ( options? : any ) => Promise<any[]>;
 }
 
 export default class Access<T>{
 
 	actor: any;
-	model: Sequelize.Model<any, any>;
+	model: any;
 
-	constructor( actor: any, model: Sequelize.Model<any, any> ){
+	constructor( actor: any, model: any ){
 		this.actor = actor,
 		this.model = model;
 	}
@@ -28,7 +26,7 @@ export default class Access<T>{
 		};
 	}
 
-	findById( identifier?: number | string, options?: Sequelize.FindOptions ) : Promise<T>{
+	findById( identifier?: number | string, options?: any ) : Promise<T>{
 		return new Promise<T>( ( resolve, reject ) => {
 			this.model.findById( identifier, options )
 				.then( ( instance: any ) => {
@@ -41,7 +39,7 @@ export default class Access<T>{
 		
 	}
 
-	findOne( options? : Sequelize.FindOptions ) : Promise<any>{
+	findOne( options? : any ) : Promise<any>{
 		return new Promise<T>( ( resolve, reject ) => {
 			this.model.findOne( options )
 				.then( ( instance: any ) => {
@@ -53,13 +51,13 @@ export default class Access<T>{
 		})
 	}
 
-	findAll( options? : Sequelize.FindOptions ) : Promise<any[]>{
+	findAll( options? : any ) : Promise<any[]>{
 		return new Promise<any[]>( ( resolve, reject ) => {
 			this
 				.model
 				.findAll( options )
-				.then( ( instances: Sequelize.Instance<any>[] ) => {
-					resolve( instances.map( ( instance: Sequelize.Instance<any> ) => {
+				.then( ( instances: any[] ) => {
+					resolve( instances.map( ( instance: any ) => {
 						return this.getActorByInstance( instance );
 					}));
 				})

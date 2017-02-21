@@ -1,7 +1,5 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Sequelize from 'sequelize';
-
 import {Actor} from '.';
 
 export default class Creator{

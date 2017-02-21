@@ -1,15 +1,14 @@
 /// <reference path="../../../typings/globals/node/index.d.ts" />
-/// <reference path="../../../typings/globals/sequelize/index.d.ts" />
 
 import {getBuildDirectory} from '../chook/';
 
 import * as Models from './models';
 import * as Path from 'path';
-import * as Sequelize from 'sequelize';
+const Sequelize = require( 'sequelize' );
 
 export class Database{
 
-	sequelize: Sequelize.Sequelize;
+	sequelize: any;
 	models: any = {};
 
 	constructor(){

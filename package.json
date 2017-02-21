@@ -63,6 +63,7 @@
     "faker": "^3.1.0",
     "js-yaml": "^3.6.1",
     "jsonwebtoken": "^7.1.9",
+    "limiter": "^1.1.0",
     "moment": "^2.15.2",
     "nyc": "^8.3.2",
     "request": "^2.78.0",
