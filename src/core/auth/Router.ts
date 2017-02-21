@@ -5,7 +5,7 @@ import {Authentication, Encryption, Token} from '.';
 import {Configuration, getEnvironment, Environment, Log} from '../chook';
 import {NextFunction, Request, RequestHandler, Response} from 'express';
 import {Server} from '../net';
-import {authenticate} from '../net/middlewares';
+import {authenticate, limiter} from '../net/middlewares';
 import {User} from '../actors';
 
 export interface Credentials{
@@ -34,6 +34,6 @@ export default class Router{
 	}
 
 	addAuthenticationRoutes(): void{
-		this.server.express.post( '/auth', authenticate );
+		this.server.express.post( '/auth', limiter, authenticate );
 	}
 }
