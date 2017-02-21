@@ -124,7 +124,6 @@ const entryModelArgs: any[] = [
 	{
 		id: "--method",
 		action: "store",
-		defaultValue: "post",
 		help: 'The HTTP method.'
 	},
 	{
