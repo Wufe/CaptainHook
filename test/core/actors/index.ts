@@ -3,12 +3,10 @@
 import {Actor, Entry, User, Task, Test} from '../../../src/core/actors';
 import {Database} from '../../../src/core/data';
 
-import * as Sequelize from 'sequelize';
-
 export interface ActorType{
 	name: string;
 	class: any;
-	model: Sequelize.Model<any, any>;
+	model: any;
 	table: string;
 };
 

@@ -3,8 +3,6 @@
 import * as Mocha from 'mocha';
 import * as Should from 'should';
 
-import * as Sequelize from 'sequelize';
-
 import {Actor, Hook, User} from '../../../src/core/actors';
 import {Actors, ActorType} from '.';
 import {AccessInterface, Database} from '../../../src/core/data';
